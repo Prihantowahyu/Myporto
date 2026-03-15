@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <!-- ==================== SEO META TAGS ==================== -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio Wahyu Prihanto - Guru Teknik Komputer dan Jaringan SMK Diponegoro Tumpang. Pengembang aplikasi sekolah, Google Apps Script enthusiast, dan ahli teknologi pendidikan.">
+    <meta name="keywords" content="Wahyu Prihanto, Guru TKJ, SMK Diponegoro Tumpang, Google Apps Script, Aplikasi Sekolah, Teknologi Pendidikan, Sistem Informasi Sekolah">
+    <meta name="author" content="Wahyu Prihanto">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://wahyuprihanto.com/">
+    <meta property="og:title" content="Wahyu Prihanto | Guru TKJ & Developer Aplikasi Sekolah">
+    <meta property="og:description" content="Guru Teknik Komputer dan Jaringan yang fokus pada pengembangan aplikasi sekolah dan digitalisasi pendidikan menggunakan Google Apps Script.">
+    <meta property="og:image" content="https://wahyuprihanto.com/images/og-image.jpg">
+    <meta property="og:locale" content="id_ID">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Wahyu Prihanto | Guru TKJ & Developer Aplikasi Sekolah">
+    <meta name="twitter:description" content="Guru Teknik Komputer dan Jaringan yang fokus pada pengembangan aplikasi sekolah dan digitalisasi pendidikan.">
+
+    <title>Wahyu Prihanto | Guru TKJ & Developer Aplikasi Sekolah</title>
+
+    <!-- ==================== FONTS & ICONS ==================== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- ==================== STYLESHEET ==================== -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- ==================== LOADING ANIMATION ==================== -->
+    <div id="loader" class="loader">
+        <div class="loader-spinner"></div>
+        <p class="loader-text">Loading...</p>
+    </div>
+
+    <!-- ==================== SCROLL PROGRESS INDICATOR ==================== -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- ==================== NAVBAR ==================== -->
+    <header class="navbar" id="navbar">
+        <nav class="nav-container">
+            <a href="#home" class="nav-brand">
+                <i class="fas fa-code"></i>
+                <span>WP</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- ==================== HERO SECTION ==================== -->
+        <section id="home" class="hero">
+            <div class="hero-bg">
+                <div class="floating-shape shape-1"></div>
+                <div class="floating-shape shape-2"></div>
+                <div class="floating-shape shape-3"></div>
+                <div class="gradient-orb orb-1"></div>
+                <div class="gradient-orb orb-2"></div>
+            </div>
+            <div class="hero-content">
+                <p class="hero-greeting" data-aos="fade-down">Halo, saya</p>
+                <h1 class="hero-title" data-aos="fade-up" data-aos-delay="100">Wahyu Prihanto</h1>
+                <h2 class="hero-subtitle typing-text" data-aos="fade-up" data-aos-delay="200">
+                    <span id="typing"></span>
+                    <span class="cursor">|</span>
+                </h2>
+                <p class="hero-description" data-aos="fade-up" data-aos-delay="300">
+                    Saya seorang guru Teknik Komputer dan Jaringan yang tertarik pada pengembangan aplikasi sekolah dan digitalisasi sistem pendidikan menggunakan teknologi web dan Google Apps Script.
+                </p>
+                <div class="hero-cta" data-aos="fade-up" data-aos-delay="400">
+                    <a href="#projects" class="btn btn-primary">
+                        <i class="fas fa-folder-open"></i>
+                        Lihat Proyek
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">
+                        <i class="fas fa-envelope"></i>
+                        Hubungi Saya
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== ABOUT SECTION ==================== -->
+        <section id="about" class="about">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Tentang Saya</h2>
+                <div class="about-grid">
+                    <div class="about-image" data-aos="fade-right">
+                        <div class="about-photo">
+                            <img src="images/profile.jpeg" alt="Foto profil Wahyu Prihanto - Guru TKJ SMK Diponegoro Tumpang" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="about-placeholder">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-content" data-aos="fade-left">
+                        <h3>Wahyu Prihanto</h3>
+                        <p class="about-role">Guru Teknik Komputer dan Jaringan | SMK Diponegoro Tumpang</p>
+                        <p class="about-text">
+                            Saya adalah guru Teknik Komputer dan Jaringan dengan pengalaman mengajar dan mengembangkan sistem aplikasi sekolah. 
+                            Fokus saya pada integrasi teknologi pendidikan untuk mempermudah proses administrasi dan manajemen kesiswaan.
+                        </p>
+                        <p class="about-text">
+                            Pengalaman membuat berbagai sistem aplikasi sekolah seperti sistem kesiswaan, rekam pelanggaran, dashboard data siswa, 
+                            dan generator sertifikat otomatis telah memperdalam pemahaman saya terhadap kebutuhan digital di dunia pendidikan.
+                        </p>
+                        <p class="about-text">
+                            Saya percaya bahwa teknologi dapat mentransformasi pendidikan menjadi lebih efisien, transparan, dan terukur.
+                        </p>
+                        <div class="about-badges">
+                            <span class="badge"><i class="fas fa-graduation-cap"></i> Guru TKJ</span>
+                            <span class="badge"><i class="fas fa-code"></i> App Developer</span>
+                            <span class="badge"><i class="fas fa-google"></i> GAS Enthusiast</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SKILLS SECTION ==================== -->
+        <section id="skills" class="skills">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Keahlian</h2>
+                <div class="skills-grid">
+                    <div class="skill-card" data-aos="fade-up" data-aos-delay="0">
+                        <div class="skill-icon"><i class="fas fa-network-wired"></i></div>
+                        <h3>Teknik Komputer dan Jaringan</h3>
+                        <div class="skill-progress"><div class="skill-bar" style="--level: 90%"></div></div>
+                        <span class="skill-level">90%</span>
+                    </div>
+                    <div class="skill-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="skill-icon"><i class="fas fa-server"></i></div>
+                        <h3>Manajemen Jaringan</h3>
+                        <div class="skill-progress"><div class="skill-bar" style="--level: 85%"></div></div>
+                        <span class="skill-level">85%</span>
+                    </div>
+                    <div class="skill-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="skill-icon"><i class="fab fa-google"></i></div>
+                        <h3>Google Apps Script</h3>
+                        <div class="skill-progress"><div class="skill-bar" style="--level: 88%"></div></div>
+                        <span class="skill-level">88%</span>
+                    </div>
+                    <div class="skill-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="skill-icon"><i class="fab fa-html5"></i></div>
+                        <h3>HTML</h3>
+                        <div class="skill-progress"><div class="skill-bar" style="--level: 92%"></div></div>
+                        <span class="skill-level">92%</span>
+                    </div>
+                    <div class="skill-card" data-aos="fade-up" data-aos-delay="400">
+                        <div class="skill-icon"><i class="fab fa-css3-alt"></i></div>
+                        <h3>CSS</h3>
+                        <div class="skill-progress"><div class="skill-bar" style="--level: 85%"></div></div>
+                        <span class="skill-level">85%</span>
+                    </div>
+                    <div class="skill-card" data-aos="fade-up" data-aos-delay="500">
+                        <div class="skill-icon"><i class="fab fa-js"></i></div>
+                        <h3>JavaScript</h3>
+                        <div class="skill-progress"><div class="skill-bar" style="--level: 80%"></div></div>
+                        <span class="skill-level">80%</span>
+                    </div>
+                    <div class="skill-card" data-aos="fade-up" data-aos-delay="600">
+                        <div class="skill-icon"><i class="fas fa-table"></i></div>
+                        <h3>Google Spreadsheet Integration</h3>
+                        <div class="skill-progress"><div class="skill-bar" style="--level: 90%"></div></div>
+                        <span class="skill-level">90%</span>
+                    </div>
+                    <div class="skill-card" data-aos="fade-up" data-aos-delay="700">
+                        <div class="skill-icon"><i class="fas fa-school"></i></div>
+                        <h3>Sistem Informasi Sekolah</h3>
+                        <div class="skill-progress"><div class="skill-bar" style="--level: 87%"></div></div>
+                        <span class="skill-level">87%</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== PROJECTS SECTION ==================== -->
+        <section id="projects" class="projects">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Proyek Aplikasi Sekolah</h2>
+                <p class="section-subtitle" data-aos="fade-up">Berbagai solusi digital yang telah saya kembangkan untuk kebutuhan pendidikan</p>
+                <div class="projects-grid">
+                    <article class="project-card" data-aos="fade-up" data-aos-delay="0">
+                        <div class="project-image">
+                            <img src="images/siswa.png" alt="Screenshot Aplikasi Sistem Kesiswaan" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            <div class="project-placeholder"><i class="fas fa-users"></i></div>
+                        </div>
+                        <div class="project-content">
+                            <h3>Aplikasi Sistem Kesiswaan</h3>
+                            <p>Sistem lengkap untuk mengelola data siswa, mulai dari Kehadiran, Pelanggaran, hingga laporan akademik terintegrasi.</p>
+                            <div class="project-tags">
+                                <span>Google Apps Script</span>
+                                <span>Google Sheets</span>
+                                <span>HTML</span>
+                            </div>
+                            <div class="project-actions">
+                                <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-external-link-alt"></i> Demo</a>
+                                <a href="#" class="btn btn-secondary btn-sm"><i class="fab fa-github"></i> GitHub</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="project-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="project-image">
+                            <img src="images/ekstra.png" alt="Rekap Pembina Ekstrakurikuler" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            <div class="project-placeholder"><i class="fas fa-clipboard-list"></i></div>
+                        </div>
+                        <div class="project-content">
+                            <h3>Sistem Rekam Pembina</h3>
+                            <p>Aplikasi pencatatan dan monitoring kehadiran Pembina Ekstrakurikuler laporan real-time.</p>
+                            <div class="project-tags">
+                                <span>GAS</span>
+                                <span>Google Forms</span>
+                                <span>JavaScript</span>
+                            </div>
+                            <div class="project-actions">
+                                <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-external-link-alt"></i> Demo</a>
+                                <a href="#" class="btn btn-secondary btn-sm"><i class="fab fa-github"></i> GitHub</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="project-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="project-image">
+                            <img src="images/belajar.png" alt="Screenshot Web Pembelajaran" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            <div class="project-placeholder"><i class="fas fa-chart-line"></i></div>
+                        </div>
+                        <div class="project-content">
+                            <h3>Web Pembelajaran</h3>
+                            <p>Dashboard interaktif untuk visualisasi Pembelajaran siswa, statistik kehadiran, dan analisis performa kelas.</p>
+                            <div class="project-tags">
+                                <span>HTML</span>
+                                <span>CSS</span>
+                                <span>JavaScript</span>
+                            </div>
+                            <div class="project-actions">
+                                <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-external-link-alt"></i> Demo</a>
+                                <a href="#" class="btn btn-secondary btn-sm"><i class="fab fa-github"></i> GitHub</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="project-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="project-image">
+                            <img src="images/mabit.png" alt="Laporan Akademik Malam Bina Iman dan Taqwa" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            <div class="project-placeholder"><i class="fas fa-certificate"></i></div>
+                        </div>
+                        <div class="project-content">
+                            <h3>Laporan Akademik Malam Bina Iman dan Taqwa</h3>
+                            <p>Tools untuk membuat Laporan Akademik Malam Bina Iman dan Taqwa di SMK Diponegoro 
+                             secara  massal dari data spreadsheet dengan template yang dapat dikustomisasi.</p>
+                            <div class="project-tags">
+                                <span>Macro VB</span>
+                                <span>Excel</span>
+                            </div>
+                            <div class="project-actions">
+                                <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-external-link-alt"></i> Demo</a>
+                                <a href="#" class="btn btn-secondary btn-sm"><i class="fab fa-github"></i> GitHub</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== EXPERIENCE SECTION ==================== -->
+        <section id="experience" class="experience">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Pengalaman</h2>
+                <div class="timeline">
+                    <div class="timeline-item" data-aos="fade-right">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">2011 - Sekarang</span>
+                            <h3>Guru Teknik Komputer dan Jaringan</h3>
+                            <p>SMK Diponegoro Tumpang</p>
+                            <p class="timeline-desc">Mengajar mata pelajaran TKJ, jaringan komputer, dan administrasi server. Mengembangkan sistem aplikasi sekolah untuk mendukung proses pembelajaran dan administrasi.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-aos="fade-left">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">2020 - Sekarang</span>
+                            <h3>Koordinator Ekstrakurikuler</h3>
+                            <p>SMK Diponegoro Tumpang</p>
+                            <p class="timeline-desc">Mengkoordinasikan berbagai kegiatan ekstrakurikuler siswa dan memastikan program berjalan efektif.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-aos="fade-right">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">2018 - Sekarang</span>
+                            <h3>Koordinator Kegiatan MABIT</h3>
+                            <p>SMK Diponegoro Tumpang</p>
+                            <p class="timeline-desc">Memimpin dan mengorganisir kegiatan Malam Bina Iman dan Taqwa (MABIT) untuk pengembangan karakter siswa.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== CONTACT SECTION ==================== -->
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Hubungi Saya</h2>
+                <p class="section-subtitle" data-aos="fade-up">Punya proyek atau ingin berkolaborasi? Mari berbicara!</p>
+                <div class="contact-grid">
+                    <div class="contact-info" data-aos="fade-right">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>Email</h4>
+                                <a href="mailto:prihantowahyu23@gmail.com">prihantowahyu23@email.com</a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fab fa-whatsapp"></i>
+                            <div>
+                                <h4>WhatsApp</h4>
+                                <a href="https://wa.me/6287775600462" target="_blank" rel="noopener noreferrer">+62 8777 5600 462</a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h4>Lokasi</h4>
+                                <span>SMK Diponegoro Tumpang, Malang</span>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="contact-form" id="contactForm" data-aos="fade-left">
+                        <div class="form-group">
+                            <label for="name">Nama</label>
+                            <input type="text" id="name" name="name" required placeholder="Masukkan nama Anda">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="Masukkan email Anda">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Pesan</label>
+                            <textarea id="message" name="message" rows="5" required placeholder="Tulis pesan Anda..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-paper-plane"></i>
+                            Kirim Pesan
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ==================== FOOTER FIXED ==================== -->
+    <footer class="footer footer-fixed">
+        <div class="footer-float">
+            <a href="https://wa.me/6287775600462" class="footer-wa" target="_blank" rel="noopener noreferrer" aria-label="Chat via WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+                <span>Mari Ngobrol</span>
+            </a>
+            <div class="footer-social">
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            </div>
+            <span class="footer-copyright">© <span id="currentYear">2020</span> PrihantoWhy</span>
+        </div>
+    </footer>
+
+    <!-- ==================== CHAT WIDGET ==================== -->
+    <div class="chat-widget" id="chatWidget">
+        <div class="chat-panel" id="chatPanel">
+            <div class="chat-panel-header">
+                <div class="chat-panel-avatar">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <div class="chat-panel-info">
+                    <span class="chat-panel-name">Wahyu Prihanto</span>
+                    <span class="chat-panel-status">Online · Siap membantu</span>
+                </div>
+                <button class="chat-minimize" id="chatMinimize" aria-label="Tutup chat">
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+            </div>
+            <div class="chat-panel-body">
+                <p class="chat-greeting">Hai! Ada yang bisa saya bantu? 🤝</p>
+                <p class="chat-hint">Klik tombol di bawah untuk mulai percakapan via WhatsApp.</p>
+                <a href="https://wa.me/6287775600462" class="chat-wa-btn" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-whatsapp"></i>
+                    Mulai Chat
+                </a>
+            </div>
+        </div>
+        <button class="chat-toggle" id="chatToggle" aria-label="Buka chat">
+            <i class="fas fa-comment-dots"></i>
+            <span class="chat-badge"></span>
+        </button>
+    </div>
+
+    <!-- ==================== SCHEMA MARKUP (JSON-LD) ==================== -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Wahyu Prihanto",
+        "jobTitle": "Guru Teknik Komputer dan Jaringan",
+        "worksFor": {
+            "@type": "Organization",
+            "name": "SMK Diponegoro Tumpang"
+        },
+        "description": "Guru TKJ yang fokus pada pengembangan aplikasi sekolah dan teknologi pendidikan",
+        "knowsAbout": ["Teknik Komputer dan Jaringan", "Google Apps Script", "Sistem Informasi Sekolah", "Teknologi Pendidikan"],
+        "sameAs": []
+    }
+    </script>
+
+    <!-- ==================== SCRIPTS ==================== -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
