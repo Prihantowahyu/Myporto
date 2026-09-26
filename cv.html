@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curriculum Vitae — Wahyu Prihanto | Guru TKJ & Network Specialist</title>
+    <meta name="description" content="Curriculum Vitae resmi Wahyu Prihanto. Praktisi IT & Pengajar TKJ dengan keahlian Instalasi Jaringan, Pemeliharaan Komputer, Infrastruktur Jaringan, Monitoring & Linux, serta Web Development.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #0f172a;
+            --primary-accent: #0284c7;
+            --accent-green: #059669;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-light: #e2e8f0;
+            --bg-card: #f8fafc;
+            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--text-main);
+            background-color: #e2e8f0;
+            line-height: 1.55;
+            padding: 30px 15px;
+            font-size: 14px;
+        }
+
+        .no-print-bar {
+            max-width: 860px;
+            margin: 0 auto 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            padding: 12px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 13px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .btn-print {
+            background: #0284c7;
+            color: #ffffff;
+        }
+        .btn-print:hover {
+            background: #0369a1;
+        }
+
+        .btn-back {
+            background: #f1f5f9;
+            color: #334155;
+            border-color: #cbd5e1;
+        }
+        .btn-back:hover {
+            background: #e2e8f0;
+        }
+
+        /* CV Sheet / Paper Style */
+        .cv-paper {
+            max-width: 860px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px 48px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            border: 1px solid #cbd5e1;
+        }
+
+        /* Header */
+        .cv-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid var(--primary-accent);
+            padding-bottom: 20px;
+            margin-bottom: 22px;
+            gap: 20px;
+        }
+
+        .header-main h1 {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+
+        .header-main .job-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--primary-accent);
+            margin-bottom: 6px;
+        }
+
+        .header-main .summary-tagline {
+            font-size: 13px;
+            color: var(--text-muted);
+            max-width: 500px;
+        }
+
+        .header-contacts {
+            text-align: right;
+            font-size: 12.5px;
+            color: #475569;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .header-contacts a {
+            color: inherit;
+            text-decoration: none;
+        }
+        .header-contacts a:hover {
+            color: var(--primary-accent);
+            text-decoration: underline;
+        }
+
+        .header-contacts i {
+            width: 16px;
+            color: var(--primary-accent);
+            margin-right: 4px;
+        }
+
+        /* Target Roles Banner */
+        .target-roles-banner {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-left: 4px solid var(--accent-green);
+            padding: 10px 14px;
+            border-radius: 6px;
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .target-roles-title {
+            font-weight: 700;
+            font-size: 12.5px;
+            color: #166534;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .role-chip {
+            background: #ffffff;
+            border: 1px solid #86efac;
+            color: #15803d;
+            font-size: 11.5px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        /* Section Layout */
+        .cv-section {
+            margin-bottom: 22px;
+        }
+
+        .section-heading {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--primary);
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 5px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-heading i {
+            color: var(--primary-accent);
+        }
+
+        .text-p {
+            font-size: 13.5px;
+            color: #334155;
+            text-align: justify;
+            margin-bottom: 10px;
+        }
+
+        /* Skills 2-Column Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .skill-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 10px 14px;
+        }
+
+        .skill-box h4 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .skill-box h4 i {
+            color: var(--primary-accent);
+            font-size: 12px;
+        }
+
+        .skill-box p {
+            font-size: 12px;
+            color: #475569;
+            line-height: 1.45;
+        }
+
+        .skill-box .tools-list {
+            margin-top: 5px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: #0369a1;
+        }
+
+        /* Experience Items */
+        .timeline-item {
+            margin-bottom: 16px;
+            padding-bottom: 14px;
+            border-bottom: 1px dashed var(--border-light);
+        }
+        .timeline-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .timeline-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 3px;
+        }
+
+        .timeline-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .timeline-org {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary-accent);
+        }
+
+        .timeline-date {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+        }
+
+        .timeline-bullets {
+            list-style: disc;
+            margin-left: 18px;
+            margin-top: 6px;
+            font-size: 12.5px;
+            color: #334155;
+        }
+
+        .timeline-bullets li {
+            margin-bottom: 4px;
+        }
+
+        /* Projects Highlight */
+        .project-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 12px 14px;
+            margin-bottom: 10px;
+        }
+
+        .project-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .project-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .project-name {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .project-badge {
+            font-size: 11px;
+            background: #dbeafe;
+            color: #1e40af;
+            font-weight: 600;
+            padding: 2px 7px;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+
+        .project-badge:hover {
+            background: #bfdbfe;
+        }
+
+        .project-desc {
+            font-size: 12.5px;
+            color: #475569;
+            margin-bottom: 6px;
+        }
+
+        .project-tech {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: #0369a1;
+        }
+
+        /* Print Optimization */
+        @media print {
+            body {
+                background: #ffffff;
+                padding: 0;
+                font-size: 12px;
+            }
+            .no-print-bar {
+                display: none !important;
+            }
+            .cv-paper {
+                box-shadow: none;
+                border: none;
+                padding: 0;
+                max-width: 100%;
+            }
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            .skill-box, .project-item {
+                border-color: #cbd5e1;
+                padding: 8px 10px;
+            }
+            .cv-section {
+                margin-bottom: 16px;
+                page-break-inside: avoid;
+            }
+            a {
+                text-decoration: none !important;
+                color: inherit !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .cv-paper {
+                padding: 24px 20px;
+            }
+            .cv-header {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .header-contacts {
+                text-align: left;
+            }
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            .timeline-head {
+                flex-direction: column;
+                gap: 2px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Bar Aksi (Hanya Tampil di Layar / Tidak Dicetak) -->
+    <div class="no-print-bar">
+        <div>
+            <strong>Curriculum Vitae — Wahyu Prihanto</strong>
+            <span style="font-size: 12px; color: #64748b; margin-left: 8px;">(Format Standar ATS & Siap Kerja)</span>
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <a href="index.html" class="btn-action btn-back">
+                <i class="fas fa-arrow-left"></i> Kembali ke Portofolio
+            </a>
+            <button onclick="window.print()" class="btn-action btn-print">
+                <i class="fas fa-print"></i> Cetak / Simpan PDF
+            </button>
+        </div>
+    </div>
+
+    <!-- CV Paper Container -->
+    <main class="cv-paper">
+        <!-- Header -->
+        <header class="cv-header">
+            <div class="header-main">
+                <h1>Wahyu Prihanto</h1>
+                <div class="job-title">Guru TKJ · Network Infrastructure Specialist · Linux SysAdmin</div>
+                <div class="summary-tagline">
+                    Praktisi IT & Tenaga Pendidik Vokasi dengan 13+ tahun pengalaman dalam perancangan & pemeliharaan jaringan, administrasi server Linux, perakitan komputer, serta pengembangan aplikasi sistem informasi sekolah.
+                </div>
+            </div>
+            <div class="header-contacts">
+                <div><i class="fas fa-location-dot"></i> Malang, Jawa Timur, Indonesia</div>
+                <div><i class="fas fa-phone"></i> +62 877-7560-0462 (WhatsApp)</div>
+                <div><i class="fas fa-envelope"></i> <a href="mailto:prihantowahyu23@gmail.com">prihantowahyu23@gmail.com</a></div>
+                <div><i class="fab fa-github"></i> <a href="https://github.com/Prihantowahyu" target="_blank">github.com/Prihantowahyu</a></div>
+                <div><i class="fas fa-globe"></i> <a href="index.html">prihantowahyu.github.io/Myporto</a></div>
+            </div>
+        </header>
+
+        <!-- Target Roles / Open for Positions -->
+        <div class="target-roles-banner">
+            <span class="target-roles-title"><i class="fas fa-check-circle"></i> Posisi yang Relevan:</span>
+            <span class="role-chip">Network Administrator / Engineer</span>
+            <span class="role-chip">Linux System Administrator</span>
+            <span class="role-chip">IT Support & Hardware Specialist</span>
+            <span class="role-chip">Guru / Instruktur IT Vokasi (TKJ)</span>
+            <span class="role-chip">Web Developer (PHP & MySQL)</span>
+        </div>
+
+        <!-- Ringkasan Profesional -->
+        <section class="cv-section">
+            <h2 class="section-heading"><i class="fas fa-user"></i> Ringkasan Profesional</h2>
+            <p class="text-p">
+                Berpengalaman lebih dari satu dekade memimpin instalasi dan pemeliharaan infrastruktur jaringan laboratorium serta operasional sekolah di SMK Diponegoro Tumpang. Menguasai konfigurasi MikroTik RouterOS (VLAN, routing, bandwidth management), pemeliharaan dan troubleshooting perangkat keras komputer, implementasi server Linux (Ubuntu/Debian), serta monitoring lalu lintas data. Memiliki portofolio pengembangan aplikasi web yang berjalan aktif di lingkungan produksi (SIMPATI dan PPDB Online) dengan standar keamanan biometrik WebAuthn, RBAC, dan PWA.
+            </p>
+        </section>
+
+        <!-- Kompetensi & Keahlian Teknis (Sesuai 4 Materi Pokok + Web Dev) -->
+        <section class="cv-section">
+            <h2 class="section-heading"><i class="fas fa-microchip"></i> Kompetensi & Keahlian Utama</h2>
+            <div class="skills-grid">
+                <!-- 1. Instalasi Jaringan -->
+                <div class="skill-box">
+                    <h4><i class="fas fa-network-wired"></i> 1. Instalasi Jaringan Komputer</h4>
+                    <p>Pemasangan kabel UTP (krimping T568A/B), pengujian LAN Tester, konfigurasi switch manageable, router indoor/outdoor, Access Point Wi-Fi, dan perancangan topologi LAN.</p>
+                    <div class="tools-list">Tools: MikroTik, TP-Link, Tenda, RJ-45, LAN Tester, Crimping Tool</div>
+                </div>
+
+                <!-- 2. Pemeliharaan Komputer -->
+                <div class="skill-box">
+                    <h4><i class="fas fa-screwdriver-wrench"></i> 2. Pemeliharaan & Troubleshooting PC</h4>
+                    <p>Perakitan unit komputer, penggantian komponen hardware, instalasi OS Windows & Linux, penanganan error BIOS/BSOD, data backup & sistem pemulihan.</p>
+                    <div class="tools-list">Tools: Windows, Ubuntu, Ventoy, Hiren's BootCD, HWInfo, MemTest86</div>
+                </div>
+
+                <!-- 3. Infrastruktur Jaringan -->
+                <div class="skill-box">
+                    <h4><i class="fas fa-route"></i> 3. Infrastruktur Jaringan & Routing</h4>
+                    <p>Segmentasi jaringan via VLAN (Virtual LAN), inter-VLAN routing, NAT/Firewall filter, manajemen alokasi bandwidth (Simple Queue & PCQ), dan simulasi topologi jaringan.</p>
+                    <div class="tools-list">Tools: MikroTik RouterOS, Winbox, Cisco Packet Tracer, Netinstall</div>
+                </div>
+
+                <!-- 4. Monitoring & Sistem Linux -->
+                <div class="skill-box">
+                    <h4><i class="fab fa-linux"></i> 4. Monitoring Jaringan & Sistem Linux</h4>
+                    <p>Pemerhati sistem operasi Linux, administrasi server Ubuntu/Debian via CLI, otomasi skrip bash, monitoring paket data jaringan, dan pemindaian layanan terbuka.</p>
+                    <div class="tools-list">Tools: Ubuntu Server, Debian, Bash, Wireshark, Nmap, SSH, Nginx/Apache</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Proyek Nyata & Sistem Terverifikasi -->
+        <section class="cv-section">
+            <h2 class="section-heading"><i class="fas fa-laptop-code"></i> Proyek & Sistem Produksi (Live)</h2>
+
+            <!-- SIMPATI -->
+            <div class="project-item">
+                <div class="project-title-row">
+                    <span class="project-name">SIMPATI — Sistem Informasi Manajemen Peserta Didik</span>
+                    <a href="https://simpatismkdiponegorotumpang.id/auth/login" target="_blank" class="project-badge">
+                        <i class="fas fa-external-link-alt"></i> simpatismkdiponegorotumpang.id
+                    </a>
+                </div>
+                <div class="project-desc">
+                    Platform SIM Sekolah terintegrasi untuk pengelolaan data 1.000+ siswa SMK Diponegoro Tumpang. Dilengkapi autentikasi biometrik WebAuthn (sidik jari), proteksi bot Cloudflare Turnstile, dukungan Progressive Web App (PWA), serta 6 tingkat otorisasi (RBAC): Admin, Tatib, Petugas, Piket KBM, Wali Kelas, dan Siswa.
+                </div>
+                <div class="project-tech">Teknologi: PHP, MySQL, WebAuthn API, Cloudflare Turnstile, Bootstrap 5, PWA Service Worker</div>
+            </div>
+
+            <!-- PPDB Online -->
+            <div class="project-item">
+                <div class="project-title-row">
+                    <span class="project-name">PPDB Online — Portal Penerimaan Peserta Didik Baru</span>
+                    <a href="https://ppdb.simpatismkdiponegorotumpang.id/index.php" target="_blank" class="project-badge">
+                        <i class="fas fa-external-link-alt"></i> ppdb.simpatismkdiponegorotumpang.id
+                    </a>
+                </div>
+                <div class="project-desc">
+                    Portal pendaftaran siswa baru end-to-end dengan formulir registrasi multi-step, pencarian otomatis data sekolah asal, validasi berkas upload foto/dokumen, pencetakan kartu/slip nomor registrasi otomatis, dan arsitektur mobile-friendly PWA.
+                </div>
+                <div class="project-tech">Teknologi: PHP, MySQL, Javascript, CSS3 Responsive, Print Engine, PWA</div>
+            </div>
+
+            <!-- Sistem Ekstra & Sertifikat Digital -->
+            <div class="project-item">
+                <div class="project-title-row">
+                    <span class="project-name">Sistem Rekam Pembina & Generator Sertifikat Berverifikasi</span>
+                    <span class="project-badge"><i class="fas fa-check"></i> Produksi Internal</span>
+                </div>
+                <div class="project-desc">
+                    Sistem otomatisasi presensi pembina ekstrakurikuler berbasis Google Apps Script dengan timestamp real-time dan rekap otomatis, serta engine pembuatan sertifikat kegiatan MABIT massal otomatis dengan sematan QR-code unik.
+                </div>
+                <div class="project-tech">Teknologi: Google Apps Script (GAS), Cloud Sheets API, Visual Basic / Macro Engine</div>
+            </div>
+        </section>
+
+        <!-- Pengalaman Kerja & Pengabdian -->
+        <section class="cv-section">
+            <h2 class="section-heading"><i class="fas fa-briefcase"></i> Pengalaman Kerja & Mengajar</h2>
+
+            <!-- Role 1 -->
+            <div class="timeline-item">
+                <div class="timeline-head">
+                    <div>
+                        <span class="timeline-title">Guru Teknik Komputer & Jaringan (TKJ) & Lead Lab Network</span>
+                        <div class="timeline-org">SMK Diponegoro Tumpang, Kab. Malang</div>
+                    </div>
+                    <span class="timeline-date">2011 — Sekarang (13+ Tahun)</span>
+                </div>
+                <ul class="timeline-bullets">
+                    <li>Mengampu mata pelajaran inti TKJ: Instalasi Jaringan, Pemeliharaan Komputer, Infrastruktur Jaringan, dan Monitoring Jaringan Komputer.</li>
+                    <li>Merancang, mengonfigurasi, dan memelihara infrastruktur jaringan sekolah, gateway MikroTik RouterOS, segmentasi VLAN antar lab, dan Access Point Wi-Fi.</li>
+                    <li>Melakukan instalasi, konfigurasi, dan perawatan rutin pada puluhan unit PC laboratorium (OS Windows & Ubuntu Linux).</li>
+                    <li>Membimbing siswa dalam praktikum pengkabelan, konfigurasi router, perakitan PC, serta persiapan uji kompetensi kejuruan.</li>
+                </ul>
+            </div>
+
+            <!-- Role 2 -->
+            <div class="timeline-item">
+                <div class="timeline-head">
+                    <div>
+                        <span class="timeline-title">Koordinator Ekstrakurikuler & IT Presensi Terintegrasi</span>
+                        <div class="timeline-org">SMK Diponegoro Tumpang, Kab. Malang</div>
+                    </div>
+                    <span class="timeline-date">2020 — Sekarang</span>
+                </div>
+                <ul class="timeline-bullets">
+                    <li>Mengelola administrasi dan koordinasi seluruh unit ekstrakurikuler di lingkungan sekolah.</li>
+                    <li>Merancang dan mengimplementasikan aplikasi presensi online berbasis Google Apps Script untuk memastikan rekapitulasi kehadiran pembina akurat dan transparan.</li>
+                </ul>
+            </div>
+
+            <!-- Role 3 -->
+            <div class="timeline-item">
+                <div class="timeline-head">
+                    <div>
+                        <span class="timeline-title">Koordinator IT & Manajemen Pelaporan MABIT</span>
+                        <div class="timeline-org">SMK Diponegoro Tumpang, Kab. Malang</div>
+                    </div>
+                    <span class="timeline-date">2018 — Sekarang</span>
+                </div>
+                <ul class="timeline-bullets">
+                    <li>Mengelola sistem pendataan dan evaluasi capaian siswa pada kegiatan Malam Bina Iman dan Taqwa (MABIT).</li>
+                    <li>Mengembangkan engine pembuatan sertifikat dan laporan massal digital dengan QR code verifikasi.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Pendidikan & Pelatihan -->
+        <section class="cv-section" style="margin-bottom: 0;">
+            <h2 class="section-heading"><i class="fas fa-graduation-cap"></i> Pendidikan & Pengembangan Diri</h2>
+            <div class="timeline-item" style="border-bottom: none; padding-bottom: 0;">
+                <div class="timeline-head">
+                    <div>
+                        <span class="timeline-title">Pendidikan Sarjana & Kepengajaran Bidang Teknologi Informasi</span>
+                        <div class="timeline-org">Indonesia</div>
+                    </div>
+                    <span class="timeline-date">Pendidikan Vokasi IT</span>
+                </div>
+                <p style="font-size: 12.5px; color: #475569; margin-top: 4px;">
+                    Aktif mengikuti perkembangan teknologi jaringan komputer, kurikulum kejuruan vokasi SMK, eksplorasi ekosistem Linux / open source, dan pengembangan aplikasi web modern.
+                </p>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>

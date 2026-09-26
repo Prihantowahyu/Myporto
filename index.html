@@ -1,420 +1,1313 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-theme="dark">
 <head>
     <!-- ==================== SEO META TAGS ==================== -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portfolio Wahyu Prihanto - Guru Teknik Komputer dan Jaringan SMK Diponegoro Tumpang. Pengembang aplikasi sekolah, Google Apps Script enthusiast, dan ahli teknologi pendidikan.">
-    <meta name="keywords" content="Wahyu Prihanto, Guru TKJ, SMK Diponegoro Tumpang, Google Apps Script, Aplikasi Sekolah, Teknologi Pendidikan, Sistem Informasi Sekolah">
+    <meta name="description" content="Portfolio Wahyu Prihanto - IT Cyber Security Specialist, Network Defense Engineer, dan Guru TKJ SMK Diponegoro Tumpang. Spesialis pengerasan jaringan, firewall MikroTik/pfSense, uji celah keamanan (penetration testing), dan otomatisasi sistem aman.">
+    <meta name="keywords" content="Wahyu Prihanto, Cyber Security Indonesia, Network Security Engineer, Ethical Hacker, Guru TKJ, MikroTik Firewall, pfSense, OWASP, Pen-testing, Google Apps Script Security">
     <meta name="author" content="Wahyu Prihanto">
     <meta name="robots" content="index, follow">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://wahyuprihanto.com/">
-    <meta property="og:title" content="Wahyu Prihanto | Guru TKJ & Developer Aplikasi Sekolah">
-    <meta property="og:description" content="Guru Teknik Komputer dan Jaringan yang fokus pada pengembangan aplikasi sekolah dan digitalisasi pendidikan menggunakan Google Apps Script.">
-    <meta property="og:image" content="https://wahyuprihanto.com/images/og-image.jpg">
+    <meta property="og:title" content="Wahyu Prihanto | Cyber Security Specialist & Network Defense Engineer">
+    <meta property="og:description" content="Praktisi Keamanan Jaringan & Guru TKJ. Membangun pertahanan siber yang tangguh, pengujian kerentanan, dan otomatisasi sistem sekolah aman.">
+    <meta property="og:image" content="images/profile.jpeg">
     <meta property="og:locale" content="id_ID">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Wahyu Prihanto | Guru TKJ & Developer Aplikasi Sekolah">
-    <meta name="twitter:description" content="Guru Teknik Komputer dan Jaringan yang fokus pada pengembangan aplikasi sekolah dan digitalisasi pendidikan.">
+    <meta name="twitter:title" content="Wahyu Prihanto | Cyber Security Specialist & Network Defense Engineer">
+    <meta name="twitter:description" content="Praktisi Keamanan Jaringan & Guru TKJ dengan spesialisasi Network Defense, Firewall Hardening, dan Security Automation.">
+    <meta name="twitter:image" content="images/profile.jpeg">
 
-    <title>Wahyu Prihanto | Guru TKJ & Developer Aplikasi Sekolah</title>
+    <title>Wahyu Prihanto | Cyber Security Specialist & Network Defense Engineer</title>
 
     <!-- ==================== FONTS & ICONS ==================== -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <!-- ==================== STYLESHEET ==================== -->
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="cyber-body">
+    <!-- ==================== CANVAS BACKGROUND ==================== -->
+    <canvas id="cyberCanvas" class="cyber-canvas"></canvas>
+    <div class="cyber-scanlines" aria-hidden="true"></div>
+
     <!-- ==================== LOADING ANIMATION ==================== -->
     <div id="loader" class="loader">
-        <div class="loader-spinner"></div>
-        <p class="loader-text">Loading...</p>
+        <div class="cyber-loader-box">
+            <div class="cyber-loader-radar">
+                <div class="radar-sweep"></div>
+                <div class="radar-dot"></div>
+            </div>
+            <div class="loader-terminal-text">
+                <span class="prompt-accent">SYS_INIT:</span>
+                <span id="loaderStatus">CALIBRATING SECURITY PROTOCOLS...</span>
+            </div>
+            <div class="loader-progress-bar">
+                <div class="loader-progress-fill" id="loaderFill"></div>
+            </div>
+            <div class="loader-telemetry">
+                <span>PORT 443 [TLS 1.3]</span>
+                <span>IDS/IPS [ACTIVE]</span>
+            </div>
+        </div>
     </div>
 
     <!-- ==================== SCROLL PROGRESS INDICATOR ==================== -->
     <div class="scroll-progress" id="scrollProgress"></div>
 
+    <!-- ==================== TOP TELEMETRY TICKER ==================== -->
+    <div class="telemetry-bar" id="telemetryBar">
+        <div class="telemetry-inner">
+            <div class="telemetry-item">
+                <span class="status-pulse-dot online"></span>
+                <span class="telemetry-label">STATUS:</span>
+                <span class="telemetry-val text-neon-green">AVAILABLE / OPEN FOR ROLES</span>
+            </div>
+            <div class="telemetry-item">
+                <i class="fas fa-briefcase text-neon-cyan"></i>
+                <span class="telemetry-label">EXPERIENCE:</span>
+                <span class="telemetry-val text-neon-cyan">13+ TAHUN IT & TKJ</span>
+            </div>
+            <div class="telemetry-item hide-mobile">
+                <i class="fas fa-network-wired text-neon-purple"></i>
+                <span class="telemetry-label">SPESIALISASI:</span>
+                <span class="telemetry-val">JARINGAN & LINUX</span>
+            </div>
+            <div class="telemetry-item hide-mobile">
+                <i class="fas fa-location-dot text-neon-amber"></i>
+                <span class="telemetry-label">LOKASI:</span>
+                <span class="telemetry-val text-neon-amber">MALANG, JAWA TIMUR</span>
+            </div>
+        </div>
+    </div>
+
     <!-- ==================== NAVBAR ==================== -->
     <header class="navbar" id="navbar">
         <nav class="nav-container">
-            <a href="#home" class="nav-brand">
-                <i class="fas fa-code"></i>
-                <span>WP</span>
+            <a href="#home" class="nav-brand" aria-label="Wahyu Prihanto Portofolio">
+                <div class="brand-shield">
+                    <i class="fas fa-network-wired"></i>
+                </div>
+                <div class="brand-text">
+                    <span class="brand-name">WAHYU<span class="brand-accent">.</span>PRIHANTO</span>
+                    <span class="brand-sub"><span class="badge-dot"></span>TKJ & NETWORK SPECIALIST</span>
+                </div>
             </a>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#contact">Contact</a></li>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="nav-link"><i class="fas fa-terminal"></i> Beranda</a></li>
+                <li><a href="#about" class="nav-link"><i class="fas fa-user-check"></i> Profil</a></li>
+                <li><a href="#skills" class="nav-link"><i class="fas fa-microchip"></i> Keahlian</a></li>
+                <li><a href="#projects" class="nav-link"><i class="fas fa-folder-tree"></i> Proyek Live</a></li>
+                <li><a href="#github-repos" class="nav-link"><i class="fab fa-github"></i> GitHub</a></li>
+                <li><a href="#experience" class="nav-link"><i class="fas fa-timeline"></i> Pengalaman</a></li>
+                <li><a href="#contact" class="nav-link"><i class="fas fa-envelope"></i> Kontak</a></li>
             </ul>
-            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-                <i class="fas fa-moon"></i>
-            </button>
-            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+
+            <div class="nav-actions">
+                <a href="cv.html" target="_blank" class="btn btn-cyber-primary btn-sm btn-nav-cv" title="Buka & Unduh CV PDF">
+                    <i class="fas fa-file-pdf"></i> <span>Unduh CV</span>
+                </a>
+                <button class="cyber-btn-icon" id="themeToggle" aria-label="Toggle Cyber Theme" title="Toggle Mode Visual">
+                    <i class="fas fa-sun"></i>
+                </button>
+                <button class="cyber-btn-icon" id="matrixToggle" aria-label="Toggle Matrix Rain" title="Toggle Efek Matrix Rain">
+                    <i class="fas fa-barcode"></i>
+                </button>
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
         </nav>
     </header>
 
     <main>
-        <!-- ==================== HERO SECTION ==================== -->
+        <!-- ==================== HERO SECTION (COMMAND CENTER) ==================== -->
         <section id="home" class="hero">
-            <div class="hero-bg">
-                <div class="floating-shape shape-1"></div>
-                <div class="floating-shape shape-2"></div>
-                <div class="floating-shape shape-3"></div>
-                <div class="gradient-orb orb-1"></div>
-                <div class="gradient-orb orb-2"></div>
-            </div>
-            <div class="hero-content">
-                <p class="hero-greeting" data-aos="fade-down">Halo, saya</p>
-                <h1 class="hero-title" data-aos="fade-up" data-aos-delay="100">Wahyu Prihanto</h1>
-                <h2 class="hero-subtitle typing-text" data-aos="fade-up" data-aos-delay="200">
-                    <span id="typing"></span>
-                    <span class="cursor">|</span>
-                </h2>
-                <p class="hero-description" data-aos="fade-up" data-aos-delay="300">
-                    Saya seorang guru Teknik Komputer dan Jaringan yang tertarik pada pengembangan aplikasi sekolah dan digitalisasi sistem pendidikan menggunakan teknologi web dan Google Apps Script.
-                </p>
-                <div class="hero-cta" data-aos="fade-up" data-aos-delay="400">
-                    <a href="#projects" class="btn btn-primary">
-                        <i class="fas fa-folder-open"></i>
-                        Lihat Proyek
-                    </a>
-                    <a href="#contact" class="btn btn-secondary">
-                        <i class="fas fa-envelope"></i>
-                        Hubungi Saya
-                    </a>
+            <div class="container hero-container">
+                <div class="hero-grid">
+                    <!-- Left: Identity & Mission -->
+                    <div class="hero-content">
+                        <div class="cyber-badge" data-aos="fade-down">
+                            <span class="status-pulse-dot online"></span>
+                            <span class="cyber-badge-text">GURU TKJ & PRAKTISI IT // SMK DIPONEGORO TUMPANG</span>
+                        </div>
+
+                        <h1 class="hero-title" data-aos="fade-up" data-aos-delay="100">
+                            Wahyu <span class="text-gradient-cyber">Prihanto</span>
+                        </h1>
+
+                        <div class="hero-roles-box" data-aos="fade-up" data-aos-delay="150">
+                            <span class="prompt-prefix">wahyu@netops:~$</span>
+                            <h2 class="hero-subtitle">
+                                <span id="typing"></span>
+                                <span class="cursor-cyber">_</span>
+                            </h2>
+                        </div>
+
+                        <p class="hero-description" data-aos="fade-up" data-aos-delay="200">
+                            Pengajar <strong>Teknik Komputer & Jaringan (TKJ)</strong> dan praktisi IT dengan 13+ tahun pengalaman dalam <strong>Infrastruktur Jaringan (MikroTik/VLAN/Routing)</strong>, <strong>Pemeliharaan Komputer & Hardware</strong>, <strong>Sistem Linux (Ubuntu/Debian)</strong>, serta pengembang sistem web institusi live (SIMPATI & PPDB).
+                        </p>
+
+                        <div class="hero-badges-row" data-aos="fade-up" data-aos-delay="250">
+                            <span class="chip-cyber"><i class="fas fa-network-wired"></i> MikroTik & VLAN Routing</span>
+                            <span class="chip-cyber"><i class="fab fa-linux"></i> Linux Server & Bash</span>
+                            <span class="chip-cyber"><i class="fas fa-screwdriver-wrench"></i> PC Maintenance & Hardware</span>
+                            <span class="chip-cyber"><i class="fas fa-globe"></i> Web Dev (PHP/MySQL/PWA)</span>
+                        </div>
+
+                        <div class="hero-cta" data-aos="fade-up" data-aos-delay="300">
+                            <a href="cv.html" target="_blank" class="btn btn-cyber-primary" id="btnHeroCV">
+                                <i class="fas fa-file-pdf"></i>
+                                <span>Unduh CV / Resume (PDF)</span>
+                            </a>
+                            <a href="#projects" class="btn btn-cyber-secondary">
+                                <i class="fas fa-layer-group"></i>
+                                <span>Lihat Proyek Nyata (Live)</span>
+                            </a>
+                            <a href="#terminalSection" class="btn btn-cyber-ghost" id="btnFocusTerminal">
+                                <i class="fas fa-terminal"></i>
+                                <span>Terminal Interaktif</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Right: Live Interactive Cyber Terminal -->
+                    <div class="hero-terminal-col" id="terminalSection" data-aos="fade-left" data-aos-delay="200">
+                        <div class="cyber-window">
+                            <div class="window-header">
+                                <div class="window-buttons">
+                                    <span class="win-btn win-close"></span>
+                                    <span class="win-btn win-min"></span>
+                                    <span class="win-btn win-max"></span>
+                                </div>
+                                <div class="window-title">
+                                    <i class="fas fa-terminal"></i>
+                                    <span>secops@wahyu-soc:~ (zsh - interactive)</span>
+                                </div>
+                                <div class="window-status">
+                                    <span class="badge-dot"></span> LIVE
+                                </div>
+                            </div>
+
+                            <div class="terminal-body" id="terminalBody">
+                                <div class="terminal-output" id="terminalOutput">
+                                    <div class="term-line term-banner">
+                                        ===========================================================<br>
+                                        [ SEC-OPS TERMINAL v3.2.0 - WAHYU PRIHANTO CYBER COMMAND ]<br>
+                                        ===========================================================<br>
+                                        Status: ALL SHIELDS OPERATIONAL | FIREWALL: ACTIVE<br>
+                                        Ketik '<span class="text-neon-cyan">help</span>' untuk melihat daftar perintah atau klik tombol di bawah.<br>
+                                    </div>
+                                </div>
+
+                                <div class="terminal-input-row">
+                                    <span class="term-prompt">secops@wahyu:~$</span>
+                                    <input type="text" id="terminalInput" class="term-input" autocomplete="off" spellcheck="false" placeholder="Ketik perintah di sini (misal: whoami, nmap, status)..." aria-label="Interactive Terminal Command Input">
+                                    <button class="term-send-btn" id="termSendBtn" title="Kirim Perintah" aria-label="Eksekusi Perintah">
+                                        <i class="fas fa-arrow-turn-down"></i>
+                                    </button>
+                                </div>
+
+                                <div class="terminal-quick-actions">
+                                    <span class="quick-label"><i class="fas fa-bolt"></i> Shortcut:</span>
+                                    <button class="chip-cmd" data-cmd="whoami">whoami</button>
+                                    <button class="chip-cmd" data-cmd="nmap">nmap</button>
+                                    <button class="chip-cmd" data-cmd="status">status</button>
+                                    <button class="chip-cmd" data-cmd="skills">skills</button>
+                                    <button class="chip-cmd" data-cmd="projects">projects</button>
+                                    <button class="chip-cmd" data-cmd="clear">clear</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- ==================== ABOUT SECTION ==================== -->
+        <!-- ==================== TELEMETRY STATS BANNER ==================== -->
+        <section class="telemetry-stats-section">
+            <div class="container">
+                <div class="cyber-metrics-grid">
+                    <div class="metric-card" data-aos="fade-up" data-aos-delay="0">
+                        <div class="metric-icon"><i class="fas fa-calendar-check"></i></div>
+                        <div class="metric-number"><span class="counter" data-target="13">0</span><span class="metric-suffix">+</span></div>
+                        <div class="metric-label">Tahun Pengalaman Jaringan & IT</div>
+                        <div class="metric-sub">Fondasi kuat arsitektur TKJ, lab & server</div>
+                    </div>
+                    <div class="metric-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="metric-icon"><i class="fas fa-network-wired"></i></div>
+                        <div class="metric-number"><span class="counter" data-target="100">0</span><span class="metric-suffix">+</span></div>
+                        <div class="metric-label">Nodes & Router Dikelola</div>
+                        <div class="metric-sub">MikroTik, VLAN, Switch, AP, Linux Box</div>
+                    </div>
+                    <div class="metric-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="metric-icon"><i class="fas fa-users"></i></div>
+                        <div class="metric-number"><span class="counter" data-target="1000">0</span><span class="metric-suffix">+</span></div>
+                        <div class="metric-label">Siswa & Pengguna Sistem</div>
+                        <div class="metric-sub">SIMPATI SIM Sekolah & Lab Komputer</div>
+                    </div>
+                    <div class="metric-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="metric-icon"><i class="fas fa-shield-heart"></i></div>
+                        <div class="metric-number"><span class="counter" data-target="99">0</span>.<span class="counter" data-target="98">0</span><span class="metric-suffix">%</span></div>
+                        <div class="metric-label">Network Uptime & Stabilitas</div>
+                        <div class="metric-sub">Infrastruktur lab sekolah & sistem online</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== ABOUT & SECURITY PROFILE ==================== -->
         <section id="about" class="about">
             <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Tentang Saya</h2>
+                <div class="section-header" data-aos="fade-up">
+                    <div class="cyber-section-tag">
+                        <i class="fas fa-id-card-clip"></i>
+                        <span>DOSSIER // PROFIL KANDIDAT</span>
+                    </div>
+                    <h2 class="section-title">Profil Profesional & Kompetensi</h2>
+                    <p class="section-subtitle">Memadukan pemahaman mendalam infrastruktur jaringan fisik, administrasi sistem Linux, pemeliharaan komputer, dan rekam jejak pengembangan sistem web institusi.</p>
+                </div>
+
                 <div class="about-grid">
-                    <div class="about-image" data-aos="fade-right">
-                        <div class="about-photo">
-                            <img src="images/profile.jpeg" alt="Foto profil Wahyu Prihanto - Guru TKJ SMK Diponegoro Tumpang" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <div class="about-placeholder">
-                                <i class="fas fa-user"></i>
+                    <!-- Photo Column with Cyber HUD Frame -->
+                    <div class="about-image-col" data-aos="fade-right">
+                        <div class="cyber-frame-wrapper">
+                            <div class="cyber-hud-corner tl"></div>
+                            <div class="cyber-hud-corner tr"></div>
+                            <div class="cyber-hud-corner bl"></div>
+                            <div class="cyber-hud-corner br"></div>
+
+                            <div class="about-photo-box">
+                                <img src="images/profile.jpeg" alt="Wahyu Prihanto - Guru TKJ & Praktisi IT" class="about-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="about-placeholder">
+                                    <i class="fas fa-user-gear"></i>
+                                </div>
+                                <div class="photo-scanline-effect"></div>
+                                <div class="photo-overlay-badge">
+                                    <span class="badge-dot pulse-fast"></span>
+                                    <span>GURU TKJ // AKTIF MENGAJAR</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- System Specs Box -->
+                        <div class="cyber-specs-box">
+                            <div class="spec-row">
+                                <span class="spec-label"><i class="fas fa-fingerprint"></i> ID:</span>
+                                <span class="spec-val">WP-TKJ-ID</span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label"><i class="fas fa-building-columns"></i> Base:</span>
+                                <span class="spec-val">SMK Diponegoro Tumpang</span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label"><i class="fas fa-compass"></i> Focus:</span>
+                                <span class="spec-val">Network, Linux & Web Systems</span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label"><i class="fas fa-briefcase"></i> Status:</span>
+                                <span class="spec-val text-neon-green">Siap Kerja / Open for Roles</span>
                             </div>
                         </div>
                     </div>
-                    <div class="about-content" data-aos="fade-left">
-                        <h3>Wahyu Prihanto</h3>
-                        <p class="about-role">Guru Teknik Komputer dan Jaringan | SMK Diponegoro Tumpang</p>
+
+                    <!-- Details Column -->
+                    <div class="about-content-col" data-aos="fade-left">
+                        <div class="about-lead">
+                            <h3>Wahyu Prihanto</h3>
+                            <p class="about-role-text">
+                                <i class="fas fa-terminal text-neon-green"></i>
+                                Guru TKJ · Network Infrastructure Specialist & Linux SysAdmin
+                            </p>
+                        </div>
+
                         <p class="about-text">
-                            Saya adalah guru Teknik Komputer dan Jaringan dengan pengalaman mengajar dan mengembangkan sistem aplikasi sekolah. 
-                            Fokus saya pada integrasi teknologi pendidikan untuk mempermudah proses administrasi dan manajemen kesiswaan.
+                            Sebagai pengajar Teknik Komputer dan Jaringan (TKJ) dan praktisi IT, saya memiliki pengalaman lebih dari satu dekade dalam merancang, mengonfigurasi, dan memelihara infrastruktur jaringan serta laboratorium komputer di lingkungan pendidikan vokasi.
                         </p>
+
                         <p class="about-text">
-                            Pengalaman membuat berbagai sistem aplikasi sekolah seperti sistem kesiswaan, rekam pelanggaran, dashboard data siswa, 
-                            dan generator sertifikat otomatis telah memperdalam pemahaman saya terhadap kebutuhan digital di dunia pendidikan.
+                            Keahlian saya berfokus pada <strong>Instalasi Jaringan</strong> (crimping UTP, switch, router, access point), <strong>Pemeliharaan & Troubleshooting Komputer</strong> (hardware, instalasi OS Windows/Linux, sistem recovery), <strong>Infrastruktur Jaringan</strong> (MikroTik RouterOS, VLAN, routing, bandwidth management), serta <strong>Monitoring Jaringan & Sistem Operasi Linux</strong> (Ubuntu/Debian, Wireshark, CLI). Selain itu, saya aktif membangun aplikasi sistem informasi sekolah nyata seperti SIMPATI (WebAuthn biometric, PWA) dan PPDB Online.
                         </p>
-                        <p class="about-text">
-                            Saya percaya bahwa teknologi dapat mentransformasi pendidikan menjadi lebih efisien, transparan, dan terukur.
-                        </p>
-                        <div class="about-badges">
-                            <span class="badge"><i class="fas fa-graduation-cap"></i> Guru TKJ</span>
-                            <span class="badge"><i class="fas fa-code"></i> App Developer</span>
-                            <span class="badge"><i class="fas fa-google"></i> GAS Enthusiast</span>
+
+                        <!-- 3 Core Principles / Work Ethics -->
+                        <div class="principles-grid">
+                            <div class="principle-card">
+                                <div class="principle-icon"><i class="fas fa-network-wired text-neon-cyan"></i></div>
+                                <h4>Infrastruktur Andal & Rapi</h4>
+                                <p>Standar instalasi fisik terstruktur, manajemen kabel yang rapi, dan konfigurasi logis jaringan yang stabil dan mudah dipelihara.</p>
+                            </div>
+                            <div class="principle-card">
+                                <div class="principle-icon"><i class="fab fa-linux text-neon-green"></i></div>
+                                <h4>Filosofi Open Source</h4>
+                                <p>Pemerhati ekosistem Linux (Ubuntu/Debian), mengoptimalkan efisiensi server, otomasi terminal bash, dan solusi teknologi berbiaya terjangkau.</p>
+                            </div>
+                            <div class="principle-card">
+                                <div class="principle-icon"><i class="fas fa-user-graduate text-neon-purple"></i></div>
+                                <h4>Edukator & Problem Solver</h4>
+                                <p>Kemampuan komunikasi teknis yang teruji dalam membimbing siswa, mentoring lab, serta menyelesaikan kendala sistem di lapangan.</p>
+                            </div>
+                        </div>
+
+                        <div class="cert-badges-row">
+                            <span class="cert-pill"><i class="fas fa-route text-neon-cyan"></i> MikroTik RouterOS & VLAN Routing</span>
+                            <span class="cert-pill"><i class="fab fa-linux text-neon-green"></i> Linux System Administration (Ubuntu/Debian)</span>
+                            <span class="cert-pill"><i class="fas fa-screwdriver-wrench text-neon-amber"></i> Hardware & PC Troubleshooting</span>
+                            <span class="cert-pill"><i class="fas fa-code text-neon-purple"></i> Full-Stack Web (PHP, MySQL, PWA)</span>
                         </div>
                     </div>
                 </div>
-            </div>
         </section>
 
-        <!-- ==================== SKILLS SECTION ==================== -->
+        <!-- ==================== SKILLS & KEAHLIAN SECTION ==================== -->
         <section id="skills" class="skills">
             <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Keahlian</h2>
-                <div class="skills-grid">
-                    <div class="skill-card" data-aos="fade-up" data-aos-delay="0">
-                        <div class="skill-icon"><i class="fas fa-network-wired"></i></div>
-                        <h3>Teknik Komputer dan Jaringan</h3>
-                        <div class="skill-progress"><div class="skill-bar" style="--level: 90%"></div></div>
-                        <span class="skill-level">90%</span>
+                <div class="section-header" data-aos="fade-up">
+                    <div class="cyber-section-tag">
+                        <i class="fas fa-microchip"></i>
+                        <span>KEAHLIAN // MATERI YANG DIAMPU</span>
                     </div>
-                    <div class="skill-card" data-aos="fade-up" data-aos-delay="100">
-                        <div class="skill-icon"><i class="fas fa-server"></i></div>
-                        <h3>Manajemen Jaringan</h3>
-                        <div class="skill-progress"><div class="skill-bar" style="--level: 85%"></div></div>
-                        <span class="skill-level">85%</span>
+                    <h2 class="section-title">Kompetensi & Bidang Keahlian</h2>
+                    <p class="section-subtitle">Keahlian yang dibangun dari pengalaman mengajar langsung di kelas dan lab jaringan, serta hobi mengeksplorasi dunia Linux.</p>
+                </div>
+
+                <div class="cyber-skills-grid">
+
+                    <!-- Domain 1: Instalasi Jaringan -->
+                    <div class="cyber-skill-card" data-aos="fade-up" data-aos-delay="0">
+                        <div class="skill-card-header">
+                            <div class="skill-card-icon"><i class="fas fa-plug-circle-check"></i></div>
+                            <div class="skill-card-title">
+                                <h3>Instalasi Jaringan</h3>
+                                <span>Pemasangan & Konfigurasi Dasar</span>
+                            </div>
+                        </div>
+                        <p class="skill-card-desc">
+                            Instalasi dan konfigurasi perangkat jaringan komputer: kabel UTP (straight/cross), konektor RJ-45, switch, router, dan access point. Termasuk pengaturan IP statis/DHCP dan pengujian konektivitas.
+                        </p>
+                        <div class="skill-item-row">
+                            <div class="skill-info">
+                                <span>Krimping & Instalasi Kabel UTP/FO</span>
+                                <span class="skill-percentage">95%</span>
+                            </div>
+                            <div class="skill-track"><div class="skill-fill" style="--level: 95%"></div></div>
+                        </div>
+                        <div class="skill-item-row">
+                            <div class="skill-info">
+                                <span>Konfigurasi Router & Switch</span>
+                                <span class="skill-percentage">90%</span>
+                            </div>
+                            <div class="skill-track"><div class="skill-fill" style="--level: 90%"></div></div>
+                        </div>
+                        <div class="skill-item-row">
+                            <div class="skill-info">
+                                <span>Setting IP, DHCP & Wireless AP</span>
+                                <span class="skill-percentage">92%</span>
+                            </div>
+                            <div class="skill-track"><div class="skill-fill" style="--level: 92%"></div></div>
+                        </div>
+                        <div class="skill-tools-tags">
+                            <span><i class="fas fa-check"></i> MikroTik</span>
+                            <span><i class="fas fa-check"></i> TP-Link/Ubiquiti</span>
+                            <span><i class="fas fa-check"></i> RJ-45 Crimping</span>
+                            <span><i class="fas fa-check"></i> LAN Tester</span>
+                        </div>
                     </div>
-                    <div class="skill-card" data-aos="fade-up" data-aos-delay="200">
-                        <div class="skill-icon"><i class="fab fa-google"></i></div>
-                        <h3>Google Apps Script</h3>
-                        <div class="skill-progress"><div class="skill-bar" style="--level: 88%"></div></div>
-                        <span class="skill-level">88%</span>
+
+                    <!-- Domain 2: Pemeliharaan Komputer -->
+                    <div class="cyber-skill-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="skill-card-header">
+                            <div class="skill-card-icon"><i class="fas fa-screwdriver-wrench"></i></div>
+                            <div class="skill-card-title">
+                                <h3>Pemeliharaan Komputer</h3>
+                                <span>Hardware, Software & Troubleshooting</span>
+                            </div>
+                        </div>
+                        <p class="skill-card-desc">
+                            Perawatan dan perbaikan komputer meliputi bongkar-pasang komponen hardware, diagnosa kerusakan, instalasi OS (Windows & Linux), update driver, pembersihan malware, serta manajemen backup data.
+                        </p>
+                        <div class="skill-item-row">
+                            <div class="skill-info">
+                                <span>Diagnosa & Perbaikan Hardware</span>
+                                <span class="skill-percentage">90%</span>
+                            </div>
+                            <div class="skill-track"><div class="skill-fill" style="--level: 90%"></div></div>
+                        </div>
+                        <div class="skill-item-row">
+                            <div class="skill-info">
+                                <span>Instalasi OS Windows & Linux</span>
+                                <span class="skill-percentage">95%</span>
+                            </div>
+                            <div class="skill-track"><div class="skill-fill" style="--level: 95%"></div></div>
+                        </div>
+                        <div class="skill-item-row">
+                            <div class="skill-info">
+                                <span>Troubleshooting & Recovery Data</span>
+                                <span class="skill-percentage">88%</span>
+                            </div>
+                            <div class="skill-track"><div class="skill-fill" style="--level: 88%"></div></div>
+                        </div>
+                        <div class="skill-tools-tags">
+                            <span><i class="fas fa-check"></i> Windows 10/11</span>
+                            <span><i class="fas fa-check"></i> Ubuntu/Debian</span>
+                            <span><i class="fas fa-check"></i> Hiren's Boot</span>
+                            <span><i class="fas fa-check"></i> Ventoy</span>
+                        </div>
                     </div>
-                    <div class="skill-card" data-aos="fade-up" data-aos-delay="300">
-                        <div class="skill-icon"><i class="fab fa-html5"></i></div>
-                        <h3>HTML</h3>
-                        <div class="skill-progress"><div class="skill-bar" style="--level: 92%"></div></div>
-                        <span class="skill-level">92%</span>
+
+                    <!-- Domain 3: Infrastruktur Jaringan -->
+                    <div class="cyber-skill-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="skill-card-header">
+                            <div class="skill-card-icon"><i class="fas fa-network-wired"></i></div>
+                            <div class="skill-card-title">
+                                <h3>Infrastruktur Jaringan</h3>
+                                <span>Desain, VLAN & Routing</span>
+                            </div>
+                        </div>
+                        <p class="skill-card-desc">
+                            Perancangan dan implementasi infrastruktur jaringan kampus: topologi LAN/WAN, konfigurasi VLAN, NAT, routing statis & dinamis (OSPF/RIP), serta manajemen bandwidth dengan MikroTik RouterOS.
+                        </p>
+                        <div class="skill-item-row">
+                            <div class="skill-info">
+                                <span>MikroTik RouterOS & Winbox</span>
+                                <span class="skill-percentage">90%</span>
+                            </div>
+                            <div class="skill-track"><div class="skill-fill" style="--level: 90%"></div></div>
+                        </div>
+                        <div class="skill-item-row">
+                            <div class="skill-info">
+                                <span>VLAN, NAT & Routing Jaringan</span>
+                                <span class="skill-percentage">87%</span>
+                            </div>
+                            <div class="skill-track"><div class="skill-fill" style="--level: 87%"></div></div>
+                        </div>
+                        <div class="skill-item-row">
+                            <div class="skill-info">
+                                <span>Manajemen Bandwidth & QoS</span>
+                                <span class="skill-percentage">85%</span>
+                            </div>
+                            <div class="skill-track"><div class="skill-fill" style="--level: 85%"></div></div>
+                        </div>
+                        <div class="skill-tools-tags">
+                            <span><i class="fas fa-check"></i> MikroTik</span>
+                            <span><i class="fas fa-check"></i> Cisco Packet Tracer</span>
+                            <span><i class="fas fa-check"></i> VLAN/Trunking</span>
+                            <span><i class="fas fa-check"></i> Winbox</span>
+                        </div>
                     </div>
-                    <div class="skill-card" data-aos="fade-up" data-aos-delay="400">
-                        <div class="skill-icon"><i class="fab fa-css3-alt"></i></div>
-                        <h3>CSS</h3>
-                        <div class="skill-progress"><div class="skill-bar" style="--level: 85%"></div></div>
-                        <span class="skill-level">85%</span>
+
+                    <!-- Domain 4: Monitoring Jaringan & Linux -->
+                    <div class="cyber-skill-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="skill-card-header">
+                            <div class="skill-card-icon"><i class="fab fa-linux"></i></div>
+                            <div class="skill-card-title">
+                                <h3>Monitoring Jaringan & Linux</h3>
+                                <span>Pemantauan Trafik & Linux Enthusiast</span>
+                            </div>
+                        </div>
+                        <p class="skill-card-desc">
+                            Pemantauan kondisi jaringan menggunakan tools analisis trafik, pengecekan konektivitas, dan penggunaan Linux sehari-hari sebagai sistem operasi utama maupun server ringan untuk lab sekolah.
+                        </p>
+                        <div class="skill-item-row">
+                            <div class="skill-info">
+                                <span>Analisis Trafik (Wireshark, NetFlow)</span>
+                                <span class="skill-percentage">82%</span>
+                            </div>
+                            <div class="skill-track"><div class="skill-fill" style="--level: 82%"></div></div>
+                        </div>
+                        <div class="skill-item-row">
+                            <div class="skill-info">
+                                <span>Linux CLI & Bash Scripting</span>
+                                <span class="skill-percentage">80%</span>
+                            </div>
+                            <div class="skill-track"><div class="skill-fill" style="--level: 80%"></div></div>
+                        </div>
+                        <div class="skill-item-row">
+                            <div class="skill-info">
+                                <span>Nmap & Ping Diagnostik Jaringan</span>
+                                <span class="skill-percentage">85%</span>
+                            </div>
+                            <div class="skill-track"><div class="skill-fill" style="--level: 85%"></div></div>
+                        </div>
+                        <div class="skill-tools-tags">
+                            <span><i class="fas fa-check"></i> Ubuntu/Debian</span>
+                            <span><i class="fas fa-check"></i> Wireshark</span>
+                            <span><i class="fas fa-check"></i> Nmap</span>
+                            <span><i class="fas fa-check"></i> Terminal/Bash</span>
+                        </div>
                     </div>
-                    <div class="skill-card" data-aos="fade-up" data-aos-delay="500">
-                        <div class="skill-icon"><i class="fab fa-js"></i></div>
-                        <h3>JavaScript</h3>
-                        <div class="skill-progress"><div class="skill-bar" style="--level: 80%"></div></div>
-                        <span class="skill-level">80%</span>
+                </div>
+
+                <!-- Toolkit Bar -->
+                <div class="radar-summary-card" data-aos="fade-up">
+                    <div class="radar-badge">
+                        <i class="fas fa-toolbox text-neon-green"></i>
+                        <span>TOOLKIT HARIAN:</span>
                     </div>
-                    <div class="skill-card" data-aos="fade-up" data-aos-delay="600">
-                        <div class="skill-icon"><i class="fas fa-table"></i></div>
-                        <h3>Google Spreadsheet Integration</h3>
-                        <div class="skill-progress"><div class="skill-bar" style="--level: 90%"></div></div>
-                        <span class="skill-level">90%</span>
-                    </div>
-                    <div class="skill-card" data-aos="fade-up" data-aos-delay="700">
-                        <div class="skill-icon"><i class="fas fa-school"></i></div>
-                        <h3>Sistem Informasi Sekolah</h3>
-                        <div class="skill-progress"><div class="skill-bar" style="--level: 87%"></div></div>
-                        <span class="skill-level">87%</span>
+                    <div class="radar-chips-list">
+                        <span class="tool-badge"><i class="fab fa-linux"></i> Ubuntu / Debian</span>
+                        <span class="tool-badge"><i class="fas fa-shield"></i> MikroTik RouterOS</span>
+                        <span class="tool-badge"><i class="fas fa-wave-square"></i> Wireshark</span>
+                        <span class="tool-badge"><i class="fas fa-terminal"></i> Nmap</span>
+                        <span class="tool-badge"><i class="fas fa-network-wired"></i> Cisco Packet Tracer</span>
+                        <span class="tool-badge"><i class="fas fa-desktop"></i> VirtualBox / VMware</span>
+                        <span class="tool-badge"><i class="fab fa-google"></i> Google Apps Script</span>
+                        <span class="tool-badge"><i class="fas fa-code"></i> VS Code</span>
+                        <span class="tool-badge"><i class="fas fa-database"></i> MySQL / phpMyAdmin</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ==================== PROJECTS SECTION ==================== -->
+
+        <!-- ==================== SECURITY PROJECTS SECTION ==================== -->
         <section id="projects" class="projects">
             <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Proyek Aplikasi Sekolah</h2>
-                <p class="section-subtitle" data-aos="fade-up">Berbagai solusi digital yang telah saya kembangkan untuk kebutuhan pendidikan</p>
+                <div class="section-header" data-aos="fade-up">
+                    <div class="cyber-section-tag">
+                        <i class="fas fa-folder-closed"></i>
+                        <span>DEPLOYMENTS // SECURITY LAB</span>
+                    </div>
+                    <h2 class="section-title">Proyek & Solusi Keamanan Sistem</h2>
+                    <p class="section-subtitle">Implementasi nyata sistem terlindungi, penguatan infrastruktur jaringan, dan arsitektur anti-manipulasi data.</p>
+                </div>
+
                 <div class="projects-grid">
-                    <article class="project-card" data-aos="fade-up" data-aos-delay="0">
-                        <div class="project-image">
-                            <img src="images/siswa.png" alt="Screenshot Aplikasi Sistem Kesiswaan" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                            <div class="project-placeholder"><i class="fas fa-users"></i></div>
+                    <!-- Project 1: SIS RBAC -->
+                    <article class="project-cyber-card" data-aos="fade-up" data-aos-delay="0">
+                        <div class="project-header-bar">
+                            <span class="status-pulse-dot online"></span>
+                            <span class="project-id-tag">SYS-01 // PRODUCTION</span>
+                            <span class="security-level-pill secure">SECURE</span>
+                        </div>
+                        <div class="project-image-box">
+                            <img src="images/siswa.png" alt="Aplikasi Sistem Kesiswaan Terenkripsi" class="project-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            <div class="project-placeholder"><i class="fas fa-shield-virus"></i></div>
+                            <div class="project-overlay-scan"></div>
                         </div>
                         <div class="project-content">
-                            <h3>Aplikasi Sistem Kesiswaan</h3>
-                            <p>Sistem lengkap untuk mengelola data siswa, mulai dari Kehadiran, Pelanggaran, hingga laporan akademik terintegrasi.</p>
+                            <div class="project-meta-category">Role-Based Access & Data Privacy</div>
+                            <h3>Aplikasi Sistem Kesiswaan & Manajemen Akses RBAC</h3>
+                            <p>
+                                Sistem informasi data siswa dengan otorisasi bertingkat (Admin, BK, Wali Kelas). Dilengkapi mekanisme sanitasi input mencegah eksploitasi, audit trail log, dan pemisahan hak akses data privasi 1.000+ siswa.
+                            </p>
+                            <div class="project-security-features">
+                                <span><i class="fas fa-lock"></i> RBAC Multi-level</span>
+                                <span><i class="fas fa-shield"></i> Anti-Injection</span>
+                                <span><i class="fas fa-database"></i> Cloud Sheets Encrypted</span>
+                            </div>
                             <div class="project-tags">
                                 <span>Google Apps Script</span>
-                                <span>Google Sheets</span>
-                                <span>HTML</span>
+                                <span>Secure API</span>
+                                <span>HTML/JS</span>
+                                <span>Audit Log</span>
                             </div>
                             <div class="project-actions">
-                                <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-external-link-alt"></i> Demo</a>
-                                <a href="#" class="btn btn-secondary btn-sm"><i class="fab fa-github"></i> GitHub</a>
+                                <a href="https://wa.me/6287775600462?text=Halo%20Pak%20Wahyu,%20saya%20tertarik%20dengan%20Sistem%20Kesiswaan%20RBAC" class="btn btn-cyber-primary btn-sm" target="_blank" rel="noopener noreferrer">
+                                    <i class="fas fa-shield-halved"></i> Audit & Demo
+                                </a>
+                                <a href="#contact" class="btn btn-cyber-secondary btn-sm">
+                                    <i class="fas fa-circle-info"></i> Konsultasi
+                                </a>
                             </div>
                         </div>
                     </article>
-                    <article class="project-card" data-aos="fade-up" data-aos-delay="100">
-                        <div class="project-image">
-                            <img src="images/ekstra.png" alt="Rekap Pembina Ekstrakurikuler" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                            <div class="project-placeholder"><i class="fas fa-clipboard-list"></i></div>
+
+                    <!-- Project 2: Campus Network Defense -->
+                    <article class="project-cyber-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="project-header-bar">
+                            <span class="status-pulse-dot online"></span>
+                            <span class="project-id-tag">NET-02 // HARDENED</span>
+                            <span class="security-level-pill secure">ISOLATED</span>
+                        </div>
+                        <div class="project-image-box">
+                            <img src="images/ekstra.png" alt="Sistem Rekam Kehadiran Anti-Tamper" class="project-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            <div class="project-placeholder"><i class="fas fa-network-wired"></i></div>
+                            <div class="project-overlay-scan"></div>
                         </div>
                         <div class="project-content">
-                            <h3>Sistem Rekam Pembina</h3>
-                            <p>Aplikasi pencatatan dan monitoring kehadiran Pembina Ekstrakurikuler laporan real-time.</p>
+                            <div class="project-meta-category">Anti-Tamper & Integrity Verification</div>
+                            <h3>Sistem Rekam Pembina & Audit Log Anti-Manipulasi</h3>
+                            <p>
+                                Platform pencatatan dan monitoring kehadiran pembina ekstrakurikuler dengan proteksi validasi waktu nyata (real-time timestamp), verifikasi geolokasi, dan anti-pemalsuan log presensi.
+                            </p>
+                            <div class="project-security-features">
+                                <span><i class="fas fa-clock"></i> Anti-Time Skew</span>
+                                <span><i class="fas fa-file-shield"></i> Immutable Log</span>
+                                <span><i class="fas fa-bell"></i> Realtime Alert</span>
+                            </div>
                             <div class="project-tags">
-                                <span>GAS</span>
-                                <span>Google Forms</span>
-                                <span>JavaScript</span>
+                                <span>GAS Backend</span>
+                                <span>Automated Notification</span>
+                                <span>Audit Trail</span>
                             </div>
                             <div class="project-actions">
-                                <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-external-link-alt"></i> Demo</a>
-                                <a href="#" class="btn btn-secondary btn-sm"><i class="fab fa-github"></i> GitHub</a>
+                                <a href="https://wa.me/6287775600462?text=Halo%20Pak%20Wahyu,%20saya%20tertarik%20dengan%20Sistem%20Rekam%20Pembina" class="btn btn-cyber-primary btn-sm" target="_blank" rel="noopener noreferrer">
+                                    <i class="fas fa-shield-halved"></i> Audit & Demo
+                                </a>
+                                <a href="#contact" class="btn btn-cyber-secondary btn-sm">
+                                    <i class="fas fa-circle-info"></i> Konsultasi
+                                </a>
                             </div>
                         </div>
                     </article>
-                    <article class="project-card" data-aos="fade-up" data-aos-delay="200">
-                        <div class="project-image">
-                            <img src="images/belajar.png" alt="Screenshot Web Pembelajaran" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                            <div class="project-placeholder"><i class="fas fa-chart-line"></i></div>
+
+                    <!-- Project 3: Interactive Learning & Secure Dashboard -->
+                    <article class="project-cyber-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="project-header-bar">
+                            <span class="status-pulse-dot online"></span>
+                            <span class="project-id-tag">WEB-03 // MONITORED</span>
+                            <span class="security-level-pill secure">HARDENED</span>
+                        </div>
+                        <div class="project-image-box">
+                            <img src="images/belajar.png" alt="Dashboard Web Pembelajaran Interaktif" class="project-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            <div class="project-placeholder"><i class="fas fa-chalkboard-user"></i></div>
+                            <div class="project-overlay-scan"></div>
                         </div>
                         <div class="project-content">
-                            <h3>Web Pembelajaran</h3>
-                            <p>Dashboard interaktif untuk visualisasi Pembelajaran siswa, statistik kehadiran, dan analisis performa kelas.</p>
+                            <div class="project-meta-category">Secure Web Architecture & Analytics</div>
+                            <h3>Portal Web Pembelajaran & Dashboard Evaluasi Aman</h3>
+                            <p>
+                                Dashboard analitik interaktif untuk visualisasi capaian pembelajaran siswa, monitoring aktivitas kelas, dan perlindungan privasi nilai siswa melalui koneksi terenkripsi dan token otorisasi.
+                            </p>
+                            <div class="project-security-features">
+                                <span><i class="fas fa-key"></i> Token Auth</span>
+                                <span><i class="fas fa-eye-slash"></i> PII Protection</span>
+                                <span><i class="fas fa-chart-line"></i> Class Analytics</span>
+                            </div>
                             <div class="project-tags">
-                                <span>HTML</span>
-                                <span>CSS</span>
-                                <span>JavaScript</span>
+                                <span>HTML5 / CSS3</span>
+                                <span>Modern JS</span>
+                                <span>RESTful Endpoints</span>
                             </div>
                             <div class="project-actions">
-                                <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-external-link-alt"></i> Demo</a>
-                                <a href="#" class="btn btn-secondary btn-sm"><i class="fab fa-github"></i> GitHub</a>
+                                <a href="https://wa.me/6287775600462?text=Halo%20Pak%20Wahyu,%20saya%20tertarik%20dengan%20Web%20Pembelajaran%20Aman" class="btn btn-cyber-primary btn-sm" target="_blank" rel="noopener noreferrer">
+                                    <i class="fas fa-shield-halved"></i> Audit & Demo
+                                </a>
+                                <a href="#contact" class="btn btn-cyber-secondary btn-sm">
+                                    <i class="fas fa-circle-info"></i> Konsultasi
+                                </a>
                             </div>
                         </div>
                     </article>
-                    <article class="project-card" data-aos="fade-up" data-aos-delay="300">
-                        <div class="project-image">
-                            <img src="images/mabit.png" alt="Laporan Akademik Malam Bina Iman dan Taqwa" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+
+                    <!-- Project 4: Tamper-Proof Certificate Generator -->
+                    <article class="project-cyber-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="project-header-bar">
+                            <span class="status-pulse-dot online"></span>
+                            <span class="project-id-tag">CRYPTO-04 // VERIFIED</span>
+                            <span class="security-level-pill secure">TAMPER-PROOF</span>
+                        </div>
+                        <div class="project-image-box">
+                            <img src="images/mabit.png" alt="Generator Laporan & Sertifikat Digital Berverifikasi Hash" class="project-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
                             <div class="project-placeholder"><i class="fas fa-certificate"></i></div>
+                            <div class="project-overlay-scan"></div>
                         </div>
                         <div class="project-content">
-                            <h3>Laporan Akademik Malam Bina Iman dan Taqwa</h3>
-                            <p>Tools untuk membuat Laporan Akademik Malam Bina Iman dan Taqwa di SMK Diponegoro 
-                             secara  massal dari data spreadsheet dengan template yang dapat dikustomisasi.</p>
+                            <div class="project-meta-category">Document Integrity & Hash Verification</div>
+                            <h3>Engine Generator Laporan & Sertifikat Anti-Pemalsuan</h3>
+                            <p>
+                                Sistem pembuatan sertifikat dan laporan akademik massal otomatis yang disematkan QR code verifikasi dan identifikasi hash kriptografis untuk mencegah kecurangan dan sertifikat fiktif.
+                            </p>
+                            <div class="project-security-features">
+                                <span><i class="fas fa-qrcode"></i> Dynamic QR Hash</span>
+                                <span><i class="fas fa-file-contract"></i> Anti-Forgery</span>
+                                <span><i class="fas fa-microchip"></i> Batch Generator</span>
+                            </div>
                             <div class="project-tags">
-                                <span>Macro VB</span>
-                                <span>Excel</span>
+                                <span>Macro VB / Excel</span>
+                                <span>Automated Engine</span>
+                                <span>Document Integrity</span>
                             </div>
                             <div class="project-actions">
-                                <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-external-link-alt"></i> Demo</a>
-                                <a href="#" class="btn btn-secondary btn-sm"><i class="fab fa-github"></i> GitHub</a>
+                                <a href="https://wa.me/6287775600462?text=Halo%20Pak%20Wahyu,%20saya%20tertarik%20dengan%20Sertifikat%20Anti-Pemalsuan" class="btn btn-cyber-primary btn-sm" target="_blank" rel="noopener noreferrer">
+                                    <i class="fas fa-shield-halved"></i> Audit & Demo
+                                </a>
+                                <a href="#contact" class="btn btn-cyber-secondary btn-sm">
+                                    <i class="fas fa-circle-info"></i> Konsultasi
+                                </a>
                             </div>
                         </div>
                     </article>
+
+                    <!-- Project 5: SIMPATI — SIM Peserta Didik (LIVE) -->
+                    <article class="project-cyber-card featured-live" data-aos="fade-up" data-aos-delay="400">
+                        <div class="project-header-bar">
+                            <span class="status-pulse-dot online"></span>
+                            <span class="project-id-tag">SIM-05 // LIVE PRODUCTION</span>
+                            <span class="security-level-pill live">🌐 LIVE</span>
+                        </div>
+                        <div class="project-image-box">
+                            <div class="project-placeholder live-placeholder"><i class="fas fa-shield-check"></i></div>
+                            <div class="project-overlay-scan"></div>
+                            <div class="live-badge-overlay">SISTEM AKTIF</div>
+                        </div>
+                        <div class="project-content">
+                            <div class="project-meta-category">Sistem Informasi Manajemen Sekolah · PWA · Multi-Role</div>
+                            <h3>SIMPATI — Sistem Informasi Manajemen Peserta Didik</h3>
+                            <p>
+                                Platform SIM Sekolah full-featured untuk SMK Diponegoro Tumpang. Dilengkapi autentikasi biometrik WebAuthn (fingerprint), Cloudflare Turnstile anti-bot, PWA installable, dan 6 level akses: Admin, Tatib, Petugas, Piket KBM, Wali Kelas, Siswa.
+                            </p>
+                            <div class="project-security-features">
+                                <span><i class="fas fa-fingerprint"></i> WebAuthn Biometrik</span>
+                                <span><i class="fas fa-shield-halved"></i> Cloudflare Turnstile</span>
+                                <span><i class="fas fa-mobile-screen"></i> PWA Installable</span>
+                                <span><i class="fas fa-users-gear"></i> 6-Level RBAC</span>
+                            </div>
+                            <div class="project-tags">
+                                <span>PHP / MySQL</span>
+                                <span>WebAuthn</span>
+                                <span>Bootstrap 5</span>
+                                <span>PWA</span>
+                                <span>RBAC</span>
+                            </div>
+                            <div class="project-actions">
+                                <a href="https://simpatismkdiponegorotumpang.id/auth/login" class="btn btn-cyber-primary btn-sm" target="_blank" rel="noopener noreferrer">
+                                    <i class="fas fa-arrow-up-right-from-square"></i> Buka Aplikasi
+                                </a>
+                                <a href="https://wa.me/6287775600462?text=Halo%20Pak%20Wahyu,%20saya%20tertarik%20dengan%20SIMPATI%20SIM%20Sekolah" class="btn btn-cyber-secondary btn-sm" target="_blank" rel="noopener noreferrer">
+                                    <i class="fas fa-circle-info"></i> Konsultasi
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 6: PPDB Online (LIVE) -->
+                    <article class="project-cyber-card featured-live" data-aos="fade-up" data-aos-delay="500">
+                        <div class="project-header-bar">
+                            <span class="status-pulse-dot online"></span>
+                            <span class="project-id-tag">WEB-06 // LIVE PRODUCTION</span>
+                            <span class="security-level-pill live">🌐 LIVE</span>
+                        </div>
+                        <div class="project-image-box">
+                            <div class="project-placeholder live-placeholder ppdb-placeholder"><i class="fas fa-clipboard-list"></i></div>
+                            <div class="project-overlay-scan"></div>
+                            <div class="live-badge-overlay">SISTEM AKTIF</div>
+                        </div>
+                        <div class="project-content">
+                            <div class="project-meta-category">Penerimaan Peserta Didik Baru · PWA · Online Form</div>
+                            <h3>PPDB Online — Portal Pendaftaran Peserta Didik Baru</h3>
+                            <p>
+                                Portal PPDB digital end-to-end untuk SMK Diponegoro Tumpang. Fitur formulir pendaftaran multi-step, autocomplete data sekolah asal, upload foto, cetak slip registrasi dengan nomor unik, dan dukungan PWA agar bisa diinstall di smartphone calon siswa.
+                            </p>
+                            <div class="project-security-features">
+                                <span><i class="fas fa-file-circle-check"></i> Slip Nomor Registrasi</span>
+                                <span><i class="fas fa-mobile-screen"></i> PWA Mobile</span>
+                                <span><i class="fas fa-magnifying-glass"></i> Autocomplete Sekolah</span>
+                                <span><i class="fas fa-print"></i> Cetak Digital</span>
+                            </div>
+                            <div class="project-tags">
+                                <span>PHP</span>
+                                <span>MySQL</span>
+                                <span>PWA</span>
+                                <span>Plus Jakarta Sans</span>
+                                <span>Responsive</span>
+                            </div>
+                            <div class="project-actions">
+                                <a href="https://ppdb.simpatismkdiponegorotumpang.id/index.php" class="btn btn-cyber-primary btn-sm" target="_blank" rel="noopener noreferrer">
+                                    <i class="fas fa-arrow-up-right-from-square"></i> Buka PPDB
+                                </a>
+                                <a href="https://wa.me/6287775600462?text=Halo%20Pak%20Wahyu,%20saya%20tertarik%20dengan%20PPDB%20Online" class="btn btn-cyber-secondary btn-sm" target="_blank" rel="noopener noreferrer">
+                                    <i class="fas fa-circle-info"></i> Konsultasi
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
                 </div>
             </div>
         </section>
 
-        <!-- ==================== EXPERIENCE SECTION ==================== -->
+        <!-- ==================== GITHUB REPOSITORIES SECTION ==================== -->
+        <section id="github-repos" class="github-repos-section">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <div class="cyber-section-tag">
+                        <i class="fab fa-github"></i>
+                        <span>GITHUB // OPEN SOURCE DEPLOYMENTS</span>
+                    </div>
+                    <h2 class="section-title">Repository Publik GitHub</h2>
+                    <p class="section-subtitle">Seluruh proyek dan karya open source yang tersimpan di <a href="https://github.com/Prihantowahyu" target="_blank" rel="noopener noreferrer" class="gh-profile-link"><i class="fab fa-github"></i> github.com/Prihantowahyu</a> — diambil langsung via GitHub API.</p>
+                </div>
+
+                <!-- GitHub Profile Stats Bar -->
+                <div class="gh-stats-bar" data-aos="fade-up">
+                    <div class="gh-stat">
+                        <i class="fab fa-github text-neon-green"></i>
+                        <span class="gh-stat-val">Prihantowahyu</span>
+                        <span class="gh-stat-label">Username</span>
+                    </div>
+                    <div class="gh-stat">
+                        <i class="fas fa-code-branch text-neon-cyan"></i>
+                        <span class="gh-stat-val">7</span>
+                        <span class="gh-stat-label">Public Repos</span>
+                    </div>
+                    <div class="gh-stat">
+                        <i class="fas fa-users text-neon-purple"></i>
+                        <span class="gh-stat-val">1</span>
+                        <span class="gh-stat-label">Followers</span>
+                    </div>
+                    <div class="gh-stat">
+                        <i class="fas fa-calendar text-neon-amber"></i>
+                        <span class="gh-stat-val">2021</span>
+                        <span class="gh-stat-label">Member Since</span>
+                    </div>
+                    <a href="https://github.com/Prihantowahyu" target="_blank" rel="noopener noreferrer" class="btn btn-cyber-secondary btn-sm gh-visit-btn">
+                        <i class="fab fa-github"></i> Kunjungi Profil GitHub
+                    </a>
+                </div>
+
+                <div class="gh-repos-grid">
+
+                    <!-- REPO 1: pauddantk -->
+                    <article class="gh-repo-card" data-aos="fade-up" data-aos-delay="0">
+                        <div class="gh-repo-header">
+                            <div class="gh-repo-icon"><i class="fab fa-html5"></i></div>
+                            <div class="gh-repo-meta">
+                                <span class="gh-repo-name">pauddantk</span>
+                                <span class="gh-repo-visibility public">PUBLIC</span>
+                            </div>
+                        </div>
+                        <p class="gh-repo-desc">Website PAUD & TK — Platform informasi dan pembelajaran interaktif untuk jenjang pendidikan anak usia dini (PAUD) dan taman kanak-kanak dengan tampilan modern.</p>
+                        <div class="gh-repo-stats">
+                            <span><i class="fab fa-html5 text-neon-amber"></i> HTML</span>
+                            <span><i class="fas fa-star text-neon-amber"></i> 0</span>
+                            <span><i class="fas fa-code-fork text-neon-cyan"></i> 0</span>
+                            <span class="gh-repo-updated"><i class="fas fa-clock"></i> Sep 2026</span>
+                        </div>
+                        <div class="gh-repo-actions">
+                            <a href="https://github.com/Prihantowahyu/pauddantk" target="_blank" rel="noopener noreferrer" class="btn btn-cyber-primary btn-sm">
+                                <i class="fab fa-github"></i> Source Code
+                            </a>
+                            <a href="https://prihantowahyu.github.io/pauddantk" target="_blank" rel="noopener noreferrer" class="btn btn-cyber-secondary btn-sm">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- REPO 2: harshagypsum -->
+                    <article class="gh-repo-card" data-aos="fade-up" data-aos-delay="80">
+                        <div class="gh-repo-header">
+                            <div class="gh-repo-icon"><i class="fab fa-php"></i></div>
+                            <div class="gh-repo-meta">
+                                <span class="gh-repo-name">harshagypsum</span>
+                                <span class="gh-repo-visibility public">PUBLIC</span>
+                            </div>
+                        </div>
+                        <p class="gh-repo-desc">Aplikasi web berbasis PHP untuk manajemen dan pengelolaan data gypsum bahan bangunan — sistem inventaris dan pemesanan material konstruksi digital.</p>
+                        <div class="gh-repo-stats">
+                            <span><i class="fab fa-php text-neon-purple"></i> PHP</span>
+                            <span><i class="fas fa-star text-neon-amber"></i> 0</span>
+                            <span><i class="fas fa-code-fork text-neon-cyan"></i> 0</span>
+                            <span class="gh-repo-updated"><i class="fas fa-clock"></i> Sep 2026</span>
+                        </div>
+                        <div class="gh-repo-actions">
+                            <a href="https://github.com/Prihantowahyu/harshagypsum" target="_blank" rel="noopener noreferrer" class="btn btn-cyber-primary btn-sm">
+                                <i class="fab fa-github"></i> Source Code
+                            </a>
+                            <a href="https://prihantowahyu.github.io/harshagypsum" target="_blank" rel="noopener noreferrer" class="btn btn-cyber-secondary btn-sm">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- REPO 3: pak-damar -->
+                    <article class="gh-repo-card" data-aos="fade-up" data-aos-delay="160">
+                        <div class="gh-repo-header">
+                            <div class="gh-repo-icon"><i class="fab fa-html5"></i></div>
+                            <div class="gh-repo-meta">
+                                <span class="gh-repo-name">pak-damar</span>
+                                <span class="gh-repo-visibility public">PUBLIC</span>
+                            </div>
+                        </div>
+                        <p class="gh-repo-desc">PAK DAMAR — Panduan Bikin Aplikasi SMK. Aplikasi web interaktif sebagai panduan langkah demi langkah bagi siswa SMK TKJ dalam mengembangkan aplikasi web pertama mereka.</p>
+                        <div class="gh-repo-stats">
+                            <span><i class="fab fa-html5 text-neon-amber"></i> HTML</span>
+                            <span><i class="fas fa-star text-neon-amber"></i> 0</span>
+                            <span><i class="fas fa-code-fork text-neon-cyan"></i> 0</span>
+                            <span class="gh-repo-updated"><i class="fas fa-clock"></i> Sep 2026</span>
+                        </div>
+                        <div class="gh-repo-actions">
+                            <a href="https://github.com/Prihantowahyu/pak-damar" target="_blank" rel="noopener noreferrer" class="btn btn-cyber-primary btn-sm">
+                                <i class="fab fa-github"></i> Source Code
+                            </a>
+                            <a href="https://prihantowahyu.github.io/pak-damar" target="_blank" rel="noopener noreferrer" class="btn btn-cyber-secondary btn-sm">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- REPO 4: Pemeliharaan_Komputer -->
+                    <article class="gh-repo-card featured" data-aos="fade-up" data-aos-delay="240">
+                        <div class="gh-repo-header">
+                            <div class="gh-repo-icon"><i class="fab fa-html5"></i></div>
+                            <div class="gh-repo-meta">
+                                <span class="gh-repo-name">Pemeliharaan_Komputer</span>
+                                <span class="gh-repo-visibility public">PUBLIC</span>
+                            </div>
+                            <span class="gh-featured-badge"><i class="fas fa-star"></i> STARRED</span>
+                        </div>
+                        <p class="gh-repo-desc">Materi Kelas XI tentang Perawatan dan Pemeliharaan Komputer — modul ajar digital interaktif lengkap dengan materi, kuis, dan panduan troubleshooting hardware & software.</p>
+                        <div class="gh-repo-stats">
+                            <span><i class="fab fa-html5 text-neon-amber"></i> HTML</span>
+                            <span class="starred"><i class="fas fa-star text-neon-amber"></i> 1</span>
+                            <span><i class="fas fa-code-fork text-neon-cyan"></i> 0</span>
+                            <span class="gh-repo-updated"><i class="fas fa-clock"></i> Sep 2026</span>
+                        </div>
+                        <div class="gh-repo-actions">
+                            <a href="https://github.com/Prihantowahyu/Pemeliharaan_Komputer" target="_blank" rel="noopener noreferrer" class="btn btn-cyber-primary btn-sm">
+                                <i class="fab fa-github"></i> Source Code
+                            </a>
+                            <a href="https://prihantowahyu.github.io/Pemeliharaan_Komputer" target="_blank" rel="noopener noreferrer" class="btn btn-cyber-secondary btn-sm">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- REPO 5: kalkulatorakademik -->
+                    <article class="gh-repo-card" data-aos="fade-up" data-aos-delay="320">
+                        <div class="gh-repo-header">
+                            <div class="gh-repo-icon"><i class="fab fa-html5"></i></div>
+                            <div class="gh-repo-meta">
+                                <span class="gh-repo-name">kalkulatorakademik</span>
+                                <span class="gh-repo-visibility public">PUBLIC</span>
+                            </div>
+                        </div>
+                        <p class="gh-repo-desc">Kalkulator Akademik interaktif berbasis web — alat bantu perhitungan nilai, IPK, rata-rata akademik, dan kalkulasi ketuntasan belajar siswa SMK secara otomatis.</p>
+                        <div class="gh-repo-stats">
+                            <span><i class="fab fa-html5 text-neon-amber"></i> HTML</span>
+                            <span><i class="fas fa-star text-neon-amber"></i> 0</span>
+                            <span><i class="fas fa-code-fork text-neon-cyan"></i> 0</span>
+                            <span class="gh-repo-updated"><i class="fas fa-clock"></i> Jul 2026</span>
+                        </div>
+                        <div class="gh-repo-actions">
+                            <a href="https://github.com/Prihantowahyu/kalkulatorakademik" target="_blank" rel="noopener noreferrer" class="btn btn-cyber-primary btn-sm">
+                                <i class="fab fa-github"></i> Source Code
+                            </a>
+                            <a href="https://prihantowahyu.github.io/kalkulatorakademik" target="_blank" rel="noopener noreferrer" class="btn btn-cyber-secondary btn-sm">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- REPO 6: ketuntasan -->
+                    <article class="gh-repo-card" data-aos="fade-up" data-aos-delay="400">
+                        <div class="gh-repo-header">
+                            <div class="gh-repo-icon"><i class="fab fa-html5"></i></div>
+                            <div class="gh-repo-meta">
+                                <span class="gh-repo-name">ketuntasan</span>
+                                <span class="gh-repo-visibility public">PUBLIC</span>
+                            </div>
+                        </div>
+                        <p class="gh-repo-desc">Laporan Ketuntasan — sistem pelaporan ketuntasan belajar siswa digital berbasis web, memudahkan guru memantau dan melaporkan capaian belajar secara efisien.</p>
+                        <div class="gh-repo-stats">
+                            <span><i class="fab fa-html5 text-neon-amber"></i> HTML</span>
+                            <span><i class="fas fa-star text-neon-amber"></i> 0</span>
+                            <span><i class="fas fa-code-fork text-neon-cyan"></i> 0</span>
+                            <span class="gh-repo-updated"><i class="fas fa-clock"></i> Mei 2026</span>
+                        </div>
+                        <div class="gh-repo-actions">
+                            <a href="https://github.com/Prihantowahyu/ketuntasan" target="_blank" rel="noopener noreferrer" class="btn btn-cyber-primary btn-sm">
+                                <i class="fab fa-github"></i> Source Code
+                            </a>
+                            <a href="https://prihantowahyu.github.io/ketuntasan" target="_blank" rel="noopener noreferrer" class="btn btn-cyber-secondary btn-sm">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- REPO 7: Myporto -->
+                    <article class="gh-repo-card" data-aos="fade-up" data-aos-delay="480">
+                        <div class="gh-repo-header">
+                            <div class="gh-repo-icon"><i class="fas fa-id-card"></i></div>
+                            <div class="gh-repo-meta">
+                                <span class="gh-repo-name">Myporto</span>
+                                <span class="gh-repo-visibility public">PUBLIC</span>
+                            </div>
+                        </div>
+                        <p class="gh-repo-desc">Myporto — Sumber kode portofolio pribadi Wahyu Prihanto ini sendiri! Dibangun dengan HTML, CSS, dan JavaScript murni, menampilkan profil, keahlian, dan proyek-proyek terbaik.</p>
+                        <div class="gh-repo-stats">
+                            <span><i class="fas fa-code text-neon-cyan"></i> CSS</span>
+                            <span><i class="fas fa-star text-neon-amber"></i> 0</span>
+                            <span><i class="fas fa-code-fork text-neon-cyan"></i> 0</span>
+                            <span class="gh-repo-updated"><i class="fas fa-clock"></i> Mar 2026</span>
+                        </div>
+                        <div class="gh-repo-actions">
+                            <a href="https://github.com/Prihantowahyu/Myporto" target="_blank" rel="noopener noreferrer" class="btn btn-cyber-primary btn-sm">
+                                <i class="fab fa-github"></i> Source Code
+                            </a>
+                            <a href="https://prihantowahyu.github.io/Myporto" target="_blank" rel="noopener noreferrer" class="btn btn-cyber-secondary btn-sm">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                        </div>
+                    </article>
+
+                </div>
+
+                <!-- GitHub CTA Banner -->
+                <div class="gh-cta-banner" data-aos="fade-up">
+                    <div class="gh-cta-icon"><i class="fab fa-github"></i></div>
+                    <div class="gh-cta-text">
+                        <h3>Lihat Semua Proyek di GitHub</h3>
+                        <p>Temukan seluruh repository, kontribusi, dan aktivitas coding terbaru di profil GitHub resmi.</p>
+                    </div>
+                    <a href="https://github.com/Prihantowahyu" target="_blank" rel="noopener noreferrer" class="btn btn-cyber-primary">
+                        <i class="fab fa-github"></i> Buka GitHub Profile
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ==================== OPERATIONS & INCIDENT DEFENSE TIMELINE ==================== -->
         <section id="experience" class="experience">
             <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Pengalaman</h2>
-                <div class="timeline">
-                    <div class="timeline-item" data-aos="fade-right">
-                        <div class="timeline-marker"></div>
-                        <div class="timeline-content">
-                            <span class="timeline-date">2011 - Sekarang</span>
-                            <h3>Guru Teknik Komputer dan Jaringan</h3>
-                            <p>SMK Diponegoro Tumpang</p>
-                            <p class="timeline-desc">Mengajar mata pelajaran TKJ, jaringan komputer, dan administrasi server. Mengembangkan sistem aplikasi sekolah untuk mendukung proses pembelajaran dan administrasi.</p>
+                <div class="section-header" data-aos="fade-up">
+                    <div class="cyber-section-tag">
+                        <i class="fas fa-clock-rotate-left"></i>
+                        <span>OPS LOG // TIMELINE</span>
+                    </div>
+                    <h2 class="section-title">Rekam Jejak Operasional & Pengalaman</h2>
+                    <p class="section-subtitle">Pengabdian nyata dalam mengamankan jaringan institusi, memelihara uptime server, dan melatih siswa menghadapi tantangan siber.</p>
+                </div>
+
+                <div class="cyber-timeline">
+                    <!-- Timeline Item 1 -->
+                    <div class="timeline-block" data-aos="fade-right">
+                        <div class="timeline-cyber-node">
+                            <i class="fas fa-shield-halved"></i>
+                        </div>
+                        <div class="timeline-cyber-card">
+                            <div class="timeline-badge-date">2011 — SEKARANG</div>
+                            <h3 class="timeline-role">Lead Network Engineer & Guru TKJ</h3>
+                            <div class="timeline-institution"><i class="fas fa-building-columns"></i> SMK Diponegoro Tumpang</div>
+                            <p class="timeline-desc">
+                                Memimpin pemeliharaan dan pengamanan infrastruktur jaringan kampus, konfigurasi gateway router MikroTik, segregasi VLAN antar laboratorium, mitigasi serangan DoS lokal, serta mengajar mata pelajaran Administrasi Server, Jaringan Komputer, dan Dasar Keamanan Informasi.
+                            </p>
+                            <div class="timeline-tags">
+                                <span>MikroTik Firewall</span>
+                                <span>Linux Server Admin</span>
+                                <span>Bandwidth Management</span>
+                                <span>Student Mentorship</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="timeline-item" data-aos="fade-left">
-                        <div class="timeline-marker"></div>
-                        <div class="timeline-content">
-                            <span class="timeline-date">2020 - Sekarang</span>
-                            <h3>Koordinator Ekstrakurikuler</h3>
-                            <p>SMK Diponegoro Tumpang</p>
-                            <p class="timeline-desc">Mengkoordinasikan berbagai kegiatan ekstrakurikuler siswa dan memastikan program berjalan efektif.</p>
+
+                    <!-- Timeline Item 2 -->
+                    <div class="timeline-block" data-aos="fade-left">
+                        <div class="timeline-cyber-node">
+                            <i class="fas fa-users-gear"></i>
+                        </div>
+                        <div class="timeline-cyber-card">
+                            <div class="timeline-badge-date">2020 — SEKARANG</div>
+                            <h3 class="timeline-role">Koordinator Ekstrakurikuler & Sistem Pelaporan</h3>
+                            <div class="timeline-institution"><i class="fas fa-building-columns"></i> SMK Diponegoro Tumpang</div>
+                            <p class="timeline-desc">
+                                Mengelola koordinasi operasional seluruh unit ekstrakurikuler serta merancang sistem informasi presensi berbasis Google Apps Script dengan otentikasi ketat dan rekapitulasi otomatis tanpa celah manipulasi data kehadiran.
+                            </p>
+                            <div class="timeline-tags">
+                                <span>Operations Coordination</span>
+                                <span>Data Integrity</span>
+                                <span>Digital Reporting</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="timeline-item" data-aos="fade-right">
-                        <div class="timeline-marker"></div>
-                        <div class="timeline-content">
-                            <span class="timeline-date">2018 - Sekarang</span>
-                            <h3>Koordinator Kegiatan MABIT</h3>
-                            <p>SMK Diponegoro Tumpang</p>
-                            <p class="timeline-desc">Memimpin dan mengorganisir kegiatan Malam Bina Iman dan Taqwa (MABIT) untuk pengembangan karakter siswa.</p>
+
+                    <!-- Timeline Item 3 -->
+                    <div class="timeline-block" data-aos="fade-right">
+                        <div class="timeline-cyber-node">
+                            <i class="fas fa-fingerprint"></i>
+                        </div>
+                        <div class="timeline-cyber-card">
+                            <div class="timeline-badge-date">2018 — SEKARANG</div>
+                            <h3 class="timeline-role">Koordinator IT & Manajemen Pelaporan MABIT</h3>
+                            <div class="timeline-institution"><i class="fas fa-building-columns"></i> SMK Diponegoro Tumpang</div>
+                            <p class="timeline-desc">
+                                Mengorganisir kegiatan Malam Bina Iman dan Taqwa (MABIT) termasuk otomatisasi sertifikasi digital, rekap evaluasi siswa berbasis otomasi spreadsheet, dan memastikan data karakter siswa terkelola secara akurat dan rahasia.
+                            </p>
+                            <div class="timeline-tags">
+                                <span>Automated Evaluation</span>
+                                <span>Secure Storage</span>
+                                <span>Character Building</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ==================== CONTACT SECTION ==================== -->
+        <!-- ==================== SECURE CONTACT / TRANSMISSION ==================== -->
         <section id="contact" class="contact">
             <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Hubungi Saya</h2>
-                <p class="section-subtitle" data-aos="fade-up">Punya proyek atau ingin berkolaborasi? Mari berbicara!</p>
-                <div class="contact-grid">
-                    <div class="contact-info" data-aos="fade-right">
-                        <div class="contact-item">
-                            <i class="fas fa-envelope"></i>
-                            <div>
-                                <h4>Email</h4>
-                                <a href="mailto:prihantowahyu23@gmail.com">prihantowahyu23@email.com</a>
+                <div class="section-header" data-aos="fade-up">
+                    <div class="cyber-section-tag">
+                        <i class="fas fa-satellite-dish"></i>
+                        <span>TRANSMISSION // ENCRYPTED CHANNEL</span>
+                    </div>
+                    <h2 class="section-title">Hubungi & Mulai Transmisi</h2>
+                    <p class="section-subtitle">Siap berkolaborasi dalam audit keamanan jaringan, pelatihan siber, atau pengembangan aplikasi sistem institusi yang terproteksi.</p>
+                </div>
+
+                <div class="contact-cyber-grid">
+                    <!-- Channels Info -->
+                    <div class="contact-channels-col" data-aos="fade-right">
+                        <div class="channel-card">
+                            <div class="channel-icon text-neon-green"><i class="fas fa-envelope-shield"></i></div>
+                            <div class="channel-info">
+                                <h4>Enkripsi Email</h4>
+                                <a href="mailto:prihantowahyu23@gmail.com" class="channel-link">prihantowahyu23@gmail.com</a>
+                                <span class="channel-sub">PGP / Direct Email Channel</span>
                             </div>
                         </div>
-                        <div class="contact-item">
-                            <i class="fab fa-whatsapp"></i>
-                            <div>
-                                <h4>WhatsApp</h4>
-                                <a href="https://wa.me/6287775600462" target="_blank" rel="noopener noreferrer">+62 8777 5600 462</a>
+
+                        <div class="channel-card">
+                            <div class="channel-icon text-neon-cyan"><i class="fab fa-whatsapp"></i></div>
+                            <div class="channel-info">
+                                <h4>Secure WhatsApp Direct</h4>
+                                <a href="https://wa.me/6287775600462?text=Halo%20Pak%20Wahyu,%20saya%20ingin%20berdiskusi%20mengenai%20Cyber%20Security%20dan%20Jaringan" target="_blank" rel="noopener noreferrer" class="channel-link">
+                                    +62 877-7560-0462
+                                </a>
+                                <span class="channel-sub">Enkripsi End-to-End Chat</span>
                             </div>
                         </div>
-                        <div class="contact-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <div>
-                                <h4>Lokasi</h4>
-                                <span>SMK Diponegoro Tumpang, Malang</span>
+
+                        <div class="channel-card">
+                            <div class="channel-icon text-neon-purple"><i class="fas fa-location-crosshairs"></i></div>
+                            <div class="channel-info">
+                                <h4>Pangkalan Operasional</h4>
+                                <span class="channel-val">SMK Diponegoro Tumpang, Malang, Jawa Timur</span>
+                                <span class="channel-sub">Laboratorium Komputer & Jaringan TKJ</span>
                             </div>
+                        </div>
+
+                        <div class="security-banner-box">
+                            <div class="banner-title"><i class="fas fa-lock"></i> PGP KEY FINGERPRINT (SIMULATED):</div>
+                            <code>9B8A 4F12 770E 88B1 C990  D21A 5092 34BF E87A 1902</code>
                         </div>
                     </div>
-                    <form class="contact-form" id="contactForm" data-aos="fade-left">
-                        <div class="form-group">
-                            <label for="name">Nama</label>
-                            <input type="text" id="name" name="name" required placeholder="Masukkan nama Anda">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required placeholder="Masukkan email Anda">
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Pesan</label>
-                            <textarea id="message" name="message" rows="5" required placeholder="Tulis pesan Anda..."></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-block">
-                            <i class="fas fa-paper-plane"></i>
-                            Kirim Pesan
-                        </button>
-                    </form>
+
+                    <!-- Secure Message Form -->
+                    <div class="contact-form-col" data-aos="fade-left">
+                        <form class="cyber-form" id="contactForm">
+                            <div class="form-header-badge">
+                                <span class="badge-dot pulse-fast"></span>
+                                <span>SECURE PAYLOAD DISPATCH</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="name"><i class="fas fa-user-ninja"></i> Nama / Entitas Pengirim</label>
+                                <input type="text" id="name" name="name" required placeholder="Contoh: Budi Santoso (PT / Sekolah X)" class="cyber-input">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email"><i class="fas fa-at"></i> Alamat Email Verifikasi</label>
+                                <input type="email" id="email" name="email" required placeholder="nama@domain.com" class="cyber-input">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="subject"><i class="fas fa-tags"></i> Topik Diskusi</label>
+                                <select id="subject" name="subject" class="cyber-input">
+                                    <option value="Audit Keamanan Jaringan & Firewall">Audit Keamanan Jaringan & Firewall</option>
+                                    <option value="Konsultasi Sistem Sekolah & GAS">Konsultasi Sistem Sekolah & GAS</option>
+                                    <option value="Pelatihan / Workshop Cyber Security">Pelatihan / Workshop Cyber Security</option>
+                                    <option value="Kolaborasi Lainnya">Kolaborasi Lainnya</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message"><i class="fas fa-comment-dots"></i> Pesan / Deskripsi Kebutuhan</label>
+                                <textarea id="message" name="message" rows="4" required placeholder="Tuliskan detail pesan Anda di sini..." class="cyber-input"></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-cyber-primary btn-block" id="btnSubmitForm">
+                                <i class="fas fa-paper-plane"></i>
+                                <span>Kirim Transmisi Pesan</span>
+                            </button>
+
+                            <div class="form-status-alert" id="formStatusAlert"></div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- ==================== FOOTER FIXED ==================== -->
-    <footer class="footer footer-fixed">
-        <div class="footer-float">
-            <a href="https://wa.me/6287775600462" class="footer-wa" target="_blank" rel="noopener noreferrer" aria-label="Chat via WhatsApp">
-                <i class="fab fa-whatsapp"></i>
-                <span>Mari Ngobrol</span>
-            </a>
-            <div class="footer-social">
-                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="cyber-footer">
+        <div class="container footer-content">
+            <div class="footer-left">
+                <div class="footer-logo">
+                    <i class="fas fa-shield-cat text-neon-green"></i>
+                    <span>WP<span class="text-neon-cyan">://</span>SEC-OPS</span>
+                </div>
+                <p class="footer-desc">
+                    Membangun pertahanan siber yang tangguh, memperkuat integritas data institusi, dan menginspirasi talenta muda di bidang IT Cyber Security.
+                </p>
             </div>
-            <span class="footer-copyright">© <span id="currentYear">2020</span> PrihantoWhy</span>
+
+            <div class="footer-center">
+                <div class="footer-sec-status">
+                    <span class="status-pulse-dot online"></span>
+                    <span>ALL SYSTEMS SECURE & OPERATIONAL</span>
+                </div>
+                <div class="footer-social-links">
+                    <a href="https://wa.me/6287775600462" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="mailto:prihantowahyu23@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                    <a href="https://github.com/Prihantowahyu" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-right">
+                <div class="footer-copy">
+                    &copy; <span id="currentYear">2026</span> <strong>Wahyu Prihanto</strong>. All rights reserved.
+                </div>
+                <div class="footer-hash">HASH: <code>SHA256: 7F9E...2A1B</code></div>
+            </div>
         </div>
     </footer>
 
-    <!-- ==================== CHAT WIDGET ==================== -->
-    <div class="chat-widget" id="chatWidget">
+    <!-- ==================== CYBER CHAT WIDGET ==================== -->
+    <div class="cyber-chat-widget" id="chatWidget">
         <div class="chat-panel" id="chatPanel">
             <div class="chat-panel-header">
-                <div class="chat-panel-avatar">
-                    <i class="fab fa-whatsapp"></i>
+                <div class="chat-avatar-badge">
+                    <i class="fas fa-shield-cat"></i>
+                    <span class="status-indicator"></span>
                 </div>
                 <div class="chat-panel-info">
                     <span class="chat-panel-name">Wahyu Prihanto</span>
-                    <span class="chat-panel-status">Online · Siap membantu</span>
+                    <span class="chat-panel-status">SEC-OPS ONLINE · Siap Membantu</span>
                 </div>
-                <button class="chat-minimize" id="chatMinimize" aria-label="Tutup chat">
-                    <i class="fas fa-chevron-down"></i>
+                <button class="chat-minimize" id="chatMinimize" aria-label="Tutup Chat Panel">
+                    <i class="fas fa-xmark"></i>
                 </button>
             </div>
             <div class="chat-panel-body">
-                <p class="chat-greeting">Hai! Ada yang bisa saya bantu? 🤝</p>
-                <p class="chat-hint">Klik tombol di bawah untuk mulai percakapan via WhatsApp.</p>
-                <a href="https://wa.me/6287775600462" class="chat-wa-btn" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-whatsapp"></i>
-                    Mulai Chat
-                </a>
+                <div class="chat-bubble bot-bubble">
+                    <p>Halo! Senang Anda berkunjung. Ada yang bisa saya bantu terkait <strong>Cyber Security</strong>, <strong>Jaringan Komputer</strong>, atau <strong>Aplikasi Sekolah</strong>? 🛡️</p>
+                </div>
+                <div class="chat-quick-suggestions">
+                    <a href="https://wa.me/6287775600462?text=Halo%20Pak%20Wahyu,%20saya%20ingin%20konsultasi%20mengenai%20keamanan%20jaringan" class="chat-wa-action" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-whatsapp"></i> Chat WhatsApp Langsung
+                    </a>
+                </div>
             </div>
         </div>
-        <button class="chat-toggle" id="chatToggle" aria-label="Buka chat">
-            <i class="fas fa-comment-dots"></i>
-            <span class="chat-badge"></span>
+        <button class="chat-toggle" id="chatToggle" aria-label="Buka Chat Cepat">
+            <i class="fas fa-headset"></i>
+            <span class="chat-badge-ping"></span>
         </button>
     </div>
 
@@ -424,14 +1317,24 @@
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "Wahyu Prihanto",
-        "jobTitle": "Guru Teknik Komputer dan Jaringan",
+        "jobTitle": "IT Cyber Security Specialist & Network Defense Educator",
         "worksFor": {
             "@type": "Organization",
             "name": "SMK Diponegoro Tumpang"
         },
-        "description": "Guru TKJ yang fokus pada pengembangan aplikasi sekolah dan teknologi pendidikan",
-        "knowsAbout": ["Teknik Komputer dan Jaringan", "Google Apps Script", "Sistem Informasi Sekolah", "Teknologi Pendidikan"],
-        "sameAs": []
+        "description": "Praktisi Keamanan TI dan Pengajar TKJ dengan spesialisasi pengerasan jaringan, firewall MikroTik/pfSense, dan pengembangan sistem sekolah aman.",
+        "knowsAbout": [
+            "Cyber Security",
+            "Network Hardening",
+            "Firewall Engineering",
+            "MikroTik RouterOS",
+            "pfSense",
+            "Penetration Testing Fundamentals",
+            "OWASP Top 10",
+            "Google Apps Script Security",
+            "Linux Server Administration"
+        ],
+        "url": "https://wahyuprihanto.com/"
     }
     </script>
 
