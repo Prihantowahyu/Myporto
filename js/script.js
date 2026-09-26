@@ -129,7 +129,7 @@ function initThemeToggle() {
     const btn = document.getElementById('themeToggle');
     const icon = btn?.querySelector('i');
 
-    const savedTheme = localStorage.getItem('cyberTheme') || localStorage.getItem('theme') || 'dark';
+    const savedTheme = localStorage.getItem('cyberTheme') || localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
     updateThemeIcon(icon, savedTheme);
 
