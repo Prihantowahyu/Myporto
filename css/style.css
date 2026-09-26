@@ -2646,3 +2646,403 @@ code {
     }
 }
 
+/* ==================== MOBILE HERO CARD ==================== */
+.mobile-hero-card {
+    display: none;
+}
+
+/* ==================== MOBILE QUICK ACTION BAR ==================== */
+.mobile-action-bar {
+    display: none;
+}
+
+/* ==================== MOBILE OPTIMIZATIONS (@media ≤ 768px) ==================== */
+@media (max-width: 768px) {
+
+    /* --- Reduce visual noise on mobile --- */
+    .cyber-canvas { opacity: 0.3; }
+    .cyber-scanlines { opacity: 0.08; }
+    .telemetry-bar { display: none; }
+    .navbar { top: 0; }
+
+    /* Give body breathing room for bottom bar */
+    body.cyber-body { padding-bottom: 72px; }
+
+    /* --- Hide desktop hero, show mobile card --- */
+    .hero {
+        display: none !important;
+    }
+
+    /* --- Reveal mobile hero card --- */
+    .mobile-hero-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 6.5rem 1.25rem 2rem;
+        gap: 1.25rem;
+        position: relative;
+        z-index: 2;
+        min-height: 100vh;
+        justify-content: center;
+    }
+
+    .mobile-hero-photo-wrap {
+        position: relative;
+        width: 120px;
+        height: 120px;
+        flex-shrink: 0;
+    }
+
+    .mobile-hero-photo {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid var(--neon-cyan);
+        box-shadow: 0 0 25px rgba(0, 240, 255, 0.35), 0 0 60px rgba(0, 240, 255, 0.1);
+    }
+
+    .mobile-hero-photo-placeholder {
+        display: none;
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: var(--bg-surface);
+        border: 3px solid var(--neon-cyan);
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        color: var(--neon-cyan);
+    }
+
+    .mobile-status-badge {
+        position: absolute;
+        bottom: 4px;
+        right: 0;
+        background: var(--bg-terminal);
+        border: 1px solid var(--neon-green);
+        color: var(--neon-green);
+        font-family: var(--font-mono);
+        font-size: 0.65rem;
+        padding: 2px 8px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        white-space: nowrap;
+    }
+
+    .mobile-hero-info {
+        text-align: center;
+    }
+
+    .mobile-hero-tag {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--neon-cyan);
+        letter-spacing: 1px;
+        margin-bottom: 0.4rem;
+    }
+
+    .mobile-hero-name {
+        font-size: 2.2rem;
+        font-weight: 800;
+        line-height: 1.15;
+        margin-bottom: 0.5rem;
+    }
+
+    .mobile-hero-school {
+        font-size: 0.88rem;
+        color: var(--text-secondary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+    }
+
+    .mobile-hero-school i {
+        color: var(--neon-amber);
+    }
+
+    /* --- Stats row --- */
+    .mobile-hero-stats {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        background: var(--bg-card);
+        border: 1px solid var(--border-card);
+        border-radius: 14px;
+        padding: 1rem 1.5rem;
+        width: 100%;
+        justify-content: space-around;
+        backdrop-filter: blur(12px);
+    }
+
+    .mobile-stat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.15rem;
+    }
+
+    .mobile-stat-val {
+        font-family: var(--font-mono);
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: var(--neon-cyan);
+        line-height: 1;
+    }
+
+    .mobile-stat-label {
+        font-size: 0.65rem;
+        color: var(--text-muted);
+        text-align: center;
+        line-height: 1.3;
+    }
+
+    .mobile-stat-divider {
+        width: 1px;
+        height: 36px;
+        background: var(--border-color);
+        flex-shrink: 0;
+    }
+
+    /* --- Skill chips --- */
+    .mobile-hero-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .mobile-chip {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        padding: 0.35rem 0.75rem;
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 20px;
+        color: var(--text-secondary);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        backdrop-filter: blur(8px);
+    }
+
+    .mobile-chip i {
+        color: var(--neon-cyan);
+        font-size: 0.8rem;
+    }
+
+    /* --- Mobile CTA buttons --- */
+    .mobile-hero-cta {
+        display: flex;
+        gap: 0.85rem;
+        width: 100%;
+    }
+
+    .mobile-btn-primary,
+    .mobile-btn-wa {
+        flex: 1;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.9rem 1rem;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 0.95rem;
+        text-decoration: none;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .mobile-btn-primary {
+        background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(0, 255, 157, 0.2));
+        border: 1.5px solid var(--neon-green);
+        color: var(--neon-green);
+        box-shadow: 0 0 20px rgba(0, 255, 157, 0.2);
+    }
+
+    .mobile-btn-primary:active {
+        transform: scale(0.97);
+        box-shadow: 0 0 30px rgba(0, 255, 157, 0.4);
+    }
+
+    .mobile-btn-wa {
+        background: linear-gradient(135deg, #1db954, #25d366);
+        border: none;
+        color: #ffffff;
+        box-shadow: 0 4px 20px rgba(37, 211, 102, 0.35);
+    }
+
+    .mobile-btn-wa:active {
+        transform: scale(0.97);
+        box-shadow: 0 4px 30px rgba(37, 211, 102, 0.5);
+    }
+
+    /* --- General section adjustments --- */
+    .telemetry-stats-section { padding: 2rem 0; }
+    .about { padding: 3.5rem 0; }
+    .skills { padding: 3.5rem 0; }
+    .section-title { font-size: 1.6rem; }
+    .section-subtitle { font-size: 0.95rem; }
+
+    /* About grid mobile */
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    /* Compact about text for mobile */
+    .about-text {
+        font-size: 0.95rem;
+        line-height: 1.65;
+        margin-bottom: 1rem;
+    }
+
+    /* Skills grid single column */
+    .cyber-skills-grid { grid-template-columns: 1fr; }
+
+    /* Contact */
+    .contact-cyber-grid { grid-template-columns: 1fr; }
+
+    /* Footer */
+    .footer-content { grid-template-columns: 1fr; text-align: center; }
+    .footer-right { text-align: center; }
+    .footer-social-links { justify-content: center; }
+}
+
+/* ==================== MOBILE QUICK ACTION BAR (@media ≤ 768px) ==================== */
+@media (max-width: 768px) {
+
+    .mobile-action-bar {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 9998;
+        background: var(--bg-glass);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-top: 1px solid var(--border-color);
+        padding: 0.6rem 0.5rem;
+        padding-bottom: calc(0.6rem + env(safe-area-inset-bottom, 0px));
+        justify-content: space-around;
+        align-items: center;
+        box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .mob-nav-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.2rem;
+        text-decoration: none;
+        color: var(--text-muted);
+        font-size: 0.6rem;
+        font-family: var(--font-mono);
+        letter-spacing: 0.5px;
+        padding: 0.3rem 0.6rem;
+        border-radius: 10px;
+        transition: color 0.2s ease, background 0.2s ease;
+        -webkit-tap-highlight-color: transparent;
+        min-width: 48px;
+    }
+
+    .mob-nav-btn i {
+        font-size: 1.1rem;
+        line-height: 1;
+    }
+
+    .mob-nav-btn:active,
+    .mob-nav-btn:hover {
+        color: var(--neon-cyan);
+        background: rgba(0, 240, 255, 0.08);
+    }
+
+    /* Center CV button — highlighted */
+    .mob-nav-center {
+        background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green));
+        color: #03060d !important;
+        border-radius: 14px;
+        padding: 0.5rem 0.9rem;
+        font-weight: 700;
+        box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+    }
+
+    .mob-nav-center i {
+        font-size: 1.3rem;
+    }
+
+    .mob-nav-center:active {
+        transform: scale(0.95);
+    }
+
+    /* Hide desktop chat widget on mobile since we have the WA button in action bar */
+    .cyber-chat-widget {
+        display: none;
+    }
+
+    /* Hide nav actions except toggle button */
+    .nav-actions .btn-nav-cv,
+    .nav-actions .cyber-btn-icon {
+        display: none;
+    }
+    .nav-actions .nav-toggle {
+        display: flex;
+    }
+}
+
+/* ==================== EXTRA SMALL (<= 400px) ==================== */
+@media (max-width: 400px) {
+    .mobile-hero-name { font-size: 1.9rem; }
+    .mobile-hero-stats { padding: 0.85rem 1rem; gap: 0.5rem; }
+    .mobile-stat-val { font-size: 1.2rem; }
+    .mobile-hero-cta { flex-direction: column; }
+    .mobile-btn-primary, .mobile-btn-wa { padding: 0.85rem; font-size: 0.9rem; }
+    .mob-nav-btn { min-width: 40px; padding: 0.25rem 0.4rem; font-size: 0.55rem; }
+}
+
+/* ==================== LIGHT MODE - MOBILE HERO CARD ==================== */
+[data-theme="light"] .mobile-hero-stats {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .mobile-chip {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.12);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .mobile-hero-photo {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 20px rgba(2, 132, 199, 0.3);
+}
+
+[data-theme="light"] .mobile-action-bar {
+    background: rgba(255, 255, 255, 0.96);
+    border-top-color: rgba(15, 23, 42, 0.1);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .mob-nav-btn {
+    color: var(--text-muted);
+}
+
+[data-theme="light"] .mob-nav-btn:active,
+[data-theme="light"] .mob-nav-btn:hover {
+    color: var(--neon-cyan);
+    background: rgba(2, 132, 199, 0.08);
+}
+
+[data-theme="light"] .mob-nav-center {
+    color: #ffffff !important;
+}
+
+
+
