@@ -217,8 +217,8 @@ function initAOS() {
     }
 }
 
-/* ==================== CYBER CANVAS — MATRIX + PARTICLE NODES ==================== */
-let matrixActive = true;
+/* ==================== NETWORK TOPOLOGY CANVAS (CLEAN MODERN) ==================== */
+let networkActive = true;
 let canvasAnimFrame = null;
 
 function initCyberCanvas() {
@@ -232,63 +232,22 @@ function initCyberCanvas() {
     window.addEventListener('resize', () => {
         W = canvas.width = window.innerWidth;
         H = canvas.height = window.innerHeight;
-        columns = Math.floor(W / fontSize);
-        drops = Array.from({ length: columns }, () => Math.floor(Math.random() * -50));
     });
 
-    const fontSize = 14;
-    let columns = Math.floor(W / fontSize);
-    let drops = Array.from({ length: columns }, () => Math.floor(Math.random() * -50));
-
-    // Matrix characters: combine latin, numbers and a few unicode symbols
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*<>/\\|{}[]~`ΩΨΛΣΔΘΞΠΦabcdefghijklmnopqrstuvwxyz';
-
-    // Particle nodes for network effect
-    const nodes = Array.from({ length: 55 }, () => ({
+    // Particle nodes for Network Topology effect (MikroTik / Network visualization)
+    const nodeCount = Math.min(Math.floor(W / 24), 55);
+    const nodes = Array.from({ length: nodeCount }, () => ({
         x: Math.random() * W,
         y: Math.random() * H,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
-        r: Math.random() * 2.5 + 1
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
+        r: Math.random() * 2 + 1.2,
+        isEmerald: Math.random() > 0.45
     }));
 
-    function drawMatrix() {
-        // Semi-transparent fade for trail effect
-        ctx.fillStyle = 'rgba(5, 8, 17, 0.05)';
-        ctx.fillRect(0, 0, W, H);
+    function drawNetwork() {
+        ctx.clearRect(0, 0, W, H);
 
-        for (let i = 0; i < drops.length; i++) {
-            const char = chars[Math.floor(Math.random() * chars.length)];
-            const y = drops[i] * fontSize;
-
-            // Head character: bright neon green
-            if (drops[i] > 0 && drops[i] * fontSize < H) {
-                ctx.fillStyle = '#00ff9d';
-                ctx.shadowColor = '#00ff9d';
-                ctx.shadowBlur = 8;
-                ctx.font = `bold ${fontSize}px 'JetBrains Mono', monospace`;
-                ctx.fillText(char, i * fontSize, y);
-            }
-
-            // Body characters: dimmer green
-            if (drops[i] > 1) {
-                ctx.fillStyle = 'rgba(0, 200, 100, 0.22)';
-                ctx.shadowBlur = 0;
-                ctx.font = `${fontSize}px 'JetBrains Mono', monospace`;
-                const prevChar = chars[Math.floor(Math.random() * chars.length)];
-                ctx.fillText(prevChar, i * fontSize, (drops[i] - 1) * fontSize);
-            }
-
-            // Reset or advance
-            if (y > H && Math.random() > 0.975) {
-                drops[i] = 0;
-            } else {
-                drops[i]++;
-            }
-        }
-
-        // Draw particle nodes
-        ctx.shadowBlur = 0;
         for (let i = 0; i < nodes.length; i++) {
             const n = nodes[i];
             n.x += n.vx;
@@ -299,28 +258,28 @@ function initCyberCanvas() {
             // Draw node
             ctx.beginPath();
             ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(0, 240, 255, 0.5)';
+            ctx.fillStyle = n.isEmerald ? 'rgba(16, 185, 129, 0.7)' : 'rgba(59, 130, 246, 0.7)';
             ctx.fill();
 
-            // Draw connections
+            // Draw network connections
             for (let j = i + 1; j < nodes.length; j++) {
                 const m = nodes[j];
                 const dist = Math.hypot(n.x - m.x, n.y - m.y);
-                if (dist < 130) {
+                if (dist < 135) {
                     ctx.beginPath();
                     ctx.moveTo(n.x, n.y);
                     ctx.lineTo(m.x, m.y);
-                    ctx.strokeStyle = `rgba(0, 240, 255, ${(1 - dist / 130) * 0.12})`;
-                    ctx.lineWidth = 0.8;
+                    ctx.strokeStyle = `rgba(16, 185, 129, ${(1 - dist / 135) * 0.14})`;
+                    ctx.lineWidth = 0.75;
                     ctx.stroke();
                 }
             }
         }
 
-        canvasAnimFrame = requestAnimationFrame(drawMatrix);
+        canvasAnimFrame = requestAnimationFrame(drawNetwork);
     }
 
-    drawMatrix();
+    drawNetwork();
 }
 
 function initMatrixToggle() {
@@ -328,9 +287,10 @@ function initMatrixToggle() {
     const canvas = document.getElementById('cyberCanvas');
     if (!btn || !canvas) return;
 
+    btn.title = "Toggle Animasi Jaringan";
     btn.addEventListener('click', () => {
-        matrixActive = !matrixActive;
-        if (!matrixActive) {
+        networkActive = !networkActive;
+        if (!networkActive) {
             if (canvasAnimFrame) {
                 cancelAnimationFrame(canvasAnimFrame);
                 canvasAnimFrame = null;
@@ -338,8 +298,8 @@ function initMatrixToggle() {
             canvas.style.opacity = '0';
             btn.style.color = 'var(--text-muted)';
         } else {
-            canvas.style.opacity = '0.65';
-            btn.style.color = 'var(--neon-cyan)';
+            canvas.style.opacity = '0.35';
+            btn.style.color = 'var(--accent)';
             initCyberCanvas();
         }
     });
