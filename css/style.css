@@ -45,11 +45,11 @@
 
 /* Light Terminal Theme (Ops Lab) */
 [data-theme="light"] {
-    --bg-primary: #f1f5f9;
-    --bg-secondary: #e2e8f0;
+    --bg-primary: #f8fafc;
+    --bg-secondary: #f1f5f9;
     --bg-surface: #ffffff;
-    --bg-card: rgba(255, 255, 255, 0.92);
-    --bg-glass: rgba(248, 250, 252, 0.9);
+    --bg-card: #ffffff;
+    --bg-glass: rgba(255, 255, 255, 0.94);
     --bg-terminal: #0b1120;
 
     --neon-green: #059669;
@@ -63,13 +63,140 @@
     --text-primary: #0f172a;
     --text-secondary: #475569;
     --text-muted: #64748b;
-    --text-code: #00ff9d;
+    --text-code: #059669;
 
-    --border-color: rgba(15, 23, 42, 0.15);
-    --border-bright: rgba(2, 132, 199, 0.4);
-    --border-card: rgba(203, 213, 225, 0.8);
+    --border-color: rgba(15, 23, 42, 0.12);
+    --border-bright: rgba(2, 132, 199, 0.45);
+    --border-card: rgba(226, 232, 240, 0.9);
     --shadow-cyber: 0 8px 30px rgba(0, 0, 0, 0.08);
     --shadow-glow: 0 0 20px rgba(2, 132, 199, 0.15);
+}
+
+[data-theme="light"] .cyber-canvas {
+    opacity: 0.15;
+}
+
+[data-theme="light"] .cyber-scanlines {
+    display: none;
+}
+
+[data-theme="light"] .telemetry-bar {
+    background: #0f172a;
+    color: #e2e8f0;
+}
+
+[data-theme="light"] .hero-roles-box {
+    background: #ffffff;
+    border: 1px solid rgba(2, 132, 199, 0.3);
+    border-left: 4px solid var(--neon-cyan);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .cyber-badge {
+    background: rgba(5, 150, 105, 0.1);
+    border-color: rgba(5, 150, 105, 0.35);
+    color: var(--neon-green);
+}
+
+[data-theme="light"] .chip-cyber {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.15);
+    color: var(--text-primary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .cyber-frame-wrapper {
+    background: #ffffff;
+    border-color: rgba(2, 132, 199, 0.3);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .cyber-specs-box {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .spec-row {
+    border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+[data-theme="light"] .photo-overlay-badge {
+    background: rgba(15, 23, 42, 0.88);
+    color: #00ff9d;
+}
+
+[data-theme="light"] .principle-card {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .cert-pill {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.12);
+    color: var(--text-primary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .cyber-skill-card {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .cyber-project-card {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .metric-card {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .gh-stats-bar {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .repo-card {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .timeline-card {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .contact-card {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .cyber-form {
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .form-input {
+    background: #f8fafc;
+    border-color: rgba(15, 23, 42, 0.15);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .cyber-btn-icon {
+    background: #f1f5f9;
+    border-color: rgba(15, 23, 42, 0.15);
+    color: var(--text-primary);
 }
 
 /* ==================== BASE & RESET ==================== */
@@ -364,16 +491,16 @@ code {
     right: 0;
     z-index: 1000;
     padding: 0.75rem 0;
-    transition: var(--transition);
-}
-
-.navbar.scrolled {
     background: var(--bg-glass);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border-color);
+    transition: var(--transition);
+}
+
+.navbar.scrolled {
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
-    padding: 0.6rem 0;
+    padding: 0.55rem 0;
 }
 
 .nav-container {
@@ -490,6 +617,8 @@ code {
     display: flex;
     align-items: center;
     gap: 0.6rem;
+    flex-shrink: 0;
+    white-space: nowrap;
 }
 
 .cyber-btn-icon {
@@ -2167,7 +2296,21 @@ code {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1180px) {
+    .nav-links {
+        gap: 0.9rem;
+    }
+    .nav-link {
+        font-size: 0.8rem;
+        padding: 0.25rem 0.4rem;
+        gap: 0.3rem;
+    }
+    .nav-link i {
+        display: none;
+    }
+}
+
+@media (max-width: 992px) {
     .hide-mobile {
         display: none !important;
     }

@@ -57,20 +57,29 @@ function initLoader() {
         if (progress >= 100) {
             clearInterval(interval);
             setTimeout(() => {
-                loader.classList.add('hidden');
-            }, 600);
+                hideLoader();
+            }, 500);
         }
-    }, 280);
+    }, 250);
+
+    function hideLoader() {
+        if (!loader.classList.contains('hidden')) {
+            loader.classList.add('hidden');
+            if (typeof AOS !== 'undefined') {
+                setTimeout(() => AOS.refresh(), 100);
+            }
+        }
+    }
 
     window.addEventListener('load', () => {
         progress = 100;
         if (loaderFill) loaderFill.style.width = '100%';
         if (loaderStatus) loaderStatus.textContent = 'SYSTEM SECURE — WELCOME.';
-        setTimeout(() => loader.classList.add('hidden'), 700);
+        setTimeout(hideLoader, 600);
     });
 
     // Hard fallback
-    setTimeout(() => loader.classList.add('hidden'), 4500);
+    setTimeout(hideLoader, 3500);
 }
 
 /* ==================== SCROLL PROGRESS ==================== */
@@ -120,7 +129,7 @@ function initThemeToggle() {
     const btn = document.getElementById('themeToggle');
     const icon = btn?.querySelector('i');
 
-    const savedTheme = localStorage.getItem('cyberTheme') || 'dark';
+    const savedTheme = localStorage.getItem('cyberTheme') || localStorage.getItem('theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
     updateThemeIcon(icon, savedTheme);
 
@@ -129,7 +138,9 @@ function initThemeToggle() {
         const next = current === 'dark' ? 'light' : 'dark';
         document.documentElement.setAttribute('data-theme', next);
         localStorage.setItem('cyberTheme', next);
+        localStorage.setItem('theme', next);
         updateThemeIcon(icon, next);
+        if (typeof AOS !== 'undefined') AOS.refresh();
     });
 }
 
