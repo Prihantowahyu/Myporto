@@ -32,12 +32,12 @@ function initLoader() {
     if (!loader) return;
 
     const messages = [
-        'CALIBRATING SECURITY PROTOCOLS...',
-        'VERIFYING CERTIFICATE CHAIN...',
-        'INITIALIZING FIREWALL ENGINE...',
-        'ESTABLISHING ENCRYPTED CHANNEL...',
-        'LOADING THREAT INTELLIGENCE...',
-        'SYSTEM SECURE — WELCOME.'
+        'MEMUAT SISTEM PORTOFOLIO...',
+        'MENYIAPKAN DATA INFRASTRUKTUR & LAB...',
+        'MEMVALIDASI DOKUMENTASI PROYEK...',
+        'MENGHUBUNGKAN REPOSITORI GITHUB...',
+        'OPTIMASI TAMPILAN & PERFORMA...',
+        'PORTOFOLIO SIAP — SELAMAT DATANG.'
     ];
 
     let progress = 0;
@@ -62,19 +62,20 @@ function initLoader() {
         }
     }, 250);
 
+    let isHidden = false;
     function hideLoader() {
-        if (!loader.classList.contains('hidden')) {
-            loader.classList.add('hidden');
-            if (typeof AOS !== 'undefined') {
-                setTimeout(() => AOS.refresh(), 100);
-            }
+        if (isHidden) return;
+        isHidden = true;
+        loader.classList.add('hidden');
+        if (typeof AOS !== 'undefined') {
+            setTimeout(() => AOS.refresh(), 100);
         }
     }
 
     window.addEventListener('load', () => {
         progress = 100;
         if (loaderFill) loaderFill.style.width = '100%';
-        if (loaderStatus) loaderStatus.textContent = 'SYSTEM SECURE — WELCOME.';
+        if (loaderStatus) loaderStatus.textContent = 'PORTOFOLIO SIAP — SELAMAT DATANG.';
         setTimeout(hideLoader, 600);
     });
 
@@ -132,6 +133,7 @@ function initThemeToggle() {
     const savedTheme = localStorage.getItem('cyberTheme') || localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
     updateThemeIcon(icon, savedTheme);
+    updateThemeAriaLabel(btn, savedTheme);
 
     btn?.addEventListener('click', () => {
         const current = document.documentElement.getAttribute('data-theme') || 'dark';
@@ -140,8 +142,14 @@ function initThemeToggle() {
         localStorage.setItem('cyberTheme', next);
         localStorage.setItem('theme', next);
         updateThemeIcon(icon, next);
+        updateThemeAriaLabel(btn, next);
         if (typeof AOS !== 'undefined') AOS.refresh();
     });
+}
+
+function updateThemeAriaLabel(btn, theme) {
+    if (!btn) return;
+    btn.setAttribute('aria-label', theme === 'dark' ? 'Ganti ke Mode Terang' : 'Ganti ke Mode Gelap');
 }
 
 function updateThemeIcon(icon, theme) {
@@ -225,6 +233,12 @@ function initCyberCanvas() {
     const canvas = document.getElementById('cyberCanvas');
     if (!canvas) return;
 
+    // Hentikan loop lama jika ada (cegah memory leak)
+    if (canvasAnimFrame) {
+        cancelAnimationFrame(canvasAnimFrame);
+        canvasAnimFrame = null;
+    }
+
     const ctx = canvas.getContext('2d');
     let W = canvas.width = window.innerWidth;
     let H = canvas.height = window.innerHeight;
@@ -246,6 +260,12 @@ function initCyberCanvas() {
     }));
 
     function drawNetwork() {
+        // Hentikan otomatis jika networkActive dimatikan
+        if (!networkActive) {
+            canvasAnimFrame = null;
+            return;
+        }
+
         ctx.clearRect(0, 0, W, H);
 
         for (let i = 0; i < nodes.length; i++) {
@@ -291,16 +311,16 @@ function initMatrixToggle() {
     btn.addEventListener('click', () => {
         networkActive = !networkActive;
         if (!networkActive) {
-            if (canvasAnimFrame) {
-                cancelAnimationFrame(canvasAnimFrame);
-                canvasAnimFrame = null;
-            }
+            // Hentikan loop — drawNetwork() akan berhenti sendiri di iterasi berikutnya
             canvas.style.opacity = '0';
             btn.style.color = 'var(--text-muted)';
         } else {
             canvas.style.opacity = '0.35';
             btn.style.color = 'var(--accent)';
-            initCyberCanvas();
+            // Mulai ulang hanya jika loop benar-benar sudah berhenti
+            if (!canvasAnimFrame) {
+                initCyberCanvas();
+            }
         }
     });
 }
@@ -615,10 +635,11 @@ function initSkillBars() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const bar = entry.target;
-                const level = bar.style.getPropertyValue('--level');
-                // Reset first to force animation
+                // Baca dari data-level (bukan getPropertyValue yg tidak bisa baca inline CSS var)
+                const level = bar.dataset.level || '0';
+                // Reset ke 0 dulu untuk memaksa animasi berjalan
                 bar.style.setProperty('--level', '0%');
-                setTimeout(() => bar.style.setProperty('--level', level), 100);
+                setTimeout(() => bar.style.setProperty('--level', level + '%'), 100);
                 observer.unobserve(bar);
             }
         });
