@@ -169,86 +169,154 @@
     </header>
 
     <main>
-        <!-- ==================== HERO SECTION (COMMAND CENTER) ==================== -->
-        <section id="home" class="hero">
-            <div class="container hero-container">
-
-                <!-- MOBILE HERO CARD (visible only on phones) -->
-                <div class="mobile-hero-card">
-                    <div class="mobile-hero-photo-wrap">
-                        <img src="images/profile.jpeg" alt="Wahyu Prihanto" class="mobile-hero-photo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="mobile-hero-photo-placeholder"><i class="fas fa-user-gear"></i></div>
-                        <span class="mobile-status-badge"><span class="status-pulse-dot online"></span> Tersedia</span>
+        <!-- ==================== UNIFIED HERO & MASTER PROFILE SECTION ==================== -->
+        <section id="home" class="unified-hero-section">
+            <div id="about" class="unified-scroll-anchor"></div>
+            <div class="container unified-container">
+                
+                <!-- Section Top Status Bar -->
+                <div class="unified-top-bar" data-aos="fade-down">
+                    <div class="cyber-badge">
+                        <span class="status-pulse-dot online"></span>
+                        <span class="cyber-badge-text">GURU TKJ &amp; PRAKTISI IT · SMK DIPONEGORO TUMPANG</span>
                     </div>
-                    <div class="mobile-hero-info">
-                        <div class="mobile-hero-tag">Guru TKJ Â· Praktisi IT</div>
-                        <p class="mobile-hero-name" aria-hidden="true">Wahyu <span class="text-gradient-cyber">Prihanto</span></p>
-                        <p class="mobile-hero-school"><i class="fas fa-building-columns"></i> SMK Diponegoro Tumpang</p>
-                    </div>
-                    <div class="mobile-hero-stats">
-                        <div class="mobile-stat">
-                            <span class="mobile-stat-val">13+</span>
-                            <span class="mobile-stat-label">Tahun Pengalaman</span>
-                        </div>
-                        <div class="mobile-stat-divider"></div>
-                        <div class="mobile-stat">
-                            <span class="mobile-stat-val">100+</span>
-                            <span class="mobile-stat-label">Node Dikelola</span>
-                        </div>
-                        <div class="mobile-stat-divider"></div>
-                        <div class="mobile-stat">
-                            <span class="mobile-stat-val">1000+</span>
-                            <span class="mobile-stat-label">Siswa</span>
-                        </div>
-                    </div>
-                    <div class="mobile-hero-chips">
-                        <span class="mobile-chip"><i class="fas fa-network-wired"></i> MikroTik &amp; VLAN</span>
-                        <span class="mobile-chip"><i class="fab fa-linux"></i> Linux Server</span>
-                        <span class="mobile-chip"><i class="fas fa-screwdriver-wrench"></i> PC Maintenance</span>
-                        <span class="mobile-chip"><i class="fas fa-globe"></i> Web Dev PWA</span>
-                    </div>
-                    <div class="mobile-hero-cta">
-                        <a href="cv.html" target="_blank" class="mobile-btn-primary">
-                            <i class="fas fa-file-pdf"></i> Unduh CV
-                        </a>
-                        <a href="https://wa.me/6287775600462" target="_blank" rel="noopener noreferrer" class="mobile-btn-wa">
-                            <i class="fab fa-whatsapp"></i> Chat WA
-                        </a>
+                    <div class="unified-quick-status">
+                        <i class="fas fa-satellite-dish"></i>
+                        <span>STATUS: LIVE &amp; READY FOR COLLABORATION</span>
                     </div>
                 </div>
 
-                <div class="hero-grid">
-                    <!-- Left: Identity & Mission -->
-                    <div class="hero-content">
-                        <div class="cyber-badge" data-aos="fade-down">
-                            <span class="status-pulse-dot online"></span>
-                            <span class="cyber-badge-text">GURU TKJ &amp; PRAKTISI IT Â· SMK DIPONEGORO TUMPANG</span>
+                <div class="unified-grid">
+                    <!-- Left Column: Master Identity Card & Telemetry -->
+                    <div class="unified-card-col" data-aos="fade-right">
+                        <div class="unified-id-card">
+                            <div class="unified-photo-wrapper">
+                                <div class="unified-photo-glow"></div>
+                                <div class="unified-photo-frame">
+                                    <img src="images/profile.jpeg" alt="Wahyu Prihanto, S.Kom - Guru TKJ &amp; Praktisi IT" class="unified-photo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <div class="unified-photo-fallback"><i class="fas fa-user-tie"></i></div>
+                                    <div class="unified-scanline"></div>
+                                    <div class="unified-live-badge">
+                                        <span class="badge-dot pulse-fast"></span>
+                                        <span>AKTIF MENGAJAR &amp; KONSULTAN IT</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="unified-id-meta">
+                                <h3 class="unified-id-name">Wahyu Prihanto, S.Kom</h3>
+                                <p class="unified-id-title"><i class="fas fa-certificate"></i> Pendidik Vokasi &amp; Praktisi IT</p>
+                                <p class="unified-id-sub"><i class="fas fa-building-columns"></i> SMK Diponegoro Tumpang, Malang</p>
+                            </div>
+
+                            <!-- 4 Telemetry Metrics Grid -->
+                            <div class="unified-metrics-grid">
+                                <div class="unified-metric-item">
+                                    <span class="metric-num text-gradient-cyber">13+</span>
+                                    <span class="metric-lbl">Tahun Pengalaman</span>
+                                </div>
+                                <div class="unified-metric-item">
+                                    <span class="metric-num text-gradient-cyber">100+</span>
+                                    <span class="metric-lbl">Node &amp; Jaringan</span>
+                                </div>
+                                <div class="unified-metric-item">
+                                    <span class="metric-num text-gradient-cyber">1000+</span>
+                                    <span class="metric-lbl">Siswa TKJ Lulusan</span>
+                                </div>
+                                <div class="unified-metric-item">
+                                    <span class="metric-num text-gradient-cyber">99.8%</span>
+                                    <span class="metric-lbl">Uptime Lab &amp; Sistem</span>
+                                </div>
+                            </div>
+
+                            <!-- System Spec Info List -->
+                            <div class="unified-specs-list">
+                                <div class="spec-row">
+                                    <span class="spec-label"><i class="fas fa-graduation-cap"></i> Kualifikasi:</span>
+                                    <span class="spec-val">S1 Pendidikan Komputer</span>
+                                </div>
+                                <div class="spec-row">
+                                    <span class="spec-label"><i class="fas fa-crosshairs"></i> Fokus Keahlian:</span>
+                                    <span class="spec-val">MikroTik, Linux &amp; Web Systems</span>
+                                </div>
+                                <div class="spec-row">
+                                    <span class="spec-label"><i class="fas fa-map-location-dot"></i> Domisili:</span>
+                                    <span class="spec-val">Malang, Jawa Timur</span>
+                                </div>
+                                <div class="spec-row">
+                                    <span class="spec-label"><i class="fas fa-briefcase"></i> Ketersediaan:</span>
+                                    <span class="spec-val text-neon-green">Siap Kolaborasi &amp; Proyek IT</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Profile Narrative, Core Competencies & CTAs -->
+                    <div class="unified-content-col" data-aos="fade-left">
+                        <div class="unified-header-box">
+                            <span class="unified-kicker"><i class="fas fa-terminal"></i> EXECUTIVE PORTFOLIO &amp; PROFILE</span>
+                            <h1 class="unified-title">
+                                Wahyu <span class="text-gradient-cyber">Prihanto, S.Kom</span>
+                            </h1>
+                            <div class="unified-typing-container">
+                                <i class="fas fa-angle-right typing-arrow"></i>
+                                <h2 class="unified-subtitle">
+                                    <span id="typing"></span>
+                                    <span class="cursor-cyber">|</span>
+                                </h2>
+                            </div>
                         </div>
 
-                        <h1 class="hero-title" data-aos="fade-up" data-aos-delay="100">
-                            Wahyu <span class="text-gradient-cyber">Prihanto</span>
-                        </h1>
-
-                        <div class="hero-roles-box" data-aos="fade-up" data-aos-delay="150">
-                            <i class="fas fa-circle-check" style="color: var(--accent); font-size: 1.05rem;"></i>
-                            <h2 class="hero-subtitle">
-                                <span id="typing"></span>
-                                <span class="cursor-cyber">|</span>
-                            </h2>
+                        <div class="unified-narrative">
+                            <p>
+                                Praktisi IT dan Pendidik Kejuruan dengan rekam jejak lebih dari <strong>13 tahun</strong> memimpin instalasi infrastruktur jaringan fisik, administrasi sistem Linux, dan pemeliharaan hardware di lingkungan institusi pendidikan. Memadukan keahlian praktis lapangan (MikroTik, VLAN, Routing, Fiber Optik) dengan kemampuan rekayasa perangkat lunak modern untuk melahirkan sistem manajemen sekolah yang andal dan teruji secara live.
+                            </p>
                         </div>
 
-                        <p class="hero-description" data-aos="fade-up" data-aos-delay="200">
-                            Pengajar <strong>Teknik Komputer & Jaringan (TKJ)</strong> dan praktisi IT dengan 13+ tahun pengalaman dalam <strong>Infrastruktur Jaringan (MikroTik/VLAN/Routing)</strong>, <strong>Pemeliharaan Komputer & Hardware</strong>, <strong>Sistem Linux (Ubuntu/Debian)</strong>, serta pengembang sistem web institusi live (SIMPATI & PPDB).
-                        </p>
-
-                        <div class="hero-badges-row" data-aos="fade-up" data-aos-delay="250">
-                            <span class="chip-cyber"><i class="fas fa-network-wired"></i> MikroTik & VLAN Routing</span>
-                            <span class="chip-cyber"><i class="fab fa-linux"></i> Linux Server & Bash</span>
-                            <span class="chip-cyber"><i class="fas fa-screwdriver-wrench"></i> PC Maintenance & Hardware</span>
-                            <span class="chip-cyber"><i class="fas fa-globe"></i> Web Dev (PHP/MySQL/PWA)</span>
+                        <!-- 4 Core Competency Cards Grid -->
+                        <div class="unified-competency-grid">
+                            <div class="unified-comp-card">
+                                <div class="comp-icon"><i class="fas fa-network-wired"></i></div>
+                                <div class="comp-body">
+                                    <h4>Infrastruktur Jaringan &amp; Routing</h4>
+                                    <p>Manajemen MikroTik RouterOS, VLAN multi-segmen, Bandwidth Queuing, VPN Tunneling &amp; WiFi Hotspot sekolah berkapasitas ratusan user.</p>
+                                </div>
+                            </div>
+                            <div class="unified-comp-card">
+                                <div class="comp-icon"><i class="fab fa-linux"></i></div>
+                                <div class="comp-body">
+                                    <h4>Administrasi Linux &amp; Server</h4>
+                                    <p>Pengelolaan Ubuntu &amp; Debian Server, Apache/Nginx Web Server, DNS, DHCP, automasi Bash scripting, serta firewall &amp; hardening keamanan.</p>
+                                </div>
+                            </div>
+                            <div class="unified-comp-card">
+                                <div class="comp-icon"><i class="fas fa-screwdriver-wrench"></i></div>
+                                <div class="comp-body">
+                                    <h4>PC Maintenance &amp; Lab Standarisasi</h4>
+                                    <p>Troubleshooting tingkat hardware, perakitan lab komputer 40+ unit, penataan kabel terstruktur (cabling rack), dan standarisasi UKK TKJ.</p>
+                                </div>
+                            </div>
+                            <div class="unified-comp-card">
+                                <div class="comp-icon"><i class="fas fa-code"></i></div>
+                                <div class="comp-body">
+                                    <h4>Sistem Web Institusi &amp; PWA</h4>
+                                    <p>Pengembangan sistem informasi sekolah nyata (Sistem Siswa, Ekstra, Belajar, Mabit) berbasis PHP murni, MySQL, REST API, dan PWA siap kerja.</p>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="hero-cta" data-aos="fade-up" data-aos-delay="300">
+                        <!-- Core Technology Badges -->
+                        <div class="unified-tech-chips">
+                            <span class="chip-cyber"><i class="fas fa-network-wired"></i> MikroTik RouterOS</span>
+                            <span class="chip-cyber"><i class="fab fa-linux"></i> Linux Ubuntu / Debian</span>
+                            <span class="chip-cyber"><i class="fas fa-diagram-project"></i> VLAN &amp; Routing</span>
+                            <span class="chip-cyber"><i class="fab fa-php"></i> PHP &amp; MySQL</span>
+                            <span class="chip-cyber"><i class="fab fa-js"></i> JavaScript &amp; PWA</span>
+                            <span class="chip-cyber"><i class="fas fa-shield-halved"></i> Network Hardening</span>
+                        </div>
+
+                        <!-- Actions Call to Action -->
+                        <div class="unified-actions">
                             <a href="cv.html" target="_blank" class="btn btn-cyber-primary" id="btnHeroCV">
                                 <i class="fas fa-file-pdf"></i>
                                 <span>Unduh CV Resmi (PDF)</span>
@@ -261,204 +329,18 @@
                                 <i class="fas fa-layer-group"></i>
                                 <span>Lihat Proyek Live</span>
                             </a>
-                        </div>
-                    </div>
-
-                    <!-- Right: Modern Professional Profile Showcase (Desktop) -->
-                    <div class="hero-profile-col" data-aos="fade-left" data-aos-delay="200">
-                        <div class="pro-profile-card">
-                            <div class="pro-photo-frame">
-                                <img src="images/profile.jpeg" alt="Wahyu Prihanto - Guru TKJ & Praktisi IT" class="pro-hero-photo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                                <div class="pro-photo-placeholder"><i class="fas fa-user-tie"></i></div>
-                                <span class="pro-status-badge">
-                                    <span class="status-pulse-dot online"></span>
-                                    <span>Aktif Mengajar &amp; Praktisi IT</span>
-                                </span>
-                            </div>
-
-                            <div class="pro-card-info">
-                                <div class="pro-badge-role">
-                                    <i class="fas fa-certificate"></i> Pendidik Vokasi &amp; Praktisi IT
-                                </div>
-                                <h3 class="pro-hero-name">Wahyu Prihanto, S.Kom</h3>
-                                <p class="pro-hero-school">
-                                    <i class="fas fa-building-columns"></i> SMK Diponegoro Tumpang, Malang
-                                </p>
-
-                                <div class="pro-stats-grid">
-                                    <div class="pro-stat-item">
-                                        <span class="pro-stat-val">13+</span>
-                                        <span class="pro-stat-lbl">Tahun Pengalaman</span>
-                                    </div>
-                                    <div class="pro-stat-divider"></div>
-                                    <div class="pro-stat-item">
-                                        <span class="pro-stat-val">100+</span>
-                                        <span class="pro-stat-lbl">Node Dikelola</span>
-                                    </div>
-                                    <div class="pro-stat-divider"></div>
-                                    <div class="pro-stat-item">
-                                        <span class="pro-stat-val">1000+</span>
-                                        <span class="pro-stat-lbl">Siswa Vokasi</span>
-                                    </div>
-                                </div>
-
-                                <div class="pro-badges-list">
-                                    <span class="pro-badge-chip"><i class="fas fa-network-wired"></i> MikroTik &amp; VLAN</span>
-                                    <span class="pro-badge-chip"><i class="fab fa-linux"></i> Linux Server</span>
-                                    <span class="pro-badge-chip"><i class="fas fa-laptop-code"></i> SIMPATI &amp; PPDB</span>
-                                </div>
-
-                                <div class="pro-card-footer">
-                                    <a href="https://wa.me/6287775600462" target="_blank" rel="noopener noreferrer" class="btn btn-cyber-primary btn-sm pro-btn-wa">
-                                        <i class="fab fa-whatsapp"></i> Chat WA Langsung
-                                    </a>
-                                    <a href="cv.html" target="_blank" class="btn btn-cyber-secondary btn-sm pro-btn-cv">
-                                        <i class="fas fa-file-pdf"></i> Unduh CV
-                                    </a>
-                                </div>
-                            </div>
+                            <a href="#contact" class="btn btn-cyber-ghost">
+                                <i class="fas fa-paper-plane"></i>
+                                <span>Kirim Pesan</span>
+                            </a>
                         </div>
                     </div>
                 </div>
+
             </div>
         </section>
-
-        <!-- ==================== TELEMETRY STATS BANNER ==================== -->
-        <section class="telemetry-stats-section">
-            <div class="container">
-                <div class="cyber-metrics-grid">
-                    <div class="metric-card" data-aos="fade-up" data-aos-delay="0">
-                        <div class="metric-icon"><i class="fas fa-calendar-check"></i></div>
-                        <div class="metric-number"><span class="counter" data-target="13">0</span><span class="metric-suffix">+</span></div>
-                        <div class="metric-label">Tahun Pengalaman Jaringan & IT</div>
-                        <div class="metric-sub">Fondasi kuat arsitektur TKJ, lab & server</div>
-                    </div>
-                    <div class="metric-card" data-aos="fade-up" data-aos-delay="100">
-                        <div class="metric-icon"><i class="fas fa-network-wired"></i></div>
-                        <div class="metric-number"><span class="counter" data-target="100">0</span><span class="metric-suffix">+</span></div>
-                        <div class="metric-label">Nodes & Router Dikelola</div>
-                        <div class="metric-sub">MikroTik, VLAN, Switch, AP, Linux Box</div>
-                    </div>
-                    <div class="metric-card" data-aos="fade-up" data-aos-delay="200">
-                        <div class="metric-icon"><i class="fas fa-users"></i></div>
-                        <div class="metric-number"><span class="counter" data-target="1000">0</span><span class="metric-suffix">+</span></div>
-                        <div class="metric-label">Siswa & Pengguna Sistem</div>
-                        <div class="metric-sub">SIMPATI SIM Sekolah & Lab Komputer</div>
-                    </div>
-                    <div class="metric-card" data-aos="fade-up" data-aos-delay="300">
-                        <div class="metric-icon"><i class="fas fa-shield-heart"></i></div>
-                        <div class="metric-number"><span class="counter" data-target="99">0</span>.<span class="counter" data-target="98">0</span><span class="metric-suffix">%</span></div>
-                        <div class="metric-label">Network Uptime & Stabilitas</div>
-                        <div class="metric-sub">Infrastruktur lab sekolah & sistem online</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==================== ABOUT & SECURITY PROFILE ==================== -->
-        <section id="about" class="about">
-            <div class="container">
-                <div class="section-header" data-aos="fade-up">
-                    <div class="cyber-section-tag">
-                        <i class="fas fa-user-tie"></i>
-                        <span>PROFIL // TENTANG SAYA</span>
-                    </div>
-                    <h2 class="section-title">Profil Profesional & Kompetensi</h2>
-                    <p class="section-subtitle">Memadukan pemahaman mendalam infrastruktur jaringan fisik, administrasi sistem Linux, pemeliharaan komputer, dan rekam jejak pengembangan sistem web institusi.</p>
-                </div>
-
-                <div class="about-grid">
-                    <!-- Photo Column with Cyber HUD Frame -->
-                    <div class="about-image-col" data-aos="fade-right">
-                        <div class="cyber-frame-wrapper">
-                            <div class="cyber-hud-corner tl"></div>
-                            <div class="cyber-hud-corner tr"></div>
-                            <div class="cyber-hud-corner bl"></div>
-                            <div class="cyber-hud-corner br"></div>
-
-                            <div class="about-photo-box">
-                                <img src="images/profile.jpeg" alt="Wahyu Prihanto - Guru TKJ & Praktisi IT" class="about-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                                <div class="about-placeholder">
-                                    <i class="fas fa-user-gear"></i>
-                                </div>
-                                <div class="photo-scanline-effect"></div>
-                                <div class="photo-overlay-badge">
-                                    <span class="badge-dot pulse-fast"></span>
-                                    <span>GURU TKJ // AKTIF MENGAJAR</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- System Specs Box -->
-                        <div class="cyber-specs-box">
-                            <div class="spec-row">
-                                <span class="spec-label"><i class="fas fa-fingerprint"></i> ID:</span>
-                                <span class="spec-val">WP-TKJ-ID</span>
-                            </div>
-                            <div class="spec-row">
-                                <span class="spec-label"><i class="fas fa-building-columns"></i> Base:</span>
-                                <span class="spec-val">SMK Diponegoro Tumpang</span>
-                            </div>
-                            <div class="spec-row">
-                                <span class="spec-label"><i class="fas fa-compass"></i> Focus:</span>
-                                <span class="spec-val">Network, Linux & Web Systems</span>
-                            </div>
-                            <div class="spec-row">
-                                <span class="spec-label"><i class="fas fa-briefcase"></i> Status:</span>
-                                <span class="spec-val text-neon-green">Siap Kerja / Open for Roles</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Details Column -->
-                    <div class="about-content-col" data-aos="fade-left">
-                        <div class="about-lead">
-                            <h3>Wahyu Prihanto</h3>
-                            <p class="about-role-text">
-                                <i class="fas fa-terminal text-neon-green"></i>
-                                Guru TKJ Â· Network Infrastructure Specialist & Linux SysAdmin
-                            </p>
-                        </div>
-
-                        <p class="about-text">
-                            Sebagai pengajar Teknik Komputer dan Jaringan (TKJ) dan praktisi IT, saya memiliki pengalaman lebih dari satu dekade dalam merancang, mengonfigurasi, dan memelihara infrastruktur jaringan serta laboratorium komputer di lingkungan pendidikan vokasi.
-                        </p>
-
-                        <p class="about-text">
-                            Keahlian saya berfokus pada <strong>Instalasi Jaringan</strong> (crimping UTP, switch, router, access point), <strong>Pemeliharaan & Troubleshooting Komputer</strong> (hardware, instalasi OS Windows/Linux, sistem recovery), <strong>Infrastruktur Jaringan</strong> (MikroTik RouterOS, VLAN, routing, bandwidth management), serta <strong>Monitoring Jaringan & Sistem Operasi Linux</strong> (Ubuntu/Debian, Wireshark, CLI). Selain itu, saya aktif membangun aplikasi sistem informasi sekolah nyata seperti SIMPATI (WebAuthn biometric, PWA) dan PPDB Online.
-                        </p>
-
-                        <!-- 3 Core Principles / Work Ethics -->
-                        <div class="principles-grid">
-                            <div class="principle-card">
-                                <div class="principle-icon"><i class="fas fa-network-wired text-neon-cyan"></i></div>
-                                <h4>Infrastruktur Andal & Rapi</h4>
-                                <p>Standar instalasi fisik terstruktur, manajemen kabel yang rapi, dan konfigurasi logis jaringan yang stabil dan mudah dipelihara.</p>
-                            </div>
-                            <div class="principle-card">
-                                <div class="principle-icon"><i class="fab fa-linux text-neon-green"></i></div>
-                                <h4>Filosofi Open Source</h4>
-                                <p>Pemerhati ekosistem Linux (Ubuntu/Debian), mengoptimalkan efisiensi server, otomasi terminal bash, dan solusi teknologi berbiaya terjangkau.</p>
-                            </div>
-                            <div class="principle-card">
-                                <div class="principle-icon"><i class="fas fa-user-graduate text-neon-purple"></i></div>
-                                <h4>Edukator & Problem Solver</h4>
-                                <p>Kemampuan komunikasi teknis yang teruji dalam membimbing siswa, mentoring lab, serta menyelesaikan kendala sistem di lapangan.</p>
-                            </div>
-                        </div>
-
-                        <div class="cert-badges-row">
-                            <span class="cert-pill"><i class="fas fa-route text-neon-cyan"></i> MikroTik RouterOS & VLAN Routing</span>
-                            <span class="cert-pill"><i class="fab fa-linux text-neon-green"></i> Linux System Administration (Ubuntu/Debian)</span>
-                            <span class="cert-pill"><i class="fas fa-screwdriver-wrench text-neon-amber"></i> Hardware & PC Troubleshooting</span>
-                            <span class="cert-pill"><i class="fas fa-code text-neon-purple"></i> Full-Stack Web (PHP, MySQL, PWA)</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==================== SKILLS & KEAHLIAN SECTION ==================== -->
+        
+<!-- ==================== SKILLS & KEAHLIAN SECTION ==================== -->
         <section id="skills" class="skills">
             <div class="container">
                 <div class="section-header" data-aos="fade-up">
