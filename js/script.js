@@ -243,10 +243,17 @@ function initCyberCanvas() {
     let W = canvas.width = window.innerWidth;
     let H = canvas.height = window.innerHeight;
 
-    window.addEventListener('resize', () => {
+    // Simpan reference handler agar bisa di-removeEventListener saat restart
+    let _resizeHandler = null;
+    if (window.__cyberCanvasResize) {
+        window.removeEventListener('resize', window.__cyberCanvasResize);
+    }
+    _resizeHandler = () => {
         W = canvas.width = window.innerWidth;
         H = canvas.height = window.innerHeight;
-    });
+    };
+    window.__cyberCanvasResize = _resizeHandler;
+    window.addEventListener('resize', _resizeHandler);
 
     // Particle nodes for Network Topology effect (MikroTik / Network visualization)
     const nodeCount = Math.min(Math.floor(W / 24), 55);
@@ -651,35 +658,54 @@ function initSkillBars() {
 /* ==================== CONTACT FORM ==================== */
 function initContactForm() {
     const form = document.getElementById('contactForm');
-    const alert = document.getElementById('formStatusAlert');
+    const alertEl = document.getElementById('formStatusAlert');
     const btn = document.getElementById('btnSubmitForm');
     if (!form) return;
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        // Simulate processing
+        const orig = btn ? btn.innerHTML : '';
         if (btn) {
-            const orig = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> <span>ENCRYPTING & TRANSMITTING...</span>';
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> <span>MENGIRIM PESAN...</span>';
             btn.disabled = true;
+        }
 
-            setTimeout(() => {
+        try {
+            const data = new FormData(form);
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: data,
+                headers: { 'Accept': 'application/json' }
+            });
+
+            if (response.ok) {
+                // Sukses
+                if (alertEl) {
+                    alertEl.className = 'form-status-alert success';
+                    alertEl.innerHTML = '<i class="fas fa-shield-check"></i> Pesan berhasil dikirim! Saya akan segera merespons.';
+                    alertEl.style.display = 'block';
+                }
+                form.reset();
+                setTimeout(() => { if (alertEl) alertEl.style.display = 'none'; }, 7000);
+            } else {
+                throw new Error('Server error');
+            }
+        } catch (err) {
+            // Error — arahkan ke WhatsApp sebagai fallback
+            if (alertEl) {
+                alertEl.className = 'form-status-alert';
+                alertEl.style.background = 'rgba(220,38,38,0.08)';
+                alertEl.style.borderColor = 'rgba(220,38,38,0.3)';
+                alertEl.style.color = '#dc2626';
+                alertEl.innerHTML = '<i class="fas fa-triangle-exclamation"></i> Gagal kirim. Coba hubungi via <a href="https://wa.me/6287775600462" target="_blank" style="color:inherit;font-weight:700">WhatsApp</a>.';
+                alertEl.style.display = 'block';
+            }
+        } finally {
+            if (btn) {
                 btn.innerHTML = orig;
                 btn.disabled = false;
-
-                if (alert) {
-                    alert.className = 'form-status-alert success';
-                    alert.innerHTML = '<i class="fas fa-shield-check"></i> Transmisi berhasil! Pesan Anda telah dikirim secara aman. Saya akan segera merespons.';
-                    alert.style.display = 'block';
-                }
-
-                form.reset();
-
-                setTimeout(() => {
-                    if (alert) alert.style.display = 'none';
-                }, 6000);
-            }, 1800);
+            }
         }
     });
 }
@@ -700,15 +726,7 @@ function initChatWidget() {
     toggle.addEventListener('click', () => widget.classList.toggle('open'));
     minimize.addEventListener('click', () => widget.classList.remove('open'));
 
-    // Auto-open chat after 12s delay for engagement
-    setTimeout(() => {
-        if (!widget.classList.contains('open')) {
-            widget.classList.add('open');
-            setTimeout(() => {
-                // Don't auto-close; let user close it
-            }, 8000);
-        }
-    }, 12000);
+    // Auto-open dihapus — chat hanya terbuka ketika diklik user
 }
 
 /* ==================== SMOOTH SCROLL ==================== */

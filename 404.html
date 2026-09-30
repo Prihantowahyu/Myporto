@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — Halaman Tidak Ditemukan | Wahyu Prihanto</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/jpeg" href="images/favicon.jpg">
+    <link rel="apple-touch-icon" href="images/favicon.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #0b1120;
+            --surface: #0f172a;
+            --border: rgba(16, 185, 129, 0.2);
+            --accent: #10b981;
+            --accent-2: #2563eb;
+            --text: #e2e8f0;
+            --muted: #64748b;
+            --font-sans: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        /* Animated background grid */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(16,185,129,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(16,185,129,0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container-404 {
+            position: relative;
+            z-index: 1;
+            max-width: 560px;
+            width: 100%;
+        }
+
+        .error-code {
+            font-family: var(--font-mono);
+            font-size: clamp(5rem, 20vw, 9rem);
+            font-weight: 800;
+            line-height: 1;
+            background: linear-gradient(135deg, #10b981 0%, #2563eb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            animation: glitch 3s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 90%, 100% { transform: translate(0); filter: none; }
+            92% { transform: translate(-2px, 1px); filter: hue-rotate(30deg); }
+            94% { transform: translate(2px, -1px); filter: hue-rotate(-30deg); }
+            96% { transform: translate(0); }
+        }
+
+        .terminal-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: left;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot-red   { background: #ef4444; }
+        .dot-amber { background: #f59e0b; }
+        .dot-green { background: #10b981; }
+
+        .terminal-title {
+            margin-left: auto;
+            color: var(--muted);
+            font-size: 0.75rem;
+        }
+
+        .terminal-line {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--muted);
+        }
+
+        .terminal-line .prompt { color: #10b981; }
+        .terminal-line .cmd    { color: #e2e8f0; }
+        .terminal-line .output { color: #ef4444; }
+        .terminal-line .info   { color: #60a5fa; }
+
+        .cursor-blink {
+            display: inline-block;
+            width: 8px;
+            height: 1em;
+            background: #10b981;
+            animation: blink 1s step-end infinite;
+            vertical-align: text-bottom;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .error-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .error-desc {
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.05);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        .footer-note {
+            margin-top: 2.5rem;
+            color: var(--muted);
+            font-size: 0.8rem;
+            font-family: var(--font-mono);
+        }
+
+        .footer-note a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-404">
+        <div class="error-code">404</div>
+
+        <div class="terminal-box">
+            <div class="terminal-header">
+                <span class="dot dot-red"></span>
+                <span class="dot dot-amber"></span>
+                <span class="dot dot-green"></span>
+                <span class="terminal-title">bash — wahyu@net-specialist</span>
+            </div>
+
+            <div class="terminal-line">
+                <span class="prompt">wahyu@portofolio:~$</span>
+                <span class="cmd">curl -I <span id="reqUrl">https://prihantowahyu.github.io/404</span></span>
+            </div>
+            <div class="terminal-line">
+                <span class="output">HTTP/1.1 404 Not Found</span>
+            </div>
+            <div class="terminal-line">
+                <span class="info">→ Halaman yang Anda cari tidak ditemukan di sistem ini.</span>
+            </div>
+            <div class="terminal-line">
+                <span class="info">→ URL mungkin salah, sudah dipindah, atau tidak pernah ada.</span>
+            </div>
+            <div class="terminal-line">
+                <span class="prompt">wahyu@portofolio:~$</span>
+                <span class="cursor-blink"></span>
+            </div>
+        </div>
+
+        <h1 class="error-title">Halaman Tidak Ditemukan</h1>
+        <p class="error-desc">
+            Sepertinya Anda mencoba mengakses rute yang tidak terdaftar dalam sistem ini.<br>
+            Kembali ke beranda atau cek kembali URL yang Anda masukkan.
+        </p>
+
+        <div class="btn-group">
+            <a href="index.html" class="btn btn-primary">
+                <i class="fas fa-house"></i> Kembali ke Beranda
+            </a>
+            <a href="index.html#contact" class="btn btn-secondary">
+                <i class="fas fa-envelope"></i> Hubungi Saya
+            </a>
+        </div>
+
+        <p class="footer-note">
+            Wahyu Prihanto &mdash; <a href="index.html">prihantowahyu.github.io/Myporto</a>
+        </p>
+    </div>
+
+    <script>
+        // Tampilkan URL saat ini di terminal
+        const el = document.getElementById('reqUrl');
+        if (el) el.textContent = window.location.href;
+    </script>
+</body>
+</html>
