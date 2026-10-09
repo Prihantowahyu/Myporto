@@ -125,25 +125,31 @@
         });
     }
 
-    // Seed Data Awal dari data/tugas.json
+    // Seed Data & Sinkronisasi dari data/tugas.json
     async function initData() {
         try {
-            let data = await dbGetAll();
-            if (!data || data.length === 0) {
-                try {
-                    const response = await fetch('data/tugas.json');
-                    if (response.ok) {
-                        const seed = await response.json();
+            let localData = await dbGetAll();
+            try {
+                const response = await fetch('data/tugas.json?t=' + Date.now());
+                if (response.ok) {
+                    const seed = await response.json();
+                    if (Array.isArray(seed)) {
                         for (const item of seed) {
-                            await dbPut(item, null);
+                            const existing = localData.find(d => d.id === item.id);
+                            if (!existing) {
+                                await dbPut(item, null);
+                                localData.push(item);
+                            } else {
+                                Object.assign(existing, item);
+                                await dbPut(existing, null);
+                            }
                         }
-                        data = seed;
                     }
-                } catch (e) {
-                    console.log('Tidak ada file seed data/tugas.json, memulai dengan data kosong.');
                 }
+            } catch (e) {
+                console.log('Tidak dapat mengambil data/tugas.json publik, menggunakan basis data lokal.');
             }
-            assignmentsData = data;
+            assignmentsData = localData;
 
             // Muat blob gambar ke cache bila ada file foto tersimpan
             await loadBlobImagesToCache();
@@ -151,6 +157,9 @@
             populateCourseFilter();
             renderStats();
             renderCards();
+
+            // Periksa jika ada target link pengumpulan dosen (URL Hash #tugas-xxx)
+            checkUrlHighlight();
         } catch (error) {
             console.error('Gagal inisialisasi data:', error);
             showToast('Gagal memuat basis data tugas', 'error');
@@ -475,7 +484,7 @@
                         </div>
                     </div>
 
-                    <!-- Footer Kartu: Quick Status & Edit/Delete -->
+                    <!-- Footer Kartu: Quick Status & Edit/Delete/Kirim ke Dosen -->
                     <div class="tugas-card-footer">
                         <div class="quick-status-selector">
                             <label for="statusSelect-${item.id}">Status:</label>
@@ -486,6 +495,9 @@
                             </select>
                         </div>
                         <div class="card-action-btns">
+                            <button class="btn-share-dosen" onclick="window.tugasApp.copyDosenLink('${item.id}')" title="Salin link langsung tugas ini untuk dikirimkan ke Dosen">
+                                <i class="fas fa-paper-plane"></i> <span>Kirim ke Dosen</span>
+                            </button>
                             <button class="btn-action-icon" onclick="window.tugasApp.openModal('${item.id}')" title="Edit Rincian Tugas">
                                 <i class="fas fa-pen-to-square"></i>
                             </button>
@@ -1050,10 +1062,74 @@
                 closeImageLightbox();
             }
         });
+
+        // Listener URL Hash Change (jika link dibuka ulang atau hash berganti)
+        window.addEventListener('hashchange', checkUrlHighlight);
     }
 
     // ==========================================
-    // 12. EXPOSE GLOBAL APIS
+    // 12. FITUR PENGUMPULAN TUGAS KE DOSEN
+    // ==========================================
+    function copyDosenLink(id) {
+        const item = assignmentsData.find(a => a.id === id);
+        const baseHref = window.location.href.split('#')[0].split('?')[0];
+        const shareUrl = `${baseHref}#${id}`;
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(shareUrl).then(() => {
+                showToast(`Link tugas "${item ? item.judul : ''}" berhasil disalin! Silakan kirimkan link ini ke Dosen Anda.`, 'success');
+            }).catch(() => {
+                fallbackCopyText(shareUrl);
+            });
+        } else {
+            fallbackCopyText(shareUrl);
+        }
+    }
+
+    function fallbackCopyText(text) {
+        const temp = document.createElement('textarea');
+        temp.value = text;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+        showToast('Link tugas berhasil disalin ke clipboard!', 'success');
+    }
+
+    function checkUrlHighlight() {
+        const hash = window.location.hash ? window.location.hash.replace(/^#/, '') : '';
+        const params = new URLSearchParams(window.location.search);
+        const targetId = hash || params.get('id');
+
+        if (targetId) {
+            currentFilter.course = 'all';
+            currentFilter.status = 'all';
+            currentFilter.search = '';
+
+            const sel = document.getElementById('filterCourse');
+            if (sel) sel.value = 'all';
+            const searchInp = document.getElementById('searchQuery');
+            if (searchInp) searchInp.value = '';
+
+            document.querySelectorAll('.filter-tab-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-status') === 'all');
+            });
+
+            renderCards();
+
+            setTimeout(() => {
+                const card = document.querySelector(`.tugas-card[data-id="${targetId}"]`);
+                if (card) {
+                    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    card.classList.add('highlight-target');
+                    showToast('Membuka tugas spesifik untuk penilaian Dosen', 'info');
+                }
+            }, 350);
+        }
+    }
+
+    // ==========================================
+    // 13. EXPOSE GLOBAL APIS
     // ==========================================
     window.tugasApp = {
         openModal,
@@ -1064,7 +1140,9 @@
         quickUpdateStatus,
         confirmDelete,
         exportJSON,
-        triggerImportJSON
+        triggerImportJSON,
+        copyDosenLink,
+        checkUrlHighlight
     };
 
     // DOM Ready

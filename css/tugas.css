@@ -1346,6 +1346,40 @@ textarea.form-control {
     transform: scale(1.1);
 }
 
+/* Tombol Kirim ke Dosen & Highlight Target Card */
+.btn-share-dosen {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    background: var(--accent-2-soft);
+    color: var(--accent-2);
+    border: 1px solid var(--accent-2-border);
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-share-dosen:hover {
+    background: var(--accent-2);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+    transform: translateY(-1px);
+}
+
+.tugas-card.highlight-target {
+    border-color: var(--accent-2) !important;
+    box-shadow: 0 0 0 3px var(--accent-2), 0 20px 45px rgba(37, 99, 235, 0.3) !important;
+    animation: pulseTargetCard 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes pulseTargetCard {
+    0% { transform: translateY(-3px) scale(1); }
+    100% { transform: translateY(-5px) scale(1.02); }
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .hero-title {

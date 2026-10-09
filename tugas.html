@@ -83,6 +83,9 @@
                     <button class="btn-primary-action" onclick="window.tugasApp.openModal()">
                         <i class="fas fa-plus-circle"></i> Tambah Tugas Baru
                     </button>
+                    <button class="btn-secondary-action" onclick="document.getElementById('panduanModal').classList.add('active'); document.body.classList.add('modal-open');" title="Lihat cara mengumpulkan tugas ke dosen via link">
+                        <i class="fas fa-circle-question text-neon-cyan"></i> Panduan ke Dosen
+                    </button>
                     <button class="btn-secondary-action" onclick="window.tugasApp.exportJSON()" title="Ekspor semua data tugas ke format JSON untuk di-commit ke GitHub">
                         <i class="fas fa-file-export"></i> Ekspor JSON (GitHub)
                     </button>
@@ -357,6 +360,58 @@
             </button>
             <img src="" alt="Pratinjau Foto Tugas" id="lightboxImage" class="lightbox-image">
             <div class="lightbox-caption" id="lightboxCaption">Dokumentasi Tugas Kuliah</div>
+        </div>
+    </div>
+
+    <!-- ==================== PANDUAN PENGUMPULAN KE DOSEN MODAL ==================== -->
+    <div class="modal-overlay" id="panduanModal" role="dialog" aria-modal="true" aria-labelledby="panduanTitle">
+        <div class="modal-container" style="max-width: 620px;">
+            <div class="modal-header">
+                <h2 id="panduanTitle">
+                    <i class="fas fa-graduation-cap text-neon-cyan"></i> Cara Mengumpulkan Tugas ke Dosen
+                </h2>
+                <button class="btn-close-modal" data-close-modal aria-label="Tutup Panduan">
+                    <i class="fas fa-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body" style="font-size: 0.92rem; line-height: 1.65; color: var(--text-secondary);">
+                <div style="display: flex; flex-direction: column; gap: 16px;">
+                    <div style="display: flex; gap: 14px; align-items: flex-start;">
+                        <span style="width: 28px; height: 28px; border-radius: 50%; background: var(--accent-2); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">1</span>
+                        <div>
+                            <strong style="color: var(--text-primary);">Tambah &amp; Lengkapi Tugas:</strong>
+                            <p style="margin-top: 2px;">Klik tombol <strong>"Tambah Tugas Baru"</strong>. Masukkan nama mata kuliah, judul, deskripsi materi, dan upload berkas laporan atau foto hasil tugas/praktikum.</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 14px; align-items: flex-start;">
+                        <span style="width: 28px; height: 28px; border-radius: 50%; background: var(--accent-2); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">2</span>
+                        <div>
+                            <strong style="color: var(--text-primary);">Jika Tugas Berupa Foto / Gambar:</strong>
+                            <p style="margin-top: 2px;">Anda dapat menaruh file foto di folder <code style="background: var(--bg-subtle); padding: 2px 6px; border-radius: 4px;">images/</code> lalu isi kolom URL Foto (misal: <code style="background: var(--bg-subtle); padding: 2px 6px; border-radius: 4px;">images/tugas-jaringan.jpg</code>), atau upload langsung saat mengisi form.</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 14px; align-items: flex-start;">
+                        <span style="width: 28px; height: 28px; border-radius: 50%; background: var(--accent-2); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">3</span>
+                        <div>
+                            <strong style="color: var(--text-primary);">Simpan ke GitHub:</strong>
+                            <p style="margin-top: 2px;">Klik tombol <strong>"Ekspor JSON (GitHub)"</strong>, ganti isi file <code style="background: var(--bg-subtle); padding: 2px 6px; border-radius: 4px;">data/tugas.json</code>, lalu jalankan <code style="background: var(--bg-subtle); padding: 2px 6px; border-radius: 4px;">git push</code> agar tugas tampil secara publik untuk dosen.</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 14px; align-items: flex-start;">
+                        <span style="width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">4</span>
+                        <div>
+                            <strong style="color: var(--text-primary);">Kirimkan Link ke Dosen:</strong>
+                            <p style="margin-top: 2px;">Klik tombol <strong style="color: var(--accent-2);"><i class="fas fa-paper-plane"></i> Kirim ke Dosen</strong> pada kartu tugas yang bersangkutan. Link unik akan otomatis disalin ke clipboard Anda untuk dikirim via WhatsApp, Email, atau Google Classroom / LMS!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-primary-action" data-close-modal>Mengerti</button>
+            </div>
         </div>
     </div>
 
