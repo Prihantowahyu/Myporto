@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+    <!-- ==================== PRIMARY SEO ==================== -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Repositori &amp; Manajemen Tugas Kuliah | Wahyu Prihanto, S.Kom</title>
+    <meta name="description" content="Portal dokumentasi dan manajemen tugas kuliah, proyek akademik, laporan praktikum jaringan, dan repositori studi oleh Wahyu Prihanto.">
+    <meta name="keywords" content="Tugas Kuliah, Portofolio Tugas, Jaringan Komputer, Wahyu Prihanto, Rekayasa Perangkat Lunak, Laporan Praktikum, Repositori GitHub">
+    <meta name="author" content="Wahyu Prihanto">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://prihantowahyu.github.io/Myporto/tugas.html">
+
+    <!-- ==================== OPEN GRAPH ==================== -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://prihantowahyu.github.io/Myporto/tugas.html">
+    <meta property="og:title" content="Repositori Tugas Kuliah — Wahyu Prihanto">
+    <meta property="og:description" content="Manajemen tugas, laporan praktikum, dan proyek perkuliahan lengkap dengan berkas lampiran dan tautan GitHub.">
+    <meta property="og:image" content="https://prihantowahyu.github.io/Myporto/images/profile.jpeg">
+
+    <!-- ==================== FONTS & ICONS ==================== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- ==================== STYLESHEETS ==================== -->
+    <link rel="stylesheet" href="css/style.css?v=3.4.0">
+    <link rel="stylesheet" href="css/tugas.css?v=1.0.0">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="images/favicon.jpg">
+</head>
+<body class="tugas-page">
+
+    <!-- ==================== HEADER NAVBAR ==================== -->
+    <header class="tugas-navbar" id="tugasNavbar">
+        <div class="tugas-nav-inner">
+            <a href="index.html" class="tugas-brand" title="Kembali ke Portofolio Utama">
+                <div class="tugas-brand-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div>
+                    <div class="tugas-brand-title">WAHYU<span style="color: var(--accent);">.</span>TUGAS</div>
+                    <div class="tugas-brand-sub">
+                        <span class="dot-pulse"></span> PORTAL TUGAS KULIAH
+                    </div>
+                </div>
+            </a>
+
+            <div class="tugas-nav-menu">
+                <a href="index.html" class="btn-nav-link">
+                    <i class="fas fa-arrow-left"></i> <span>Beranda</span>
+                </a>
+                <a href="cv.html" target="_blank" class="btn-nav-link hide-mobile">
+                    <i class="fas fa-file-invoice"></i> <span>Curriculum Vitae</span>
+                </a>
+                <button class="tugas-theme-toggle" id="tugasThemeToggle" aria-label="Ganti Tema Visual" title="Ganti Mode Terang / Gelap">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== HERO SECTION ==================== -->
+    <section class="tugas-hero">
+        <div class="hero-glow-bg"></div>
+        <div class="tugas-hero-container">
+            <div class="hero-header-top">
+                <div>
+                    <div class="hero-badge-live">
+                        <i class="fas fa-network-wired"></i> REPOSITORI AKADEMIK &amp; PROYEK
+                    </div>
+                    <h1 class="hero-title">
+                        Portal Manajemen &amp; <span class="text-gradient-hero">Tugas Kuliah</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Catat mata kuliah, kelola tenggat waktu (deadline), upload berkas laporan &amp; tugas, serta tautkan langsung ke repositori GitHub studi Anda.
+                    </p>
+                </div>
+
+                <div class="hero-actions-group">
+                    <button class="btn-primary-action" onclick="window.tugasApp.openModal()">
+                        <i class="fas fa-plus-circle"></i> Tambah Tugas Baru
+                    </button>
+                    <button class="btn-secondary-action" onclick="window.tugasApp.exportJSON()" title="Ekspor semua data tugas ke format JSON untuk di-commit ke GitHub">
+                        <i class="fas fa-file-export"></i> Ekspor JSON (GitHub)
+                    </button>
+                    <button class="btn-secondary-action" onclick="window.tugasApp.triggerImportJSON()" title="Pulihkan / Impor data tugas dari file JSON">
+                        <i class="fas fa-file-import"></i> Impor JSON
+                    </button>
+                    <!-- Input file tersembunyi untuk impor JSON -->
+                    <input type="file" id="jsonFileInput" accept=".json" style="display: none;">
+                </div>
+            </div>
+
+            <!-- Stats Overview Grid -->
+            <div class="stats-overview-grid">
+                <div class="stat-card">
+                    <div class="stat-icon-wrapper stat-icon-blue">
+                        <i class="fas fa-book-open-reader"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="statTotal">0</div>
+                        <div class="stat-label">Total Tugas</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon-wrapper stat-icon-green">
+                        <i class="fas fa-circle-check"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number text-neon-green" id="statSelesai">0</div>
+                        <div class="stat-label">Telah Selesai</div>
+                        <div class="stat-progress-bar-container">
+                            <div class="stat-progress-bar">
+                                <div class="stat-progress-fill" id="statProgressFill" style="width: 0%;"></div>
+                            </div>
+                            <div class="stat-progress-caption" id="statProgressText">0% Selesai</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon-wrapper stat-icon-amber">
+                        <i class="fas fa-spinner"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number text-neon-amber" id="statProses">0</div>
+                        <div class="stat-label">Sedang Dikerjakan</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon-wrapper stat-icon-purple">
+                        <i class="fas fa-hourglass-half"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number text-neon-purple" id="statBelum">0</div>
+                        <div class="stat-label">Belum Dikerjakan</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon-wrapper stat-icon-blue">
+                        <i class="fas fa-shapes"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="statCourses">0</div>
+                        <div class="stat-label">Mata Kuliah Aktif</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== MAIN CONTENT & TOOLBAR ==================== -->
+    <main class="tugas-main-section">
+        <!-- Toolbar & Filter Card -->
+        <div class="toolbar-card">
+            <div class="toolbar-upper">
+                <div class="search-box">
+                    <i class="fas fa-magnifying-glass"></i>
+                    <input type="text" id="searchQuery" class="search-input" placeholder="Cari judul tugas, mata kuliah, kode MK, dosen, atau materi...">
+                </div>
+
+                <div class="filter-controls-group">
+                    <select id="filterCourse" class="custom-select" aria-label="Pilih Mata Kuliah">
+                        <option value="all">Semua Mata Kuliah</option>
+                    </select>
+
+                    <select id="sortBy" class="custom-select" aria-label="Urutkan Tugas">
+                        <option value="deadline-asc">Tenggat Waktu: Terdekat</option>
+                        <option value="deadline-desc">Tenggat Waktu: Terjauh</option>
+                        <option value="created-desc">Terbaru Diunggah</option>
+                        <option value="course-asc">Mata Kuliah: A - Z</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="toolbar-lower">
+                <div class="filter-tabs-wrapper">
+                    <button class="filter-tab-btn active" data-status="all">
+                        <i class="fas fa-list-ul"></i> Semua
+                    </button>
+                    <button class="filter-tab-btn" data-status="belum">
+                        <i class="fas fa-hourglass-start"></i> Belum Dikerjakan
+                    </button>
+                    <button class="filter-tab-btn" data-status="proses">
+                        <i class="fas fa-spinner"></i> Sedang Dikerjakan
+                    </button>
+                    <button class="filter-tab-btn" data-status="selesai">
+                        <i class="fas fa-circle-check"></i> Selesai
+                    </button>
+                </div>
+
+                <div class="toolbar-git-hint">
+                    <i class="fab fa-github"></i> Terhubung &amp; Kompatibel dengan GitHub Pages
+                </div>
+            </div>
+        </div>
+
+        <!-- Assignments Grid -->
+        <div class="assignments-grid" id="assignmentsGrid">
+            <!-- Dynamic cards loaded via js/tugas.js -->
+        </div>
+    </main>
+
+    <!-- ==================== MODAL TAMBAH / EDIT TUGAS ==================== -->
+    <div class="modal-overlay" id="tugasModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 id="modalTitle">
+                    <i class="fas fa-book-bookmark text-neon-cyan"></i> Tambah Tugas Kuliah Baru
+                </h2>
+                <button class="btn-close-modal" data-close-modal aria-label="Tutup Jendela Modal">
+                    <i class="fas fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="tugasForm">
+                <div class="modal-body">
+                    <!-- Row 1: Mata Kuliah & Kode MK -->
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label for="inputMataKuliah">Nama Mata Kuliah <span class="required">*</span></label>
+                            <input type="text" id="inputMataKuliah" class="form-control" placeholder="Contoh: Jaringan Komputer" required list="listMataKuliah">
+                            <datalist id="listMataKuliah">
+                                <option value="Jaringan Komputer & Komunikasi Data">
+                                <option value="Administrasi Server & Cloud">
+                                <option value="Pemrograman Web Lanjut">
+                                <option value="Keamanan Siber & Kriptografi">
+                                <option value="Sistem Operasi Terdistribusi">
+                                <option value="Rekayasa Perangkat Lunak">
+                                <option value="Kecerdasan Buatan & Machine Learning">
+                                <option value="Basis Data & Big Data">
+                            </datalist>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputKodeMK">Kode Mata Kuliah</label>
+                            <input type="text" id="inputKodeMK" class="form-control" placeholder="Contoh: TIF-204">
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Semester & Dosen -->
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label for="inputSemester">Semester / Tingkat</label>
+                            <input type="text" id="inputSemester" class="form-control" placeholder="Contoh: Semester 4">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputDosen">Dosen Pengampu</label>
+                            <input type="text" id="inputDosen" class="form-control" placeholder="Nama Dosen & Gelar">
+                        </div>
+                    </div>
+
+                    <!-- Judul Tugas -->
+                    <div class="form-group">
+                        <label for="inputJudul">Judul Tugas / Proyek <span class="required">*</span></label>
+                        <input type="text" id="inputJudul" class="form-control" placeholder="Contoh: Konfigurasi Dynamic Routing OSPF & VLAN" required>
+                    </div>
+
+                    <!-- Deskripsi Tugas -->
+                    <div class="form-group">
+                        <label for="inputDeskripsi">Deskripsi &amp; Informasi Tambahan</label>
+                        <textarea id="inputDeskripsi" class="form-control" placeholder="Rincian tugas, petunjuk pengerjaan, tujuan, atau catatan penting..."></textarea>
+                    </div>
+
+                    <!-- Row 3: Deadline & Tanggal Kumpul -->
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label for="inputDeadline">Batas Waktu (Deadline)</label>
+                            <input type="datetime-local" id="inputDeadline" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputTanggalKumpul">Tanggal Pengumpulan (Jika Sudah)</label>
+                            <input type="date" id="inputTanggalKumpul" class="form-control">
+                        </div>
+                    </div>
+
+                    <!-- Row 4: Status Tugas -->
+                    <div class="form-group">
+                        <label for="inputStatus">Status Pengerjaan</label>
+                        <select id="inputStatus" class="form-control">
+                            <option value="belum">⏳ Belum Dikerjakan</option>
+                            <option value="proses">🔄 Sedang Dikerjakan</option>
+                            <option value="selesai">✅ Selesai / Terkumpul</option>
+                        </select>
+                    </div>
+
+                    <!-- Upload File Berkas Tugas / Foto Dokumentasi (IndexedDB) -->
+                    <div class="form-group">
+                        <label>Upload Berkas Tugas / Foto Dokumentasi (PDF, DOCX, ZIP, JPG, PNG)</label>
+                        <div class="file-dropzone" id="fileDropZone">
+                            <div class="dropzone-icon">
+                                <i class="fas fa-cloud-arrow-up"></i>
+                            </div>
+                            <div class="dropzone-text">Pilih atau seret berkas / foto ke sini</div>
+                            <div class="dropzone-hint">Mendukung Foto Praktikum (JPG, PNG, WEBP) serta Dokumen PDF/ZIP</div>
+                            <input type="file" id="inputFile" style="display: none;" accept=".pdf,.doc,.docx,.zip,.rar,.jpg,.jpeg,.png,.webp">
+                        </div>
+
+                        <div class="staged-file-box hidden" id="stagedFilePreview">
+                            <div style="display: flex; flex-direction: column; gap: 6px; width: 100%;">
+                                <div style="display: flex; align-items: center; justify-content: space-between;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <i class="fas fa-paperclip text-neon-cyan"></i>
+                                        <div>
+                                            <strong id="stagedFileName">file.pdf</strong>
+                                            <span id="stagedFileSize" style="color: var(--text-muted); font-size: 0.8rem; margin-left: 8px;">2.4 MB</span>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn-remove-file" id="btnRemoveStagedFile" title="Hapus Berkas">
+                                        <i class="fas fa-times"></i> Hapus
+                                    </button>
+                                </div>
+                                <img id="stagedImgThumbnail" class="staged-img-thumb" style="display: none;" alt="Preview Foto Tugas">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- URL Gambar / Foto Eksternal (Opsional) -->
+                    <div class="form-group">
+                        <label for="inputImageUrl"><i class="fas fa-image"></i> URL Foto / Gambar Tugas (Opsional)</label>
+                        <input type="text" id="inputImageUrl" class="form-control" placeholder="Contoh: images/siswa.png atau link gambar hosted online">
+                    </div>
+
+                    <!-- Row 5: Link Repository GitHub & Demo -->
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label for="inputGithub"><i class="fab fa-github"></i> URL Repositori GitHub</label>
+                            <input type="url" id="inputGithub" class="form-control" placeholder="https://github.com/username/repo">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputDemo"><i class="fas fa-link"></i> URL Demo / Google Drive</label>
+                            <input type="url" id="inputDemo" class="form-control" placeholder="https://drive.google.com/... atau demo web">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary-action" data-close-modal>Batal</button>
+                    <button type="submit" class="btn-primary-action">
+                        <i class="fas fa-save"></i> Simpan Tugas
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== IMAGE LIGHTBOX MODAL ==================== -->
+    <div class="lightbox-overlay" id="imageLightboxModal" role="dialog" aria-modal="true" aria-label="Pratinjau Foto Tugas">
+        <div class="lightbox-container">
+            <button class="lightbox-close-btn" data-close-lightbox aria-label="Tutup Foto">
+                <i class="fas fa-xmark"></i>
+            </button>
+            <img src="" alt="Pratinjau Foto Tugas" id="lightboxImage" class="lightbox-image">
+            <div class="lightbox-caption" id="lightboxCaption">Dokumentasi Tugas Kuliah</div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="tugas-toast" id="tugasToast"></div>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script src="js/tugas.js?v=1.0.0"></script>
+</body>
+</html>
