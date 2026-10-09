@@ -224,6 +224,40 @@
 
             <form id="tugasForm">
                 <div class="modal-body">
+                    <!-- ===== AREA UPLOAD — SELALU TERLIHAT DI ATAS ===== -->
+                    <div class="upload-section-top">
+                        <div class="upload-section-label">
+                            <i class="fas fa-photo-film"></i>
+                            Upload Foto / Berkas Tugas
+                        </div>
+                        <div class="file-dropzone" id="fileDropZone">
+                            <div class="dropzone-icon"><i class="fas fa-cloud-arrow-up"></i></div>
+                            <div class="dropzone-text">Klik atau seret foto &amp; berkas ke sini</div>
+                            <div class="dropzone-hint">📷 Foto JPG/PNG &nbsp;•&nbsp; 📄 PDF/DOCX &nbsp;•&nbsp; 🗜️ ZIP/RAR</div>
+                            <input type="file" id="inputFile" style="display: none;" accept=".pdf,.doc,.docx,.zip,.rar,.jpg,.jpeg,.png,.webp">
+                        </div>
+                        <div class="staged-file-box hidden" id="stagedFilePreview">
+                            <div style="display: flex; flex-direction: column; gap: 6px; width: 100%;">
+                                <div style="display: flex; align-items: center; justify-content: space-between;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <i class="fas fa-paperclip" style="color: var(--accent-2);"></i>
+                                        <div>
+                                            <strong id="stagedFileName">file.pdf</strong>
+                                            <span id="stagedFileSize" style="color: var(--text-muted); font-size: 0.8rem; margin-left: 8px;">2.4 MB</span>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn-remove-file" id="btnRemoveStagedFile" title="Hapus Berkas">
+                                        <i class="fas fa-times"></i> Hapus
+                                    </button>
+                                </div>
+                                <img id="stagedImgThumbnail" class="staged-img-thumb" style="display: none;" alt="Preview Foto Tugas">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="form-divider"><span>Data Tugas</span></div>
+
                     <!-- Row 1: Mata Kuliah & Kode MK -->
                     <div class="form-grid-2">
                         <div class="form-group">
@@ -267,66 +301,35 @@
                     <!-- Deskripsi Tugas -->
                     <div class="form-group">
                         <label for="inputDeskripsi">Deskripsi &amp; Informasi Tambahan</label>
-                        <textarea id="inputDeskripsi" class="form-control" placeholder="Rincian tugas, petunjuk pengerjaan, tujuan, atau catatan penting..."></textarea>
+                        <textarea id="inputDeskripsi" class="form-control" style="min-height: 68px;" placeholder="Rincian tugas, petunjuk pengerjaan, tujuan, atau catatan penting..."></textarea>
                     </div>
 
-                    <!-- Row 3: Deadline & Tanggal Kumpul -->
+                    <!-- Row 3: Deadline & Status berdampingan -->
                     <div class="form-grid-2">
                         <div class="form-group">
                             <label for="inputDeadline">Batas Waktu (Deadline)</label>
                             <input type="datetime-local" id="inputDeadline" class="form-control">
                         </div>
                         <div class="form-group">
+                            <label for="inputStatus">Status Pengerjaan</label>
+                            <select id="inputStatus" class="form-control">
+                                <option value="belum">⏳ Belum Dikerjakan</option>
+                                <option value="proses">🔄 Sedang Dikerjakan</option>
+                                <option value="selesai">✅ Selesai / Terkumpul</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Row 4: Tanggal Kumpul & URL Foto berdampingan -->
+                    <div class="form-grid-2">
+                        <div class="form-group">
                             <label for="inputTanggalKumpul">Tanggal Pengumpulan (Jika Sudah)</label>
                             <input type="date" id="inputTanggalKumpul" class="form-control">
                         </div>
-                    </div>
-
-                    <!-- Row 4: Status Tugas -->
-                    <div class="form-group">
-                        <label for="inputStatus">Status Pengerjaan</label>
-                        <select id="inputStatus" class="form-control">
-                            <option value="belum">⏳ Belum Dikerjakan</option>
-                            <option value="proses">🔄 Sedang Dikerjakan</option>
-                            <option value="selesai">✅ Selesai / Terkumpul</option>
-                        </select>
-                    </div>
-
-                    <!-- Upload File Berkas Tugas / Foto Dokumentasi (IndexedDB) -->
-                    <div class="form-group">
-                        <label>Upload Berkas Tugas / Foto Dokumentasi (PDF, DOCX, ZIP, JPG, PNG)</label>
-                        <div class="file-dropzone" id="fileDropZone">
-                            <div class="dropzone-icon">
-                                <i class="fas fa-cloud-arrow-up"></i>
-                            </div>
-                            <div class="dropzone-text">Pilih atau seret berkas / foto ke sini</div>
-                            <div class="dropzone-hint">Mendukung Foto Praktikum (JPG, PNG, WEBP) serta Dokumen PDF/ZIP</div>
-                            <input type="file" id="inputFile" style="display: none;" accept=".pdf,.doc,.docx,.zip,.rar,.jpg,.jpeg,.png,.webp">
+                        <div class="form-group">
+                            <label for="inputImageUrl"><i class="fas fa-image"></i> URL Foto Tambahan (Opsional)</label>
+                            <input type="text" id="inputImageUrl" class="form-control" placeholder="images/foto.jpg atau link online">
                         </div>
-
-                        <div class="staged-file-box hidden" id="stagedFilePreview">
-                            <div style="display: flex; flex-direction: column; gap: 6px; width: 100%;">
-                                <div style="display: flex; align-items: center; justify-content: space-between;">
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <i class="fas fa-paperclip text-neon-cyan"></i>
-                                        <div>
-                                            <strong id="stagedFileName">file.pdf</strong>
-                                            <span id="stagedFileSize" style="color: var(--text-muted); font-size: 0.8rem; margin-left: 8px;">2.4 MB</span>
-                                        </div>
-                                    </div>
-                                    <button type="button" class="btn-remove-file" id="btnRemoveStagedFile" title="Hapus Berkas">
-                                        <i class="fas fa-times"></i> Hapus
-                                    </button>
-                                </div>
-                                <img id="stagedImgThumbnail" class="staged-img-thumb" style="display: none;" alt="Preview Foto Tugas">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- URL Gambar / Foto Eksternal (Opsional) -->
-                    <div class="form-group">
-                        <label for="inputImageUrl"><i class="fas fa-image"></i> URL Foto / Gambar Tugas (Opsional)</label>
-                        <input type="text" id="inputImageUrl" class="form-control" placeholder="Contoh: images/siswa.png atau link gambar hosted online">
                     </div>
 
                     <!-- Row 5: Link Repository GitHub & Demo -->
@@ -337,7 +340,7 @@
                         </div>
                         <div class="form-group">
                             <label for="inputDemo"><i class="fas fa-link"></i> URL Demo / Google Drive</label>
-                            <input type="url" id="inputDemo" class="form-control" placeholder="https://drive.google.com/... atau demo web">
+                            <input type="url" id="inputDemo" class="form-control" placeholder="https://drive.google.com/...">
                         </div>
                     </div>
                 </div>

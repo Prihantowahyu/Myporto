@@ -957,8 +957,8 @@
     border: 1px solid var(--border-color);
     border-radius: var(--radius-xl);
     width: 100%;
-    max-width: 720px;
-    max-height: 90vh;
+    max-width: 780px;
+    max-height: 95vh;
     display: flex;
     flex-direction: column;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
@@ -1059,6 +1059,51 @@
 textarea.form-control {
     resize: vertical;
     min-height: 95px;
+}
+
+/* Upload Section di atas form */
+.upload-section-top {
+    margin-bottom: 6px;
+}
+
+.upload-section-label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--accent-2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    padding: 10px 14px;
+    background: rgba(37, 99, 235, 0.08);
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(37, 99, 235, 0.2);
+}
+
+/* Divider antar section form */
+.form-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 14px 0 12px;
+    color: var(--text-light);
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.form-divider::before,
+.form-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-color);
+}
+
+.form-divider span {
+    padding: 0 4px;
+    white-space: nowrap;
 }
 
 /* File Drop Zone */
