@@ -606,11 +606,12 @@
 
         modal.classList.add('active');
         document.body.classList.add('modal-open');
+        const modalBody = modal.querySelector('.modal-body');
+        if (modalBody) modalBody.scrollTop = 0;
     }
 
     function closeModal() {
-        const modal = document.getElementById('tugasModal');
-        modal.classList.remove('active');
+        document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
         document.body.classList.remove('modal-open');
         editingId = null;
         stagedFile = null;
@@ -1018,12 +1019,12 @@
             btn.addEventListener('click', closeModal);
         });
 
-        const modal = document.getElementById('tugasModal');
-        if (modal) {
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) closeModal();
+        // Modal backdrop click
+        document.querySelectorAll('.modal-overlay').forEach(modalEl => {
+            modalEl.addEventListener('click', (e) => {
+                if (e.target === modalEl) closeModal();
             });
-        }
+        });
 
         // Lightbox close triggers
         const lightboxModal = document.getElementById('imageLightboxModal');

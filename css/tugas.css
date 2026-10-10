@@ -928,13 +928,17 @@
 }
 
 /* ==================== MODAL DIALOG ==================== */
+body.modal-open {
+    overflow: hidden;
+}
+
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(15, 23, 42, 0.65);
+    background: rgba(15, 23, 42, 0.7);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     z-index: 2000;
@@ -944,6 +948,8 @@
     padding: 20px;
     opacity: 0;
     visibility: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -958,16 +964,30 @@
     border-radius: var(--radius-xl);
     width: 100%;
     max-width: 780px;
-    max-height: 95vh;
+    max-height: min(90vh, 850px);
+    height: auto;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
     transform: scale(0.95) translateY(10px);
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    margin: auto;
 }
 
 .modal-overlay.active .modal-container {
     transform: scale(1) translateY(0);
+}
+
+/* Make form inside modal properly flex and respect container height */
+.modal-container form,
+#tugasForm {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    height: 100%;
+    overflow: hidden;
 }
 
 .modal-header {
@@ -976,6 +996,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-shrink: 0;
 }
 
 .modal-header h2 {
@@ -1010,8 +1031,11 @@
 
 /* ===== MODAL BODY & FOOTER ===== */
 .modal-body {
-    flex: 1;
+    flex: 1 1 auto;
+    min-height: 0;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
     padding: 24px 28px;
     display: flex;
     flex-direction: column;
@@ -1475,5 +1499,21 @@ textarea.form-control {
     .toolbar-lower {
         flex-direction: column;
         align-items: flex-start;
+    }
+    .modal-overlay {
+        padding: 10px;
+    }
+    .modal-container {
+        max-height: calc(100dvh - 20px);
+        border-radius: var(--radius-lg);
+    }
+    .modal-header {
+        padding: 16px 20px;
+    }
+    .modal-body {
+        padding: 18px 20px;
+    }
+    .modal-footer {
+        padding: 14px 20px;
     }
 }
