@@ -2,22 +2,17 @@
  * =========================================================================
  * KONFIGURASI SINKRONISASI CLOUD MULTI-USER (SUPABASE)
  * =========================================================================
- * Fitur ini memungkinkan Anda dan teman-teman mahasiswa lain untuk saling
- * mengunggah tugas secara online & realtime langsung di GitHub Pages (GRATIS)!
- * 
- * CARA MENGHUBUNGKAN:
- * 1. Buat akun & project gratis di https://supabase.com
- * 2. Salin Project URL & anon public key dari Project Settings -> API
- * 3. Isi nilai di bawah ini ATAU masukkan melalui tombol "Sinkronisasi Cloud" di web:
+ * Konfigurasi resmi database Cloud Supabase untuk Portal Tugas Kuliah MyPorto.
+ * Terhubung secara publik & realtime untuk GitHub Pages!
  */
 
 window.SUPABASE_CONFIG = {
-    // URL Project Supabase (contoh: 'https://xyzabcdefghijklmn.supabase.co')
-    url: '',
+    // URL Project Supabase
+    url: 'https://igvwtkqhwmnboxmlmvdc.supabase.co',
 
-    // Public Anon Key Supabase (contoh: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...')
-    anonKey: '',
+    // Public Anon / Publishable Key Supabase
+    anonKey: 'sb_publishable_xMnPThhUaVl8li0u9RCnJA_Ua2w3MaN',
 
-    // Nama tabel database Supabase (default: 'tugas')
+    // Nama tabel database Supabase
     tableName: 'tugas'
 };
