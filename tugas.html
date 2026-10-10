@@ -98,6 +98,9 @@
                     <button class="btn-secondary-action" onclick="window.tugasApp.triggerImportJSON()" title="Pulihkan / Impor data tugas dari file JSON" id="btnImportJSON">
                         <i class="fas fa-file-import"></i> Impor JSON
                     </button>
+                    <button class="btn-secondary-action" onclick="window.tugasApp.resetSampleData()" title="Muat ulang data contoh awal jika diperlukan" id="btnResetSample">
+                        <i class="fas fa-rotate-left"></i> Reset Contoh
+                    </button>
                     <!-- Input file tersembunyi untuk impor JSON -->
                     <input type="file" id="jsonFileInput" accept=".json" style="display: none;">
                 </div>
@@ -204,14 +207,25 @@
                     </button>
                 </div>
 
-                <div class="toolbar-git-hint">
-                    <span id="cloudStatusBadge" class="cloud-status-badge">
-                        <i class="fas fa-circle-dot" id="cloudStatusDot"></i>
-                        <span id="cloudStatusText">Mode Lokal</span>
-                    </span>
-                    <button type="button" class="btn-cloud-config-trigger" onclick="window.tugasApp.openCloudSyncModal()" title="Pengaturan Sinkronisasi Online Multi-User">
-                        <i class="fas fa-sliders"></i> Sync Cloud
-                    </button>
+                <div class="toolbar-right-actions">
+                    <div class="view-mode-toggle" id="viewModeToggle">
+                        <button type="button" class="view-toggle-btn active" data-view="grid" title="Tampilan Kartu (Grid)" id="btnViewGrid">
+                            <i class="fas fa-grip"></i> <span class="view-toggle-text">Grid</span>
+                        </button>
+                        <button type="button" class="view-toggle-btn" data-view="table" title="Tampilan Tabel (List Dinamis)" id="btnViewTable">
+                            <i class="fas fa-table-list"></i> <span class="view-toggle-text">Tabel</span>
+                        </button>
+                    </div>
+
+                    <div class="toolbar-git-hint">
+                        <span id="cloudStatusBadge" class="cloud-status-badge">
+                            <i class="fas fa-circle-dot" id="cloudStatusDot"></i>
+                            <span id="cloudStatusText">Mode Lokal</span>
+                        </span>
+                        <button type="button" class="btn-cloud-config-trigger" onclick="window.tugasApp.openCloudSyncModal()" title="Pengaturan Sinkronisasi Online Multi-User">
+                            <i class="fas fa-sliders"></i> Sync Cloud
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -232,9 +246,49 @@
             </div>
         </div>
 
-        <!-- Assignments Grid -->
+        <!-- Assignments Grid (Tampilan Kartu) -->
         <div class="assignments-grid" id="assignmentsGrid">
             <!-- Dynamic cards loaded via js/tugas.js -->
+        </div>
+
+        <!-- Assignments Table Wrapper (Tampilan Tabel Dinamis) -->
+        <div class="assignments-table-wrapper" id="assignmentsTableWrapper" style="display: none;">
+            <div class="table-responsive">
+                <table class="tugas-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 140px;">Status</th>
+                            <th style="width: 200px;">Mata Kuliah</th>
+                            <th>Judul Tugas &amp; Pengunggah</th>
+                            <th style="width: 180px;">Batas Waktu</th>
+                            <th style="width: 210px;">Berkas Lampiran</th>
+                            <th style="width: 150px; text-align: center;">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="assignmentsTableBody">
+                        <!-- Dynamic rows loaded via js/tugas.js -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Dynamic Pagination Bar -->
+        <div class="pagination-bar" id="paginationBar">
+            <div class="pagination-info" id="paginationInfo">
+                Menampilkan 0 tugas
+            </div>
+            <div class="pagination-controls" id="paginationControls">
+                <!-- Dynamic pagination buttons -->
+            </div>
+            <div class="pagination-per-page">
+                <label for="perPageSelect">Tampilkan:</label>
+                <select id="perPageSelect" class="custom-select per-page-select">
+                    <option value="6">6 per hal</option>
+                    <option value="12" selected>12 per hal</option>
+                    <option value="24">24 per hal</option>
+                    <option value="all">Semua</option>
+                </select>
+            </div>
         </div>
     </main>
 
@@ -252,33 +306,31 @@
 
             <form id="tugasForm">
                 <div class="modal-body">
-                    <!-- ===== AREA UPLOAD — SELALU TERLIHAT DI ATAS ===== -->
+                    <!-- ===== AREA UPLOAD MULTI-BERKAS — SELALU TERLIHAT DI ATAS ===== -->
                     <div class="upload-section-top">
                         <div class="upload-section-label">
-                            <i class="fas fa-photo-film"></i>
-                            Upload Foto / Berkas Tugas
+                            <i class="fas fa-paperclip text-neon-cyan"></i>
+                            Lampiran Berkas &amp; Foto Dokumentasi (Bisa Banyak File Sekaligus)
                         </div>
                         <div class="file-dropzone" id="fileDropZone">
                             <div class="dropzone-icon"><i class="fas fa-cloud-arrow-up"></i></div>
-                            <div class="dropzone-text">Klik atau seret foto &amp; berkas ke sini</div>
-                            <div class="dropzone-hint">📷 Foto JPG/PNG &nbsp;•&nbsp; 📄 PDF/DOCX &nbsp;•&nbsp; 🗜️ ZIP/RAR</div>
-                            <input type="file" id="inputFile" style="display: none;" accept=".pdf,.doc,.docx,.zip,.rar,.jpg,.jpeg,.png,.webp">
+                            <div class="dropzone-text">Klik atau seret beberapa berkas &amp; foto ke sini</div>
+                            <div class="dropzone-hint">📁 Mendukung banyak file: Foto JPG/PNG/WebP &bull; Dokumen PDF/Word &bull; Arsip ZIP/RAR &bull; Kodingan &amp; Excel</div>
+                            <input type="file" id="inputFile" style="display: none;" multiple accept="*">
                         </div>
-                        <div class="staged-file-box hidden" id="stagedFilePreview">
-                            <div style="display: flex; flex-direction: column; gap: 6px; width: 100%;">
-                                <div style="display: flex; align-items: center; justify-content: space-between;">
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <i class="fas fa-paperclip" style="color: var(--accent-2);"></i>
-                                        <div>
-                                            <strong id="stagedFileName">file.pdf</strong>
-                                            <span id="stagedFileSize" style="color: var(--text-muted); font-size: 0.8rem; margin-left: 8px;">2.4 MB</span>
-                                        </div>
-                                    </div>
-                                    <button type="button" class="btn-remove-file" id="btnRemoveStagedFile" title="Hapus Berkas">
-                                        <i class="fas fa-times"></i> Hapus
-                                    </button>
+                        
+                        <!-- Container Daftar Berkas Terlampir Multi-File -->
+                        <div class="staged-files-container hidden" id="stagedFilesContainer">
+                            <div class="staged-files-header">
+                                <div class="staged-files-title">
+                                    <i class="fas fa-layer-group text-neon-cyan"></i> Berkas Terlampir (<span id="stagedFilesCount">0</span> file)
                                 </div>
-                                <img id="stagedImgThumbnail" class="staged-img-thumb" style="display: none;" alt="Preview Foto Tugas">
+                                <button type="button" class="btn-clear-staged-all" id="btnClearAllStagedFiles" title="Hapus semua berkas pilihan">
+                                    <i class="fas fa-trash-can"></i> Hapus Semua
+                                </button>
+                            </div>
+                            <div class="staged-files-list" id="stagedFilesList">
+                                <!-- Dinamis rendered file cards/chips via JS -->
                             </div>
                         </div>
                     </div>
@@ -394,8 +446,15 @@
             <button class="lightbox-close-btn" data-close-lightbox aria-label="Tutup Foto">
                 <i class="fas fa-xmark"></i>
             </button>
+            <button class="lightbox-nav-btn lightbox-prev" id="lightboxPrevBtn" aria-label="Foto Sebelumnya" title="Foto Sebelumnya">
+                <i class="fas fa-chevron-left"></i>
+            </button>
             <img src="" alt="Pratinjau Foto Tugas" id="lightboxImage" class="lightbox-image">
+            <button class="lightbox-nav-btn lightbox-next" id="lightboxNextBtn" aria-label="Foto Selanjutnya" title="Foto Selanjutnya">
+                <i class="fas fa-chevron-right"></i>
+            </button>
             <div class="lightbox-caption" id="lightboxCaption">Dokumentasi Tugas Kuliah</div>
+            <div class="lightbox-counter" id="lightboxCounter">1 / 1</div>
         </div>
     </div>
 
