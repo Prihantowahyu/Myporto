@@ -28,6 +28,10 @@
     let editingId = null;
     let stagedFile = null; // Menyimpan File object saat upload di modal
 
+    // Supabase Cloud State (Multi-User Realtime Sync untuk GitHub Pages)
+    let supabaseClient = null;
+    let isCloudActive = false;
+
     // ==========================================
     // 1. INISIALISASI INDEXEDDB
     // ==========================================
@@ -125,40 +129,243 @@
         });
     }
 
-    // Seed Data & Sinkronisasi dari data/tugas.json
+    // ==========================================
+    // 1B. MODUL SINKRONISASI CLOUD (SUPABASE)
+    // ==========================================
+    function getCloudCredentials() {
+        const localUrl = localStorage.getItem('supabase_url');
+        const localKey = localStorage.getItem('supabase_anon_key');
+        const configUrl = (window.SUPABASE_CONFIG && window.SUPABASE_CONFIG.url) || '';
+        const configKey = (window.SUPABASE_CONFIG && window.SUPABASE_CONFIG.anonKey) || '';
+
+        const url = (localUrl && localUrl.trim()) || configUrl.trim();
+        const anonKey = (localKey && localKey.trim()) || configKey.trim();
+
+        return { url, anonKey };
+    }
+
+    async function initCloudClient() {
+        const { url, anonKey } = getCloudCredentials();
+        if (!url || !anonKey || !window.supabase || !window.supabase.createClient) {
+            isCloudActive = false;
+            supabaseClient = null;
+            updateCloudUIIndicators(false);
+            return false;
+        }
+
+        try {
+            supabaseClient = window.supabase.createClient(url, anonKey);
+            isCloudActive = true;
+            updateCloudUIIndicators(true);
+            subscribeToRealtimeCloud();
+            return true;
+        } catch (e) {
+            console.error('Gagal inisialisasi client Supabase:', e);
+            isCloudActive = false;
+            supabaseClient = null;
+            updateCloudUIIndicators(false);
+            return false;
+        }
+    }
+
+    function mapAssignmentToDb(item) {
+        return {
+            id: item.id,
+            mata_kuliah: item.mataKuliah || '',
+            kode_mk: item.kodeMK || '',
+            semester: item.semester || '',
+            dosen: item.dosen || '',
+            pengunggah: item.pengunggah || 'Wahyu Prihanto',
+            nim: item.nim || '',
+            judul: item.judul || '',
+            deskripsi: item.deskripsi || '',
+            deadline: item.deadline || '',
+            tanggal_kumpul: item.tanggalKumpul || '',
+            status: item.status || 'belum',
+            file_name: item.fileName || '',
+            file_size: item.fileSize || 0,
+            file_type: item.fileType || '',
+            image_url: item.imageUrl || '',
+            github_url: item.githubUrl || '',
+            demo_url: item.demoUrl || ''
+        };
+    }
+
+    function mapDbToAssignment(row) {
+        return {
+            id: row.id,
+            mataKuliah: row.mata_kuliah || '',
+            kodeMK: row.kode_mk || '',
+            semester: row.semester || '',
+            dosen: row.dosen || '',
+            pengunggah: row.pengunggah || 'Wahyu Prihanto',
+            nim: row.nim || '',
+            judul: row.judul || '',
+            deskripsi: row.deskripsi || '',
+            deadline: row.deadline || '',
+            tanggalKumpul: row.tanggal_kumpul || '',
+            status: row.status || 'belum',
+            fileName: row.file_name || '',
+            fileSize: row.file_size || 0,
+            fileType: row.file_type || '',
+            imageUrl: row.image_url || '',
+            githubUrl: row.github_url || '',
+            demoUrl: row.demo_url || ''
+        };
+    }
+
+    async function fetchCloudAssignments() {
+        if (!supabaseClient) return null;
+        try {
+            const { data, error } = await supabaseClient
+                .from('tugas')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                console.error('Gagal memuat tugas dari Supabase:', error);
+                return null;
+            }
+            return (data || []).map(mapDbToAssignment);
+        } catch (e) {
+            console.error('Error fetchCloudAssignments:', e);
+            return null;
+        }
+    }
+
+    async function saveCloudAssignment(item) {
+        if (!supabaseClient) return;
+        try {
+            const row = mapAssignmentToDb(item);
+            const { error } = await supabaseClient
+                .from('tugas')
+                .upsert(row, { onConflict: 'id' });
+            if (error) {
+                console.error('Supabase upsert error:', error);
+                showToast('Catatan: Tugas tersimpan lokal, gagal sync cloud: ' + error.message, 'warning');
+            }
+        } catch (e) {
+            console.error('Error saveCloudAssignment:', e);
+        }
+    }
+
+    async function deleteCloudAssignment(id) {
+        if (!supabaseClient) return;
+        try {
+            const { error } = await supabaseClient
+                .from('tugas')
+                .delete()
+                .eq('id', id);
+            if (error) {
+                console.error('Supabase delete error:', error);
+            }
+        } catch (e) {
+            console.error('Error deleteCloudAssignment:', e);
+        }
+    }
+
+    function subscribeToRealtimeCloud() {
+        if (!supabaseClient) return;
+        try {
+            supabaseClient
+                .channel('tugas-channel')
+                .on('postgres_changes', { event: '*', schema: 'public', table: 'tugas' }, async () => {
+                    const cloudData = await fetchCloudAssignments();
+                    if (cloudData) {
+                        assignmentsData = cloudData;
+                        for (const item of cloudData) {
+                            await dbPut(item, null);
+                        }
+                        populateCourseFilter();
+                        renderCourseFilterPills();
+                        renderStats();
+                        renderCards();
+                        showToast('Ada pembaruan tugas dari mahasiswa lain!', 'info');
+                    }
+                })
+                .subscribe();
+        } catch (e) {
+            console.error('Supabase Realtime subscription error:', e);
+        }
+    }
+
+    function updateCloudUIIndicators(active) {
+        const badge = document.getElementById('cloudStatusBadge');
+        const text = document.getElementById('cloudStatusText');
+        const dot = document.getElementById('cloudStatusDot');
+
+        if (!badge || !text) return;
+
+        if (active) {
+            badge.className = 'cloud-status-badge connected';
+            text.textContent = 'Cloud Sync Aktif';
+            if (dot) dot.className = 'fas fa-circle-dot text-emerald';
+        } else {
+            badge.className = 'cloud-status-badge';
+            text.textContent = 'Mode Lokal';
+            if (dot) dot.className = 'fas fa-circle-dot';
+        }
+    }
+
+    // Seed Data & Sinkronisasi
     async function initData() {
         try {
-            let localData = await dbGetAll();
-            try {
-                const response = await fetch('data/tugas.json?t=' + Date.now());
-                if (response.ok) {
-                    const seed = await response.json();
-                    if (Array.isArray(seed)) {
-                        for (const item of seed) {
-                            const existing = localData.find(d => d.id === item.id);
-                            if (!existing) {
-                                await dbPut(item, null);
-                                localData.push(item);
-                            } else {
-                                Object.assign(existing, item);
-                                await dbPut(existing, null);
+            // Cek dan inisialisasi Cloud Sync Supabase
+            const cloudConnected = await initCloudClient();
+            let loadedFromCloud = false;
+
+            if (cloudConnected) {
+                const cloudData = await fetchCloudAssignments();
+                if (cloudData && cloudData.length > 0) {
+                    assignmentsData = cloudData;
+                    loadedFromCloud = true;
+                    // Cache ke IndexedDB lokal untuk backup
+                    for (const item of cloudData) {
+                        await dbPut(item, null);
+                    }
+                }
+            }
+
+            if (!loadedFromCloud) {
+                let localData = await dbGetAll();
+                try {
+                    const response = await fetch('data/tugas.json?t=' + Date.now());
+                    if (response.ok) {
+                        const seed = await response.json();
+                        if (Array.isArray(seed)) {
+                            for (const item of seed) {
+                                const existing = localData.find(d => d.id === item.id);
+                                if (!existing) {
+                                    await dbPut(item, null);
+                                    localData.push(item);
+                                } else {
+                                    Object.assign(existing, item);
+                                    await dbPut(existing, null);
+                                }
+                            }
+                            // Jika cloud aktif tapi tabel cloud kosong, seed ke cloud
+                            if (cloudConnected && (!assignmentsData || assignmentsData.length === 0)) {
+                                for (const item of localData) {
+                                    await saveCloudAssignment(item);
+                                }
                             }
                         }
                     }
+                } catch (e) {
+                    console.log('Tidak dapat mengambil data/tugas.json publik, menggunakan basis data lokal.');
                 }
-            } catch (e) {
-                console.log('Tidak dapat mengambil data/tugas.json publik, menggunakan basis data lokal.');
+                assignmentsData = localData;
             }
-            assignmentsData = localData;
 
             // Muat blob gambar ke cache bila ada file foto tersimpan
             await loadBlobImagesToCache();
 
             populateCourseFilter();
+            renderCourseFilterPills();
             renderStats();
             renderCards();
 
-            // Periksa jika ada target link pengumpulan dosen (URL Hash #tugas-xxx)
+            // Periksa jika ada target link pengumpulan dosen atau filter khusus mata kuliah
             checkUrlHighlight();
         } catch (error) {
             console.error('Gagal inisialisasi data:', error);
@@ -244,8 +451,80 @@
         if (courses.includes(currentVal)) {
             select.value = currentVal;
         } else {
-            select.value = 'all';
-            currentFilter.course = 'all';
+            select.value = currentFilter.course || 'all';
+        }
+    }
+
+    // ==========================================
+    // 2B. FILTER KHUSUS MATA KULIAH (PILLS & LINK)
+    // ==========================================
+    function renderCourseFilterPills() {
+        const container = document.getElementById('coursePillsList');
+        const shareBtn = document.getElementById('btnShareCourse');
+        if (!container) return;
+
+        const courses = [...new Set(assignmentsData.map(a => a.mataKuliah).filter(Boolean))].sort();
+        const totalAll = assignmentsData.length;
+
+        let pillsHtml = `
+            <button type="button" class="course-pill-btn ${currentFilter.course === 'all' ? 'active' : ''}" data-course="all">
+                <i class="fas fa-list-check"></i>
+                <span>Semua Mata Kuliah</span>
+                <span class="course-pill-badge">${totalAll}</span>
+            </button>
+        `;
+
+        courses.forEach(c => {
+            const count = assignmentsData.filter(a => a.mataKuliah === c).length;
+            const isActive = currentFilter.course === c;
+            pillsHtml += `
+                <button type="button" class="course-pill-btn ${isActive ? 'active' : ''}" data-course="${escapeHtml(c)}">
+                    <i class="fas fa-book-bookmark"></i>
+                    <span>${escapeHtml(c)}</span>
+                    <span class="course-pill-badge">${count}</span>
+                </button>
+            `;
+        });
+
+        container.innerHTML = pillsHtml;
+
+        // Tampilkan tombol share link jika mata kuliah tertentu dipilih
+        if (shareBtn) {
+            if (currentFilter.course !== 'all') {
+                shareBtn.style.display = 'inline-flex';
+                shareBtn.innerHTML = `<i class="fas fa-link"></i> Salin Link ${escapeHtml(currentFilter.course)}`;
+            } else {
+                shareBtn.style.display = 'none';
+            }
+        }
+
+        // Event listener klik pill
+        container.querySelectorAll('.course-pill-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const courseVal = btn.getAttribute('data-course');
+                setCourseFilter(courseVal);
+            });
+        });
+    }
+
+    function setCourseFilter(courseVal) {
+        currentFilter.course = courseVal || 'all';
+        const select = document.getElementById('filterCourse');
+        if (select) select.value = currentFilter.course;
+        renderCourseFilterPills();
+        renderCards();
+    }
+
+    function copyCourseLink() {
+        if (currentFilter.course === 'all') return;
+        const baseHref = window.location.href.split('?')[0].split('#')[0];
+        const url = `${baseHref}?mk=${encodeURIComponent(currentFilter.course)}`;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(() => {
+                showToast(`Link khusus mata kuliah "${currentFilter.course}" berhasil disalin!`, 'success');
+            }).catch(() => {
+                showToast(url, 'info');
+            });
         }
     }
 
@@ -414,6 +693,14 @@
                     </div>
 
                     <div class="tugas-card-body">
+                        ${item.pengunggah ? `
+                            <div class="tugas-author-tag" title="Mahasiswa yang mengunggah tugas ini">
+                                <i class="fas fa-user-graduate"></i>
+                                <span>Diunggah oleh: <strong>${escapeHtml(item.pengunggah)}</strong></span>
+                                ${item.nim ? `<span class="author-nim">&bull; ${escapeHtml(item.nim)}</span>` : ''}
+                            </div>
+                        ` : ''}
+
                         <h3 class="tugas-title">${escapeHtml(item.judul)}</h3>
                         
                         ${item.dosen || item.semester ? `
@@ -567,6 +854,8 @@
             const item = assignmentsData.find(a => a.id === id);
             if (item) {
                 titleEl.textContent = 'Edit Data Tugas Kuliah';
+                document.getElementById('inputPengunggah').value = item.pengunggah || '';
+                document.getElementById('inputNim').value = item.nim || '';
                 document.getElementById('inputMataKuliah').value = item.mataKuliah || '';
                 document.getElementById('inputKodeMK').value = item.kodeMK || '';
                 document.getElementById('inputSemester').value = item.semester || '';
@@ -595,6 +884,8 @@
             }
         } else {
             titleEl.textContent = 'Tambah Tugas Kuliah Baru';
+            document.getElementById('inputPengunggah').value = localStorage.getItem('last_pengunggah') || 'Wahyu Prihanto';
+            document.getElementById('inputNim').value = localStorage.getItem('last_nim') || '';
             document.getElementById('inputStatus').value = 'belum';
             // Default deadline set to 7 days ahead
             const future = new Date();
@@ -620,6 +911,8 @@
     async function handleFormSubmit(e) {
         e.preventDefault();
 
+        const pengunggah = document.getElementById('inputPengunggah').value.trim() || 'Wahyu Prihanto';
+        const nim = document.getElementById('inputNim').value.trim();
         const mataKuliah = document.getElementById('inputMataKuliah').value.trim();
         const judul = document.getElementById('inputJudul').value.trim();
 
@@ -627,6 +920,9 @@
             showToast('Mata kuliah dan judul tugas wajib diisi!', 'warning');
             return;
         }
+
+        localStorage.setItem('last_pengunggah', pengunggah);
+        if (nim) localStorage.setItem('last_nim', nim);
 
         const kodeMK = document.getElementById('inputKodeMK').value.trim();
         const semester = document.getElementById('inputSemester').value.trim();
@@ -645,6 +941,8 @@
             const existing = assignmentsData.find(a => a.id === editingId);
             assignment = {
                 ...existing,
+                pengunggah,
+                nim,
                 mataKuliah,
                 kodeMK,
                 semester,
@@ -675,6 +973,8 @@
             const newId = 'tugas-' + Date.now();
             assignment = {
                 id: newId,
+                pengunggah,
+                nim,
                 mataKuliah,
                 kodeMK,
                 semester,
@@ -701,6 +1001,11 @@
 
         try {
             await dbPut(assignment, stagedFile);
+
+            // Sinkronisasi ke Supabase Cloud jika aktif
+            if (isCloudActive && supabaseClient) {
+                await saveCloudAssignment(assignment);
+            }
             
             // Perbarui memori lokal
             if (editingId) {
@@ -712,6 +1017,7 @@
 
             closeModal();
             populateCourseFilter();
+            renderCourseFilterPills();
             renderStats();
             renderCards();
             showToast(editingId ? 'Tugas berhasil diperbarui!' : 'Tugas baru berhasil disimpan!', 'success');
@@ -736,6 +1042,11 @@
 
         try {
             await dbPut(item, null);
+
+            if (isCloudActive && supabaseClient) {
+                await saveCloudAssignment(item);
+            }
+
             renderStats();
             renderCards();
             showToast(`Status tugas diubah menjadi "${newStatus}"`, 'info');
@@ -754,8 +1065,14 @@
 
         try {
             await dbDelete(id);
+
+            if (isCloudActive && supabaseClient) {
+                await deleteCloudAssignment(id);
+            }
+
             assignmentsData = assignmentsData.filter(a => a.id !== id);
             populateCourseFilter();
+            renderCourseFilterPills();
             renderStats();
             renderCards();
             showToast('Tugas berhasil dihapus', 'info');
@@ -900,13 +1217,18 @@
             });
         }
 
-        // Filter Course
+        // Filter Course Select
         const filterCourse = document.getElementById('filterCourse');
         if (filterCourse) {
             filterCourse.addEventListener('change', (e) => {
-                currentFilter.course = e.target.value;
-                renderCards();
+                setCourseFilter(e.target.value);
             });
+        }
+
+        // Tombol Salin Link Mata Kuliah Ini
+        const shareCourseBtn = document.getElementById('btnShareCourse');
+        if (shareCourseBtn) {
+            shareCourseBtn.addEventListener('click', copyCourseLink);
         }
 
         // Filter Status Tabs
@@ -934,6 +1256,16 @@
         if (form) {
             form.addEventListener('submit', handleFormSubmit);
         }
+
+        // Cloud Sync Modal Listeners
+        const btnSaveCloud = document.getElementById('btnSaveCloudConfig');
+        if (btnSaveCloud) btnSaveCloud.addEventListener('click', handleSaveCloudConfig);
+
+        const btnDiscCloud = document.getElementById('btnDisconnectCloud');
+        if (btnDiscCloud) btnDiscCloud.addEventListener('click', handleDisconnectCloud);
+
+        const btnCopySql = document.getElementById('btnCopySqlSchema');
+        if (btnCopySql) btnCopySql.addEventListener('click', copySqlSchema);
 
         // File Drag & Drop
         const dropZone = document.getElementById('fileDropZone');
@@ -1069,6 +1401,178 @@
     }
 
     // ==========================================
+    // 11B. MODAL CLOUD SYNC LOGIC
+    // ==========================================
+    const SQL_SCHEMA = `-- TABEL TUGAS KULIAH MULTI-USER (MYPORTO)
+create table if not exists tugas (
+  id text primary key,
+  mata_kuliah text,
+  kode_mk text,
+  semester text,
+  dosen text,
+  pengunggah text,
+  nim text,
+  judul text not null,
+  deskripsi text,
+  deadline text,
+  tanggal_kumpul text,
+  status text default 'belum',
+  file_name text,
+  file_size bigint,
+  file_type text,
+  image_url text,
+  github_url text,
+  demo_url text,
+  created_at timestamp with time zone default timezone('utc'::text, now())
+);
+
+-- Kebijakan Row Level Security (Akses Mahasiswa & Publik)
+alter table tugas enable row level security;
+create policy "Akses Publik Baca" on tugas for select using (true);
+create policy "Akses Publik Tambah" on tugas for insert with check (true);
+create policy "Akses Publik Update" on tugas for update using (true);
+create policy "Akses Publik Hapus" on tugas for delete using (true);
+
+-- Aktifkan Realtime Replication
+alter publication supabase_realtime add table tugas;
+`;
+
+    function openCloudSyncModal() {
+        const modal = document.getElementById('cloudSyncModal');
+        if (!modal) return;
+
+        const urlInput = document.getElementById('inputSupabaseUrl');
+        const keyInput = document.getElementById('inputSupabaseKey');
+
+        const { url, anonKey } = getCloudCredentials();
+
+        if (urlInput) urlInput.value = url;
+        if (keyInput) keyInput.value = anonKey;
+
+        updateCloudModalBanner();
+
+        modal.classList.add('active');
+        document.body.classList.add('modal-open');
+    }
+
+    function updateCloudModalBanner() {
+        const banner = document.getElementById('cloudModalStatusBanner');
+        const title = document.getElementById('cloudBannerTitle');
+        const desc = document.getElementById('cloudBannerDesc');
+        const icon = document.getElementById('cloudBannerIcon');
+
+        if (!banner || !title || !desc || !icon) return;
+
+        if (isCloudActive) {
+            banner.style.background = 'rgba(16, 185, 129, 0.12)';
+            banner.style.borderColor = 'rgba(16, 185, 129, 0.35)';
+            icon.className = 'fas fa-check-circle';
+            icon.style.background = '#10b981';
+            title.textContent = 'Status: Terhubung ke Cloud Supabase (Online Multi-User)';
+            title.style.color = '#10b981';
+            desc.textContent = 'Sinkronisasi aktif! Setiap mahasiswa yang mengunggah tugas di situs ini akan langsung tersimpan di cloud dan muncul secara realtime.';
+        } else {
+            banner.style.background = 'var(--accent-2-soft)';
+            banner.style.borderColor = 'var(--accent-2-border)';
+            icon.className = 'fas fa-satellite-dish';
+            icon.style.background = 'var(--accent-2)';
+            title.textContent = 'Status: Mode Lokal (IndexedDB & Berkas Statis)';
+            title.style.color = 'var(--text-primary)';
+            desc.textContent = 'Data saat ini tersimpan di browser & data/tugas.json. Hubungkan ke Supabase gratis agar mahasiswa lain bisa upload secara online.';
+        }
+    }
+
+    async function handleSaveCloudConfig() {
+        const urlInput = document.getElementById('inputSupabaseUrl');
+        const keyInput = document.getElementById('inputSupabaseKey');
+
+        const url = urlInput ? urlInput.value.trim() : '';
+        const anonKey = keyInput ? keyInput.value.trim() : '';
+
+        if (!url || !anonKey) {
+            showToast('Harap isi Supabase Project URL dan Anon Public Key!', 'warning');
+            return;
+        }
+
+        try {
+            if (!window.supabase || !window.supabase.createClient) {
+                showToast('Library Supabase belum termuat. Periksa koneksi internet Anda.', 'error');
+                return;
+            }
+
+            const client = window.supabase.createClient(url, anonKey);
+            const { error } = await client.from('tugas').select('id').limit(1);
+
+            if (error) {
+                console.error('Supabase Test Error:', error);
+                showToast('Gagal menghubungkan: ' + error.message, 'error');
+                return;
+            }
+
+            localStorage.setItem('supabase_url', url);
+            localStorage.setItem('supabase_anon_key', anonKey);
+
+            supabaseClient = client;
+            isCloudActive = true;
+            updateCloudUIIndicators(true);
+            updateCloudModalBanner();
+
+            subscribeToRealtimeCloud();
+
+            // Refresh data dari cloud
+            const cloudData = await fetchCloudAssignments();
+            if (cloudData && cloudData.length > 0) {
+                assignmentsData = cloudData;
+                for (const item of cloudData) {
+                    await dbPut(item, null);
+                }
+            } else {
+                // Jika tabel baru masih kosong, upload data lokal ke cloud
+                for (const item of assignmentsData) {
+                    await saveCloudAssignment(item);
+                }
+            }
+
+            populateCourseFilter();
+            renderCourseFilterPills();
+            renderStats();
+            renderCards();
+
+            showToast('Berhasil terhubung ke Supabase Cloud! Multi-user aktif.', 'success');
+            setTimeout(closeModal, 1200);
+        } catch (err) {
+            console.error(err);
+            showToast('Kesalahan koneksi Supabase: ' + err.message, 'error');
+        }
+    }
+
+    function handleDisconnectCloud() {
+        localStorage.removeItem('supabase_url');
+        localStorage.removeItem('supabase_anon_key');
+        if (window.SUPABASE_CONFIG) {
+            window.SUPABASE_CONFIG.url = '';
+            window.SUPABASE_CONFIG.anonKey = '';
+        }
+        supabaseClient = null;
+        isCloudActive = false;
+        updateCloudUIIndicators(false);
+        updateCloudModalBanner();
+        showToast('Koneksi Cloud diputus. Kembali ke Mode Lokal.', 'info');
+    }
+
+    function copySqlSchema() {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(SQL_SCHEMA).then(() => {
+                showToast('Script SQL Supabase berhasil disalin! Tempel di SQL Editor Supabase Anda.', 'success');
+            }).catch(() => {
+                fallbackCopyText(SQL_SCHEMA);
+            });
+        } else {
+            fallbackCopyText(SQL_SCHEMA);
+        }
+    }
+
+    // ==========================================
     // 12. FITUR PENGUMPULAN TUGAS KE DOSEN
     // ==========================================
     function copyDosenLink(id) {
@@ -1094,13 +1598,20 @@
         temp.select();
         document.execCommand('copy');
         document.body.removeChild(temp);
-        showToast('Link tugas berhasil disalin ke clipboard!', 'success');
+        showToast('Teks berhasil disalin ke clipboard!', 'success');
     }
 
     function checkUrlHighlight() {
         const hash = window.location.hash ? window.location.hash.replace(/^#/, '') : '';
         const params = new URLSearchParams(window.location.search);
         const targetId = hash || params.get('id');
+        const mkParam = params.get('mk');
+
+        // Jika ada filter khusus mata kuliah di URL (?mk=Nama+MK)
+        if (mkParam) {
+            setCourseFilter(decodeURIComponent(mkParam));
+            showToast(`Menampilkan khusus mata kuliah: ${decodeURIComponent(mkParam)}`, 'info');
+        }
 
         if (targetId) {
             currentFilter.course = 'all';
@@ -1116,6 +1627,7 @@
                 btn.classList.toggle('active', btn.getAttribute('data-status') === 'all');
             });
 
+            renderCourseFilterPills();
             renderCards();
 
             setTimeout(() => {
@@ -1123,7 +1635,7 @@
                 if (card) {
                     card.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     card.classList.add('highlight-target');
-                    showToast('Membuka tugas spesifik untuk penilaian Dosen', 'info');
+                    showToast('Membuka rincian tugas untuk Dosen', 'info');
                 }
             }, 350);
         }
@@ -1143,7 +1655,10 @@
         exportJSON,
         triggerImportJSON,
         copyDosenLink,
-        checkUrlHighlight
+        checkUrlHighlight,
+        openCloudSyncModal,
+        setCourseFilter,
+        copyCourseLink
     };
 
     // DOM Ready

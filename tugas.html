@@ -83,11 +83,14 @@
                     <button class="btn-primary-action" onclick="window.tugasApp.openModal()">
                         <i class="fas fa-plus-circle"></i> Tambah Tugas Baru
                     </button>
+                    <button class="btn-secondary-action" onclick="window.tugasApp.openCloudSyncModal()" title="Pengaturan Sinkronisasi Online Multi-User (Supabase / GitHub Pages)">
+                        <i class="fas fa-cloud-arrow-up text-neon-cyan"></i> Sinkronisasi Cloud (Multi-User)
+                    </button>
                     <button class="btn-secondary-action" onclick="document.getElementById('panduanModal').classList.add('active'); document.body.classList.add('modal-open');" title="Lihat cara mengumpulkan tugas ke dosen via link">
                         <i class="fas fa-circle-question text-neon-cyan"></i> Panduan ke Dosen
                     </button>
                     <button class="btn-secondary-action" onclick="window.tugasApp.exportJSON()" title="Ekspor semua data tugas ke format JSON untuk di-commit ke GitHub">
-                        <i class="fas fa-file-export"></i> Ekspor JSON (GitHub)
+                        <i class="fas fa-file-export"></i> Ekspor JSON
                     </button>
                     <button class="btn-secondary-action" onclick="window.tugasApp.triggerImportJSON()" title="Pulihkan / Impor data tugas dari file JSON">
                         <i class="fas fa-file-import"></i> Impor JSON
@@ -199,8 +202,30 @@
                 </div>
 
                 <div class="toolbar-git-hint">
-                    <i class="fab fa-github"></i> Terhubung &amp; Kompatibel dengan GitHub Pages
+                    <span id="cloudStatusBadge" class="cloud-status-badge">
+                        <i class="fas fa-circle-dot" id="cloudStatusDot"></i>
+                        <span id="cloudStatusText">Mode Lokal</span>
+                    </span>
+                    <button type="button" class="btn-cloud-config-trigger" onclick="window.tugasApp.openCloudSyncModal()" title="Pengaturan Sinkronisasi Online Multi-User">
+                        <i class="fas fa-sliders"></i> Sync Cloud
+                    </button>
                 </div>
+            </div>
+        </div>
+
+        <!-- Course Filter Pills Bar (Khusus Per Mata Kuliah) -->
+        <div class="course-filter-section" id="courseFilterSection">
+            <div class="course-filter-header">
+                <div class="course-filter-title">
+                    <i class="fas fa-layer-group text-neon-cyan"></i>
+                    <span>Kategori Khusus Mata Kuliah</span>
+                </div>
+                <button type="button" class="btn-share-course" id="btnShareCourse" style="display: none;" title="Salin link langsung untuk mata kuliah yang dipilih">
+                    <i class="fas fa-link"></i> Salin Link Mata Kuliah Ini
+                </button>
+            </div>
+            <div class="course-pills-list" id="coursePillsList">
+                <!-- Dynamically rendered course pills -->
             </div>
         </div>
 
@@ -256,7 +281,19 @@
                     </div>
 
                     <!-- Divider -->
-                    <div class="form-divider"><span>Data Tugas</span></div>
+                    <div class="form-divider"><span>Identitas Mahasiswa &amp; Data Tugas</span></div>
+
+                    <!-- Row Pengunggah / Mahasiswa (Multi-User) -->
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label for="inputPengunggah"><i class="fas fa-user-graduate"></i> Nama Mahasiswa / Pengunggah <span class="required">*</span></label>
+                            <input type="text" id="inputPengunggah" class="form-control" placeholder="Nama Lengkap Anda / Teman" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputNim"><i class="fas fa-id-card"></i> NIM / Identitas Mahasiswa</label>
+                            <input type="text" id="inputNim" class="form-control" placeholder="Contoh: 21.11.2024 (Opsional)">
+                        </div>
+                    </div>
 
                     <!-- Row 1: Mata Kuliah & Kode MK -->
                     <div class="form-grid-2">
@@ -418,10 +455,81 @@
         </div>
     </div>
 
+    <!-- ==================== MODAL SINKRONISASI CLOUD (MULTI-USER) ==================== -->
+    <div class="modal-overlay" id="cloudSyncModal" role="dialog" aria-modal="true" aria-labelledby="cloudSyncTitle">
+        <div class="modal-container" style="max-width: 680px;">
+            <div class="modal-header">
+                <h2 id="cloudSyncTitle">
+                    <i class="fas fa-cloud-arrow-up text-neon-cyan"></i> Sinkronisasi Cloud Multi-User (GitHub Pages)
+                </h2>
+                <button class="btn-close-modal" data-close-modal aria-label="Tutup Pengaturan Cloud">
+                    <i class="fas fa-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body" style="font-size: 0.92rem; line-height: 1.65; color: var(--text-secondary);">
+                <!-- Status Banner -->
+                <div class="cloud-status-banner" id="cloudModalStatusBanner">
+                    <div class="cloud-status-indicator-icon">
+                        <i class="fas fa-satellite-dish" id="cloudBannerIcon"></i>
+                    </div>
+                    <div>
+                        <strong id="cloudBannerTitle" style="color: var(--text-primary); display: block; font-size: 0.98rem;">Status: Mode Lokal (IndexedDB)</strong>
+                        <span id="cloudBannerDesc" style="font-size: 0.84rem; color: var(--text-muted);">
+                            Data tersimpan di browser Anda &amp; static JSON. Hubungkan ke Supabase agar teman mahasiswa lain bisa ikut mengunggah secara online &amp; realtime di GitHub Pages!
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 16px;">
+                    <label for="inputSupabaseUrl"><i class="fas fa-globe"></i> Supabase Project URL</label>
+                    <input type="url" id="inputSupabaseUrl" class="form-control" placeholder="https://xyzabcdefghijklmn.supabase.co">
+                </div>
+
+                <div class="form-group">
+                    <label for="inputSupabaseKey"><i class="fas fa-key"></i> Supabase Public Anon Key</label>
+                    <input type="text" id="inputSupabaseKey" class="form-control" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap;">
+                    <button type="button" class="btn-primary-action" id="btnSaveCloudConfig" style="font-size: 0.85rem; padding: 9px 18px;">
+                        <i class="fas fa-plug"></i> Simpan &amp; Hubungkan Cloud
+                    </button>
+                    <button type="button" class="btn-secondary-action" id="btnDisconnectCloud" style="font-size: 0.85rem; padding: 9px 16px;">
+                        <i class="fas fa-power-off"></i> Putuskan (Gunakan Mode Lokal)
+                    </button>
+                </div>
+
+                <!-- Petunjuk Setup Singkat -->
+                <div style="margin-top: 22px; border-top: 1px solid var(--border-color); padding-top: 16px;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+                        <span style="font-size: 0.92rem; font-weight: 700; color: var(--text-primary);">
+                            <i class="fas fa-wand-magic-sparkles text-neon-cyan"></i> Panduan Setup Supabase (Gratis &plusmn; 2 Menit):
+                        </span>
+                        <button type="button" class="btn-action-mini" id="btnCopySqlSchema" style="padding: 5px 12px; font-size: 0.8rem;" title="Salin kode SQL untuk membuat tabel di Supabase">
+                            <i class="fas fa-copy"></i> Salin SQL Tabel
+                        </button>
+                    </div>
+                    <ol style="margin-left: 20px; display: flex; flex-direction: column; gap: 8px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.55;">
+                        <li>Buka <a href="https://supabase.com" target="_blank" rel="noopener noreferrer" style="color: var(--accent-2); font-weight: 600;">supabase.com</a> dan buat akun gratis (bisa langsung pakai GitHub).</li>
+                        <li>Klik <strong>New Project</strong>, beri nama misalnya <em>"tugas-kuliah"</em>.</li>
+                        <li>Buka menu <strong>SQL Editor</strong> di dashboard Supabase, klik tombol <strong>"Salin SQL Tabel"</strong> di atas, tempel di editor lalu klik <strong>Run</strong>.</li>
+                        <li>Buka <strong>Project Settings &rarr; API</strong>, salin <em>Project URL</em> dan <em>anon public key</em> ke form di atas (atau tempel di file <code style="background: var(--bg-subtle); padding: 1px 5px; border-radius: 4px;">js/supabase-config.js</code>) lalu commit &amp; push ke GitHub!</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary-action" data-close-modal>Tutup</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Toast Notification -->
     <div class="tugas-toast" id="tugasToast"></div>
 
     <!-- ==================== JAVASCRIPT ==================== -->
-    <script src="js/tugas.js?v=1.0.0"></script>
+    <!-- Supabase JS Client for Multi-User Realtime Cloud Sync (GitHub Pages) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/tugas.js?v=1.2.0"></script>
 </body>
 </html>
