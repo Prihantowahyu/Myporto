@@ -4,7 +4,7 @@
     <!-- ==================== PRIMARY SEO ==================== -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Repositori &amp; Manajemen Tugas Kuliah | Wahyu Prihanto, S.Kom</title>
+    <title>Ruang Tugas Kuliah | Repositori &amp; Manajemen Akademik</title>
     <meta name="description" content="Portal dokumentasi dan manajemen tugas kuliah, proyek akademik, laporan praktikum jaringan, dan repositori studi oleh Wahyu Prihanto.">
     <meta name="keywords" content="Tugas Kuliah, Portofolio Tugas, Jaringan Komputer, Wahyu Prihanto, Rekayasa Perangkat Lunak, Laporan Praktikum, Repositori GitHub">
     <meta name="author" content="Wahyu Prihanto">
@@ -41,9 +41,9 @@
                     <i class="fas fa-graduation-cap"></i>
                 </div>
                 <div>
-                    <div class="tugas-brand-title">WAHYU<span style="color: var(--accent);">.</span>TUGAS</div>
+                    <div class="tugas-brand-title">RUANG<span style="color: var(--accent);"> </span><span class="brand-tugas-word">TUGAS</span></div>
                     <div class="tugas-brand-sub">
-                        <span class="dot-pulse"></span> PORTAL TUGAS KULIAH
+                        <span class="dot-pulse"></span> RUANG TUGAS KULIAH
                     </div>
                 </div>
             </a>
@@ -72,7 +72,7 @@
                         <i class="fas fa-network-wired"></i> REPOSITORI AKADEMIK &amp; PROYEK
                     </div>
                     <h1 class="hero-title">
-                        Portal Manajemen &amp; <span class="text-gradient-hero">Tugas Kuliah</span>
+                        Ruang Tugas &amp; <span class="text-gradient-hero">Kuliah Bersama</span>
                     </h1>
                     <p class="hero-subtitle">
                         Catat mata kuliah, kelola tenggat waktu (deadline), upload berkas laporan &amp; tugas, serta tautkan langsung ke repositori GitHub studi Anda.
@@ -80,19 +80,22 @@
                 </div>
 
                 <div class="hero-actions-group">
-                    <button class="btn-primary-action" onclick="window.tugasApp.openModal()">
+                    <button class="btn-primary-action" onclick="window.tugasApp.openModal()" id="btnTambahTugas">
                         <i class="fas fa-plus-circle"></i> Tambah Tugas Baru
                     </button>
-                    <button class="btn-secondary-action" onclick="window.tugasApp.openCloudSyncModal()" title="Pengaturan Sinkronisasi Online Multi-User (Supabase / GitHub Pages)">
-                        <i class="fas fa-cloud-arrow-up text-neon-cyan"></i> Sinkronisasi Cloud (Multi-User)
+                    <button class="btn-secondary-action btn-kategori" onclick="window.tugasApp.openKategoriModal()" title="Kelola kategori / mata kuliah: tambah, edit, hapus" id="btnKelolaKategori">
+                        <i class="fas fa-layer-group text-neon-cyan"></i> Kelola Kategori
                     </button>
-                    <button class="btn-secondary-action" onclick="document.getElementById('panduanModal').classList.add('active'); document.body.classList.add('modal-open');" title="Lihat cara mengumpulkan tugas ke dosen via link">
-                        <i class="fas fa-circle-question text-neon-cyan"></i> Panduan ke Dosen
+                    <button class="btn-secondary-action" onclick="window.tugasApp.openCloudSyncModal()" title="Pengaturan Sinkronisasi Online Multi-User (Supabase / GitHub Pages)" id="btnSyncCloud">
+                        <i class="fas fa-cloud-arrow-up text-neon-cyan"></i> Sync Cloud
                     </button>
-                    <button class="btn-secondary-action" onclick="window.tugasApp.exportJSON()" title="Ekspor semua data tugas ke format JSON untuk di-commit ke GitHub">
+                    <button class="btn-secondary-action" onclick="document.getElementById('panduanModal').classList.add('active'); document.body.classList.add('modal-open');" title="Lihat cara mengumpulkan tugas ke dosen via link" id="btnPanduan">
+                        <i class="fas fa-circle-question text-neon-cyan"></i> Panduan Dosen
+                    </button>
+                    <button class="btn-secondary-action" onclick="window.tugasApp.exportJSON()" title="Ekspor semua data tugas ke format JSON" id="btnExportJSON">
                         <i class="fas fa-file-export"></i> Ekspor JSON
                     </button>
-                    <button class="btn-secondary-action" onclick="window.tugasApp.triggerImportJSON()" title="Pulihkan / Impor data tugas dari file JSON">
+                    <button class="btn-secondary-action" onclick="window.tugasApp.triggerImportJSON()" title="Pulihkan / Impor data tugas dari file JSON" id="btnImportJSON">
                         <i class="fas fa-file-import"></i> Impor JSON
                     </button>
                     <!-- Input file tersembunyi untuk impor JSON -->
@@ -301,14 +304,7 @@
                             <label for="inputMataKuliah">Nama Mata Kuliah <span class="required">*</span></label>
                             <input type="text" id="inputMataKuliah" class="form-control" placeholder="Contoh: Jaringan Komputer" required list="listMataKuliah">
                             <datalist id="listMataKuliah">
-                                <option value="Jaringan Komputer & Komunikasi Data">
-                                <option value="Administrasi Server & Cloud">
-                                <option value="Pemrograman Web Lanjut">
-                                <option value="Keamanan Siber & Kriptografi">
-                                <option value="Sistem Operasi Terdistribusi">
-                                <option value="Rekayasa Perangkat Lunak">
-                                <option value="Kecerdasan Buatan & Machine Learning">
-                                <option value="Basis Data & Big Data">
+                                <!-- Dinamis dari kategori yang dikelola pengguna -->
                             </datalist>
                         </div>
                         <div class="form-group">
@@ -515,6 +511,57 @@
                         <li>Buka menu <strong>SQL Editor</strong> di dashboard Supabase, klik tombol <strong>"Salin SQL Tabel"</strong> di atas, tempel di editor lalu klik <strong>Run</strong>.</li>
                         <li>Buka <strong>Project Settings &rarr; API</strong>, salin <em>Project URL</em> dan <em>anon public key</em> ke form di atas (atau tempel di file <code style="background: var(--bg-subtle); padding: 1px 5px; border-radius: 4px;">js/supabase-config.js</code>) lalu commit &amp; push ke GitHub!</li>
                     </ol>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary-action" data-close-modal>Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MODAL MANAJEMEN KATEGORI MATA KULIAH ==================== -->
+    <div class="modal-overlay" id="kategoriModal" role="dialog" aria-modal="true" aria-labelledby="kategoriModalTitle">
+        <div class="modal-container" style="max-width: 640px;">
+            <div class="modal-header">
+                <h2 id="kategoriModalTitle">
+                    <i class="fas fa-layer-group text-neon-cyan"></i> Kelola Kategori Mata Kuliah
+                </h2>
+                <button class="btn-close-modal" data-close-modal aria-label="Tutup Modal Kategori">
+                    <i class="fas fa-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body kategori-modal-body">
+                <!-- Form Tambah / Edit Kategori -->
+                <div class="kategori-form-section">
+                    <div class="kategori-form-title" id="kategoriFormTitle">
+                        <i class="fas fa-plus-circle"></i> Tambah Mata Kuliah Baru
+                    </div>
+                    <div class="kategori-input-row">
+                        <div class="form-group" style="flex:1; margin-bottom:0;">
+                            <input type="text" id="inputKategoriNama" class="form-control" placeholder="Nama Mata Kuliah (cth: Jaringan Komputer)" maxlength="120">
+                        </div>
+                        <div class="form-group" style="width:130px; margin-bottom:0;">
+                            <input type="text" id="inputKategoriKode" class="form-control" placeholder="Kode MK (cth: TIF-204)" maxlength="20">
+                        </div>
+                        <button type="button" class="btn-primary-action" id="btnSaveKategori" style="white-space:nowrap; padding:10px 16px; font-size:0.85rem;">
+                            <i class="fas fa-save"></i> Simpan
+                        </button>
+                        <button type="button" class="btn-secondary-action" id="btnCancelEditKategori" style="display:none; padding:10px 12px; font-size:0.85rem;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <input type="hidden" id="editKategoriId">
+                </div>
+
+                <!-- List Kategori -->
+                <div class="kategori-list-section">
+                    <div class="kategori-list-header">
+                        <span><i class="fas fa-list-ul"></i> Daftar Kategori Terdaftar</span>
+                        <span class="kategori-count-badge" id="kategoriCount">0 kategori</span>
+                    </div>
+                    <div class="kategori-list" id="kategoriList">
+                        <!-- Dinamis -->
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">

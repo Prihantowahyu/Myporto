@@ -1642,7 +1642,223 @@ alter publication supabase_realtime add table tugas;
     }
 
     // ==========================================
-    // 13. EXPOSE GLOBAL APIS
+    // 13. MANAJEMEN KATEGORI MATA KULIAH
+    // ==========================================
+    const KATEGORI_KEY = 'ruangtugas_kategori';
+
+    function loadKategoriData() {
+        try {
+            const raw = localStorage.getItem(KATEGORI_KEY);
+            return raw ? JSON.parse(raw) : [];
+        } catch {
+            return [];
+        }
+    }
+
+    function saveKategoriData(list) {
+        localStorage.setItem(KATEGORI_KEY, JSON.stringify(list));
+    }
+
+    function populateMataKuliahDatalist() {
+        const dl = document.getElementById('listMataKuliah');
+        if (!dl) return;
+
+        let kategoriList = loadKategoriData();
+
+        // Merge dengan mata kuliah yang sudah ada di tugas (auto-discover)
+        const fromAssignments = [...new Set(assignmentsData.map(a => a.mataKuliah).filter(Boolean))];
+        fromAssignments.forEach(mk => {
+            if (!kategoriList.find(k => k.nama === mk)) {
+                // Tambahkan otomatis ke kategori
+                kategoriList.push({ id: 'auto-' + mk.replace(/\s+/g, '-').toLowerCase(), nama: mk, kode: '' });
+            }
+        });
+
+        dl.innerHTML = kategoriList.map(k => `<option value="${escapeHtml(k.nama)}">${k.kode ? escapeHtml(k.kode) + ' - ' : ''}${escapeHtml(k.nama)}</option>`).join('');
+    }
+
+    function renderKategoriList() {
+        const container = document.getElementById('kategoriList');
+        const countEl = document.getElementById('kategoriCount');
+        if (!container) return;
+
+        const list = loadKategoriData();
+
+        if (countEl) countEl.textContent = `${list.length} kategori`;
+
+        if (list.length === 0) {
+            container.innerHTML = `
+                <div class="kategori-empty">
+                    <i class="fas fa-folder-open"></i>
+                    <p>Belum ada kategori mata kuliah. Tambahkan di atas!</p>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = list.map(k => {
+            const tugasCount = assignmentsData.filter(a => a.mataKuliah === k.nama).length;
+            return `
+                <div class="kategori-item" data-id="${escapeHtml(k.id)}">
+                    <div class="kategori-item-info">
+                        ${k.kode ? `<span class="kategori-kode-badge">${escapeHtml(k.kode)}</span>` : ''}
+                        <span class="kategori-nama">${escapeHtml(k.nama)}</span>
+                        <span class="kategori-tugas-count">${tugasCount} tugas</span>
+                    </div>
+                    <div class="kategori-item-actions">
+                        <button type="button" class="btn-kategori-edit" onclick="window.tugasApp.editKategori('${escapeHtml(k.id)}')" title="Edit Kategori">
+                            <i class="fas fa-pen-to-square"></i>
+                        </button>
+                        <button type="button" class="btn-kategori-delete" onclick="window.tugasApp.deleteKategori('${escapeHtml(k.id)}')" title="Hapus Kategori">
+                            <i class="fas fa-trash-can"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function openKategoriModal() {
+        // Sync kategori otomatis dari data tugas yg ada
+        const list = loadKategoriData();
+        const fromAssignments = [...new Set(assignmentsData.map(a => a.mataKuliah).filter(Boolean))];
+        let changed = false;
+        fromAssignments.forEach(mk => {
+            if (!list.find(k => k.nama === mk)) {
+                list.push({ id: 'auto-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6), nama: mk, kode: '' });
+                changed = true;
+            }
+        });
+        if (changed) saveKategoriData(list);
+
+        resetKategoriForm();
+        renderKategoriList();
+
+        const modal = document.getElementById('kategoriModal');
+        if (modal) {
+            modal.classList.add('active');
+            document.body.classList.add('modal-open');
+        }
+    }
+
+    function resetKategoriForm() {
+        const nameInput = document.getElementById('inputKategoriNama');
+        const kodeInput = document.getElementById('inputKategoriKode');
+        const editId = document.getElementById('editKategoriId');
+        const formTitle = document.getElementById('kategoriFormTitle');
+        const saveBtn = document.getElementById('btnSaveKategori');
+        const cancelBtn = document.getElementById('btnCancelEditKategori');
+
+        if (nameInput) nameInput.value = '';
+        if (kodeInput) kodeInput.value = '';
+        if (editId) editId.value = '';
+        if (formTitle) formTitle.innerHTML = '<i class="fas fa-plus-circle"></i> Tambah Mata Kuliah Baru';
+        if (saveBtn) saveBtn.innerHTML = '<i class="fas fa-save"></i> Simpan';
+        if (cancelBtn) cancelBtn.style.display = 'none';
+    }
+
+    function saveKategoriFromForm() {
+        const nameInput = document.getElementById('inputKategoriNama');
+        const kodeInput = document.getElementById('inputKategoriKode');
+        const editId = document.getElementById('editKategoriId');
+
+        const nama = nameInput ? nameInput.value.trim() : '';
+        const kode = kodeInput ? kodeInput.value.trim() : '';
+        const id = editId ? editId.value.trim() : '';
+
+        if (!nama) {
+            showToast('Nama mata kuliah tidak boleh kosong!', 'warning');
+            if (nameInput) nameInput.focus();
+            return;
+        }
+
+        const list = loadKategoriData();
+
+        if (id) {
+            // Mode Edit
+            const idx = list.findIndex(k => k.id === id);
+            if (idx !== -1) {
+                list[idx].nama = nama;
+                list[idx].kode = kode;
+                saveKategoriData(list);
+                showToast(`Kategori "${nama}" berhasil diperbarui!`, 'success');
+            }
+        } else {
+            // Mode Tambah - cek duplikat
+            if (list.find(k => k.nama.toLowerCase() === nama.toLowerCase())) {
+                showToast(`Mata kuliah "${nama}" sudah ada di daftar kategori!`, 'warning');
+                return;
+            }
+            list.push({ id: 'mk-' + Date.now(), nama, kode });
+            saveKategoriData(list);
+            showToast(`Kategori "${nama}" berhasil ditambahkan!`, 'success');
+        }
+
+        resetKategoriForm();
+        renderKategoriList();
+        populateMataKuliahDatalist();
+        populateCourseFilter();
+        renderCourseFilterPills();
+    }
+
+    function editKategori(id) {
+        const list = loadKategoriData();
+        const item = list.find(k => k.id === id);
+        if (!item) return;
+
+        const nameInput = document.getElementById('inputKategoriNama');
+        const kodeInput = document.getElementById('inputKategoriKode');
+        const editId = document.getElementById('editKategoriId');
+        const formTitle = document.getElementById('kategoriFormTitle');
+        const saveBtn = document.getElementById('btnSaveKategori');
+        const cancelBtn = document.getElementById('btnCancelEditKategori');
+
+        if (nameInput) { nameInput.value = item.nama; nameInput.focus(); }
+        if (kodeInput) kodeInput.value = item.kode || '';
+        if (editId) editId.value = item.id;
+        if (formTitle) formTitle.innerHTML = '<i class="fas fa-pen-to-square text-neon-cyan"></i> Edit Kategori Mata Kuliah';
+        if (saveBtn) saveBtn.innerHTML = '<i class="fas fa-check"></i> Update';
+        if (cancelBtn) cancelBtn.style.display = 'inline-flex';
+    }
+
+    function deleteKategori(id) {
+        const list = loadKategoriData();
+        const item = list.find(k => k.id === id);
+        if (!item) return;
+
+        const tugasCount = assignmentsData.filter(a => a.mataKuliah === item.nama).length;
+        const msg = tugasCount > 0
+            ? `Hapus kategori "${item.nama}"? Kategori ini memiliki ${tugasCount} tugas terkait. Tugas tidak akan ikut terhapus.`
+            : `Hapus kategori "${item.nama}"?`;
+
+        if (!confirm(msg)) return;
+
+        const newList = list.filter(k => k.id !== id);
+        saveKategoriData(newList);
+        showToast(`Kategori "${item.nama}" berhasil dihapus.`, 'info');
+        renderKategoriList();
+        populateMataKuliahDatalist();
+        populateCourseFilter();
+        renderCourseFilterPills();
+    }
+
+    function setupKategoriEventListeners() {
+        const saveBtn = document.getElementById('btnSaveKategori');
+        if (saveBtn) saveBtn.addEventListener('click', saveKategoriFromForm);
+
+        const cancelBtn = document.getElementById('btnCancelEditKategori');
+        if (cancelBtn) cancelBtn.addEventListener('click', resetKategoriForm);
+
+        const nameInput = document.getElementById('inputKategoriNama');
+        if (nameInput) {
+            nameInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') { e.preventDefault(); saveKategoriFromForm(); }
+            });
+        }
+    }
+
+    // ==========================================
+    // 14. EXPOSE GLOBAL APIS
     // ==========================================
     window.tugasApp = {
         openModal,
@@ -1658,13 +1874,19 @@ alter publication supabase_realtime add table tugas;
         checkUrlHighlight,
         openCloudSyncModal,
         setCourseFilter,
-        copyCourseLink
+        copyCourseLink,
+        openKategoriModal,
+        editKategori,
+        deleteKategori
     };
 
     // DOM Ready
     document.addEventListener('DOMContentLoaded', () => {
         setupEventListeners();
-        initData();
+        setupKategoriEventListeners();
+        initData().then(() => {
+            populateMataKuliahDatalist();
+        });
     });
 
 })();
